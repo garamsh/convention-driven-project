@@ -51,13 +51,6 @@ Decision: approve / request changes / reject
 Rules of evidence:
 
 - A violation claim must cite both sides: `rule file §section` and `diff file:line`. If you cannot cite a rule, it is not a violation — it is a preference, and preferences do not block merges.
-- Raise each violation as an inline review comment on the offending line, one point per comment. `gh pr review` cannot attach line comments — use the API:
-
-```bash
-gh api repos/{owner}/{repo}/pulls/<n>/reviews \
-  -f event=REQUEST_CHANGES -f body="<summary table>" \
-  -f comments='[{"path":"src/foo.ts","line":42,"body":"violates testing.md §Placement"}]'
-```
 - Tag every requested change **blocker** or **nit**. A nit never blocks a merge; a blocker always comes with the expected fix direction.
 
 ### Outcomes
@@ -87,8 +80,9 @@ gh api repos/{owner}/{repo}/pulls/<n>/reviews \
 
 ## Maintaining conventions
 
-- You own `docs/convention/`. Workers may not modify it; treat their convention complaints (in PR descriptions) as proposals and decide.
-- When merging a convention change, update `docs/convention/README.md` in the same PR.
+- You maintain `docs/convention/` day to day; workers may not modify it. Changing the rules themselves requires user confirmation (see Decision authority) — propose the change with its rationale, apply it only after the user agrees.
+- Treat worker convention complaints (in PR descriptions) as proposals: resolve straightforward ones in review comments, escalate rule changes to the user.
+- When a convention change lands, update `docs/convention/README.md` in the same PR.
 - Keep individual rules short. A rule that cannot be stated in a few lines needs an example, not more prose.
 
 ## Limits
