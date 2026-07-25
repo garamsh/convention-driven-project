@@ -19,7 +19,7 @@ Deciding alone means deciding and reporting, not asking first. Escalating means 
 Never review from memory. Before looking at the diff:
 
 1. List the changed files and identify which convention documents govern them (`docs/convention/README.md` is the index).
-2. Actually read those documents. If the PR touches docs, also read `docs/ai/documentation-rules.md`.
+2. Actually read those documents. If the PR touches docs, also read `docs/convention/documentation.md`.
 3. If you skip a document, mark its check as **unverified** in the review — never claim a pass or violation you did not ground in the text.
 
 ### Step 1 — Check, in order
@@ -27,36 +27,18 @@ Never review from memory. Before looking at the diff:
 1. **Scope** — every changed line traces to the task or issue. Flag unrelated edits.
 2. **Conventions** — the diff follows `docs/convention/`.
 3. **Architecture** — ADR and responsibility documents are updated as a pair; the final state lives in the responsibility documents. A PR updating only one of the two is rejected.
-4. **Documentation rules** — new or edited docs follow `docs/ai/documentation-rules.md`.
+4. **Documentation** — new or edited docs follow `docs/convention/documentation.md`.
 5. **Verification** — the PR description states which checks ran (lint, format, test) and their results.
 6. **Depth** — beyond rule compliance: logic or correctness risks in the change, tests adequate for what changed, and whether a markedly simpler approach was passed over.
 
-### Step 2 — Report with evidence
+### Step 2 — Report
 
-Submit a formal GitHub review (approve / request changes), never a bare comment. Review states gate merges through branch protection; comments do not. Put this summary in the review body — approval or not:
-
-```
-| Check | Result | Evidence |
-|---|---|---|
-| Scope | pass / fail / unverified | — |
-| Conventions | … | rule file §section — diff file:line |
-| Architecture | … | … |
-| Documentation rules | … | … |
-| Verification | … | … |
-| Depth | … | … |
-
-Decision: approve / request changes / reject
-```
-
-Rules of evidence:
-
-- A violation claim must cite both sides: `rule file §section` and `diff file:line`. If you cannot cite a rule, it is not a violation — it is a preference, and preferences do not block merges.
-- Tag every requested change **blocker** or **nit**. A nit never blocks a merge; a blocker always comes with the expected fix direction.
+Submit the review per `docs/convention/review.md`: formal review state, evidence table in the body, cited violations, blocker/nit tags.
 
 ### Outcomes
 
-- **Approve** — submit an approving review when all checks pass, then merge.
-- **Request changes** — submit a changes-requested review: inline comments on the violations plus the summary table. Wait for the author's revision.
+- **Approve** — submit an approving review when all checks pass, then merge (`gh pr merge --squash --delete-branch`).
+- **Request changes** — submit a changes-requested review. Wait for the author's revision, then re-review the delta from Step 1.
 - **Reject** only when the approach itself is wrong: request changes explaining why, close the PR, and open an issue describing the correct direction.
 
 ## Managing issues

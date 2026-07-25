@@ -12,8 +12,8 @@ This file is replaced during bootstrap; do not edit it to describe your project.
 ## Structure
 
 - `AGENTS.md` — role matrix and rules every agent follows
-- `docs/ai/` — agent-only procedures (bootstrap, role playbooks, documentation rules)
-- `docs/convention/` — code conventions; stack files are pruned during bootstrap
+- `docs/ai/` — agent-only procedures (bootstrap, role playbooks)
+- `docs/convention/` — conventions for code, reviews, and documentation; stack files are pruned during bootstrap
 - `docs/architecture/` — responsibility documents (current truth) and ADRs (append-only decision log)
 - `.opencode/agents/`, `.claude/agents/` — tool-specific agent adapters
 - `.github/` — PR and issue templates, CODEOWNERS
@@ -23,5 +23,8 @@ This file is replaced during bootstrap; do not edit it to describe your project.
 Templates do not carry repository settings. After creation, configure manually:
 
 - **Settings → General → Template repository**: leave unchecked for the new project (that checkbox is for this template repo itself).
-- **Branch protection on `main`**: require pull requests, require review before merge, block direct pushes — this mechanically enforces the PM role.
+- **Branch protection on `main`**: require pull requests and block direct pushes — this mechanically enforces the PM role.
+- **Require review before merge**: enable only if the PM acts under a separate GitHub account (bot or GitHub App). GitHub rejects self-approval, so when workers and the PM share one account, enabling this blocks every merge — leave it off and rely on the review conventions in `docs/convention/review.md`.
+- **Require status checks**: enable once CI exists, so `make ci` gates merges.
+- **Merge methods**: restrict to squash only (matches `docs/convention/git.md`).
 - **Automatically delete head branches** (Settings → General → Pull Requests): removes a PR's remote branch on merge, preventing branch accumulation.

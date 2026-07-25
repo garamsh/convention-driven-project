@@ -10,7 +10,9 @@ Rules every agent follows when writing code. The PM owns these files; workers re
 | `runtime-safety.md` | Types, boundaries, error handling |
 | `testing.md` | Test layers, mocking, placement |
 | `ci.md` | Local/CI parity, workflows, security |
-| `git.md` | Branches, commits, PR titles |
+| `git.md` | Branches, commits, PR titles, merging |
+| `review.md` | What makes a review valid; how authors respond |
+| `documentation.md` | What makes documentation valid |
 | `planning.md` | PLAN.md structure for non-trivial work |
 
 ## Stack-specific
