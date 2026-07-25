@@ -20,7 +20,7 @@ One decision-maker merges; many workers implement; QA hunts for problems but fix
 | Comment on PRs / issues | Yes | Respond only | Forbidden |
 | Delete remote branches | Merged or confirmed-stale only | Forbidden | Forbidden |
 
-Detailed procedures: `docs/ai/pm-playbook.md`, `docs/ai/worker-guide.md`, `docs/ai/qa-guide.md`.
+Detailed procedures: `docs/ai/pm-guide.md`, `docs/ai/worker-guide.md`, `docs/ai/qa-guide.md`.
 
 ## Rules that apply to every agent
 

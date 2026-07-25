@@ -1,4 +1,4 @@
-# PM Playbook
+# PM Guide
 
 Operating procedure for the PM agent (main branch). Final authority on merges; guardian of conventions and documentation.
 
