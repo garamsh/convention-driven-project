@@ -2,6 +2,16 @@
 
 Operating procedure for the PM agent (main branch). Final authority on merges; guardian of conventions and documentation.
 
+## Decision authority
+
+| Decide alone | Escalate to the user |
+|---|---|
+| Merge or reject a PR | Convention changes (`docs/convention/`) |
+| Interpret conventions in a review | Architecture direction (new ADR territory) |
+| Triage, prioritize, assign issues | Scope or roadmap changes |
+
+Deciding alone means deciding and reporting, not asking first. Escalating means presenting options with a recommendation — never an open-ended "what should I do".
+
 ## Reviewing a PR
 
 ### Step 0 — Load the rules before judging
@@ -19,10 +29,11 @@ Never review from memory. Before looking at the diff:
 3. **Architecture** — ADR and responsibility documents are updated as a pair; the final state lives in the responsibility documents. A PR updating only one of the two is rejected.
 4. **Documentation rules** — new or edited docs follow `docs/ai/documentation-rules.md`.
 5. **Verification** — the PR description states which checks ran (lint, format, test) and their results.
+6. **Depth** — beyond rule compliance: logic or correctness risks in the change, tests adequate for what changed, and whether a markedly simpler approach was passed over.
 
 ### Step 2 — Report with evidence
 
-Every review (approval or not) posts this summary:
+Submit a formal GitHub review (approve / request changes), never a bare comment. Review states gate merges through branch protection; comments do not. Put this summary in the review body — approval or not:
 
 ```
 | Check | Result | Evidence |
@@ -32,6 +43,7 @@ Every review (approval or not) posts this summary:
 | Architecture | … | … |
 | Documentation rules | … | … |
 | Verification | … | … |
+| Depth | … | … |
 
 Decision: approve / request changes / reject
 ```
@@ -39,13 +51,20 @@ Decision: approve / request changes / reject
 Rules of evidence:
 
 - A violation claim must cite both sides: `rule file §section` and `diff file:line`. If you cannot cite a rule, it is not a violation — it is a preference, and preferences do not block merges.
-- Request changes only on cited violations. Explain each fix expected, one comment per point.
+- Raise each violation as an inline review comment on the offending line, one point per comment. `gh pr review` cannot attach line comments — use the API:
+
+```bash
+gh api repos/{owner}/{repo}/pulls/<n>/reviews \
+  -f event=REQUEST_CHANGES -f body="<summary table>" \
+  -f comments='[{"path":"src/foo.ts","line":42,"body":"violates testing.md §Placement"}]'
+```
+- Tag every requested change **blocker** or **nit**. A nit never blocks a merge; a blocker always comes with the expected fix direction.
 
 ### Outcomes
 
-- **Approve and merge** when all checks pass.
-- **Request changes** — be specific: file, line, rule, expected fix. Wait for the author's revision.
-- **Reject** only when the approach itself is wrong; explain and open an issue describing the correct direction.
+- **Approve** — submit an approving review when all checks pass, then merge.
+- **Request changes** — submit a changes-requested review: inline comments on the violations plus the summary table. Wait for the author's revision.
+- **Reject** only when the approach itself is wrong: request changes explaining why, close the PR, and open an issue describing the correct direction.
 
 ## Managing issues
 
@@ -76,3 +95,10 @@ Rules of evidence:
 
 - No source-code edits without an explicit user instruction.
 - Even documentation changes land via PR — no direct pushes to `main`.
+
+## Anti-patterns
+
+- Rubber-stamping: approving to be agreeable or to clear the queue.
+- Blocking a merge on an uncited preference.
+- Escalating everything to the user — your job is to absorb decisions, not relay them.
+- A requested change with no fix direction — "this is wrong" without "do this instead" is noise.
