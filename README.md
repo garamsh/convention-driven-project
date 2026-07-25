@@ -1,6 +1,6 @@
 # Harness — AI Agent Project Template
 
-A GitHub template repository for projects developed by AI agents (opencode, Claude Code). Multiple agents work in parallel on separate branches under two roles: a PM agent on `main` that reviews, merges, and supervises — and worker agents that implement tasks following written conventions.
+A GitHub template repository for projects developed by AI agents (opencode, Claude Code). Multiple agents work in parallel under three roles: a PM agent on `main` that reviews, merges, and supervises; worker agents that implement tasks following written conventions; and a QA agent that hunts for problems and files them as issues.
 
 ## Usage
 
@@ -24,3 +24,4 @@ Templates do not carry repository settings. After creation, configure manually:
 
 - **Settings → General → Template repository**: leave unchecked for the new project (that checkbox is for this template repo itself).
 - **Branch protection on `main`**: require pull requests, require review before merge, block direct pushes — this mechanically enforces the PM role.
+- **Automatically delete head branches** (Settings → General → Pull Requests): removes a PR's remote branch on merge, preventing branch accumulation.
