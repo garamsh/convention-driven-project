@@ -24,7 +24,7 @@ Templates do not carry repository settings. After creation, configure manually:
 
 - **Settings → General → Template repository**: leave unchecked for the new project (that checkbox is for this template repo itself).
 - **Branch protection on `main`**: require pull requests and block direct pushes — this mechanically enforces the PM role.
-- **Require review before merge**: enable only if the PM acts under a separate GitHub account (bot or GitHub App). GitHub rejects self-approval, so when workers and the PM share one account, enabling this blocks every merge — leave it off and rely on the review conventions in `docs/convention/review.md`.
+- **Require review before merge**: enable only if the PM acts under a separate GitHub account (bot or GitHub App). GitHub rejects self-approval, so when workers and the PM share one account, enabling this blocks every merge — leave it off; the PM's merge then serves as the approval (see `docs/convention/review.md` §Single-account setups).
 - **Require status checks**: enable once CI exists, so `make ci` gates merges.
 - **Merge methods**: restrict to squash only (matches `docs/convention/git.md`).
 - **Automatically delete head branches** (Settings → General → Pull Requests): removes a PR's remote branch on merge, preventing branch accumulation.
