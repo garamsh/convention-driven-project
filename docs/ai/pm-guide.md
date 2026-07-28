@@ -49,6 +49,10 @@ Submit the review per `docs/convention/review.md`: formal review state, evidence
 - When PR feedback reveals a recurring problem, edit or create an issue so the fix is tracked once, not repeated per-PR.
 - Issues state the goal and acceptance criteria, not the implementation.
 
+## Dispatching workers
+
+Assign implementation work by running a worker in an orca worktree, not by editing source yourself. Create the worktree in orca linked to its issue, launch a role-bound agent into it, and watch its terminal to completion. Full procedure: `orca-dispatch.md`. Roles must be bound with the tool's own `--agent <role>` flag — orca's `--agent` selects only the tool.
+
 ## Branch hygiene
 
 - After merging a PR, delete the remote head branch (unnecessary if the repo has *Automatically delete head branches* enabled).
