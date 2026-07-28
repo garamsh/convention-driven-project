@@ -16,4 +16,6 @@ Current architecture of the system and the decisions behind it. This file is the
 
 ## Index
 
-_Populated during bootstrap (`docs/ai/BOOTSTRAP.md`)._
+### Responsibility documents
+
+- `agent-harness.md` — the three agent roles, where their definitions live, the PR-based flow through `main`, and the convention/architecture split.
