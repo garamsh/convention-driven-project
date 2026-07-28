@@ -7,6 +7,7 @@ How the PM creates orca worktrees and dispatches role-bound agents into them. Or
 - When to use
 - Prerequisites
 - Binding the role
+- Running unattended
 - Dispatching a worker
 - Watching a worker
 - After the PR
@@ -36,6 +37,17 @@ Orca's own `--agent <id>` selects the *tool* (`claude`, `opencode`, `codex`, `cu
 
 Roles are `pm`, `worker`, `qa`. For Claude, `--settings '{"outputStyle":"<Name>"}'` (names live in `.claude/output-styles/`) is an equivalent way to lock the same role. A launched agent that reports the wrong role — or none — was not bound correctly; fix the flag before sending work.
 
+## Running unattended
+
+A dispatched worker runs with no human at its terminal, so it must not block on permission prompts. Orca has no autonomy flag of its own — its `--agent` only picks the tool and launches it with defaults. Autonomy comes from the tool's own flag, combined with the role flag and passed through `orca terminal create --command`.
+
+| Tool | Autonomous, role-bound launch |
+|---|---|
+| Claude Code | `claude --agent <role> --permission-mode bypassPermissions` |
+| opencode | `opencode --agent <role> --auto` |
+
+These flags skip permission prompts. They are acceptable only because the worker runs in an isolated worktree on a task branch, never on `main`.
+
 ## Dispatching a worker
 
 1. Open the issue with goal and acceptance criteria (`pm-guide.md` §Managing issues). The worker acts from the issue alone.
@@ -43,8 +55,8 @@ Roles are `pm`, `worker`, `qa`. For Claude, `--settings '{"outputStyle":"<Name>"
 3. Create the worktree in orca, linked to the confirmed issue and based on `main`:
    `orca worktree create --repo name:<repo> --name <slug> --base-branch main --issue <N> --json`.
    Pass `--repo` explicitly (`name:<repo>` or `id:<id>`); do not pass orca's `--agent` here. Read the worktree path from the result.
-4. Launch the role-bound agent in the worktree's terminal and capture the handle:
-   `orca terminal create --worktree path:<worktree-path> --command "claude --agent worker" --json`.
+4. Launch the role-bound agent in the worktree's terminal in autonomous mode (§Running unattended) and capture the handle:
+   `orca terminal create --worktree path:<worktree-path> --command "claude --agent worker --permission-mode bypassPermissions" --json`.
 5. Send the task, referencing the issue, `worker-guide.md`, and the conventions that govern the change:
    `orca terminal send --terminal <handle> --text "<task>" --enter`.
    Send the prompt as a separate step rather than embedding a long prompt in the launch command, which is fragile to quote.
