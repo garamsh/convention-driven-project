@@ -17,6 +17,8 @@ How the PM creates orca worktrees and dispatches role-bound agents into them. Or
 
 Use orca to run a worker on an issue as a persistent, observable process rather than an ephemeral in-session helper. The worktree survives the PM session, stays visible in the Orca app, and is tied to its issue. Prefer it whenever the PM assigns implementation work (see `pm-guide.md` §Managing issues).
 
+Dispatch is gated on a human. The PM opens and refines the issue on its own, but creates no worktree and launches no worker until a human confirms the issue. This gate keeps a human in control of what work actually starts.
+
 ## Prerequisites
 
 - The orca CLI is installed and the project is registered as an orca repo (`orca repo list`).
@@ -36,13 +38,14 @@ Roles are `pm`, `worker`, `qa`. For Claude, `--settings '{"outputStyle":"<Name>"
 
 ## Dispatching a worker
 
-1. Prepare the issue with goal and acceptance criteria (`pm-guide.md` §Managing issues). The worker acts from the issue alone.
-2. Create the worktree in orca, linked to the issue and based on `main`:
+1. Open the issue with goal and acceptance criteria (`pm-guide.md` §Managing issues). The worker acts from the issue alone.
+2. Wait for a human to confirm the issue. Do not create a worktree or launch a worker before confirmation.
+3. Create the worktree in orca, linked to the confirmed issue and based on `main`:
    `orca worktree create --repo name:<repo> --name <slug> --base-branch main --issue <N> --json`.
    Pass `--repo` explicitly (`name:<repo>` or `id:<id>`); do not pass orca's `--agent` here. Read the worktree path from the result.
-3. Launch the role-bound agent in the worktree's terminal and capture the handle:
+4. Launch the role-bound agent in the worktree's terminal and capture the handle:
    `orca terminal create --worktree path:<worktree-path> --command "claude --agent worker" --json`.
-4. Send the task, referencing the issue, `worker-guide.md`, and the conventions that govern the change:
+5. Send the task, referencing the issue, `worker-guide.md`, and the conventions that govern the change:
    `orca terminal send --terminal <handle> --text "<task>" --enter`.
    Send the prompt as a separate step rather than embedding a long prompt in the launch command, which is fragile to quote.
 
