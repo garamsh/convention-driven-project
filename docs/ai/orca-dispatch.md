@@ -39,14 +39,16 @@ Roles are `pm`, `worker`, `qa`. For Claude, `--settings '{"outputStyle":"<Name>"
 
 ## Running unattended
 
-A dispatched worker runs with no human at its terminal, so it must not block on permission prompts. Orca has no autonomy flag of its own — its `--agent` only picks the tool and launches it with defaults. Autonomy comes from the tool's own flag, combined with the role flag and passed through `orca terminal create --command`.
+A dispatched worker runs with no human at its terminal, so launch it headless: one command that carries the task, binds the worker role, bypasses permission prompts, runs to completion, and exits. Do not launch an interactive session and then send the prompt as a second step — the extra step is fragile and is the usual cause of a worker that never starts.
 
-| Tool | Autonomous, role-bound launch |
+Orca has no autonomy or headless flag of its own; its `--agent` only selects the tool. All of it comes from the tool's own flags, passed through `orca terminal create --command`:
+
+| Tool | Headless, role-bound, autonomous launch |
 |---|---|
-| Claude Code | `claude --agent <role> --permission-mode bypassPermissions` |
-| opencode | `opencode --agent <role> --auto` |
+| Claude Code | `claude --agent worker --permission-mode bypassPermissions -p '<prompt>'` |
+| opencode | `opencode run --agent worker --auto '<prompt>'` |
 
-These flags skip permission prompts. They are acceptable only because the worker runs in an isolated worktree on a task branch, never on `main`.
+Keep `<prompt>` free of single quotes (the whole command is already single-quoted inside `--command`). Permission bypass is acceptable only because the worker runs in an isolated worktree on a task branch, never on `main`.
 
 ## Dispatching a worker
 
@@ -55,21 +57,16 @@ These flags skip permission prompts. They are acceptable only because the worker
 3. Create the worktree in orca, linked to the confirmed issue and based on `main`:
    `orca worktree create --repo name:<repo> --name <slug> --base-branch main --issue <N> --json`.
    Pass `--repo` explicitly (`name:<repo>` or `id:<id>`); do not pass orca's `--agent` here. Read the worktree path from the result.
-4. Launch the role-bound agent in the worktree's terminal in autonomous mode (§Running unattended) and capture the handle:
-   `orca terminal create --worktree path:<worktree-path> --command "claude --agent worker --permission-mode bypassPermissions" --json`.
-5. Send the task, referencing the issue, `worker-guide.md`, and the conventions that govern the change:
-   `orca terminal send --terminal <handle> --text "<task>" --enter`.
-   Send the prompt as a separate step rather than embedding a long prompt in the launch command, which is fragile to quote.
+4. Dispatch the worker headless in one command (§Running unattended) and capture the handle. Keep the prompt short — name the issue and point to the guides; the worker reads the issue itself:
+   `orca terminal create --worktree path:<worktree-path> --command "claude --agent worker --permission-mode bypassPermissions -p 'Work GitHub issue #<N> as the worker: run gh issue view <N>, implement it per docs/ai/worker-guide.md and docs/convention/, then commit, push, and open a PR with gh. You are already on the correct branch and worktree.'" --json`.
 
-The worker then works on its branch and opens a PR; it does not create another branch or worktree.
+The worker reads the issue, works on its branch, opens a PR, and exits; it does not create another branch or worktree.
 
 ## Watching a worker
 
-- `orca terminal read --terminal <handle> [--cursor <n>]` — tail output; pass the previous `nextCursor` to read only new lines.
-- `orca terminal wait --terminal <handle> --for tui-idle|exit` — block until the agent is idle or the process exits.
-- `orca terminal send --terminal <handle> --text "<correction>" [--interrupt] --enter` — steer or interrupt a running worker.
-
-Confirm the agent started and self-identified with the right role before leaving it to run.
+- `orca terminal wait --terminal <handle> --for exit` — block until the headless worker finishes. Its exit ends the dispatch.
+- `orca terminal read --terminal <handle> [--cursor <n>]` — read output, including the final PR URL. A headless worker prints little until it finishes; pass the previous `nextCursor` for incremental reads. Read the raw text output, not `--json`, when you just want to eyeball progress.
+- To steer a worker instead of running it to completion, launch it interactively (omit `-p`) and drive it with `orca terminal send --terminal <handle> --text "<message>" [--interrupt] --enter`.
 
 ## After the PR
 
