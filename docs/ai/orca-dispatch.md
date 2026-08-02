@@ -2,13 +2,11 @@
 
 How the PM dispatches workers into Orca worktrees. Applies only when the environment provides the Orca CLI; skip this document otherwise. On Linux outside Orca-managed terminals the executable is `orca-ide` (bare `orca` is the GNOME screen reader); inside Orca terminals it is `orca`.
 
-Sequences below were verified by direct experiment. Two modes: lightweight for independent work, supervised when completion must be tracked.
-
 ## Never bypass Orca tracking
 
 All agent processes are launched through the Orca CLI. No `nohup`, detached spawns, or background subprocesses — an agent Orca cannot see reports no status, appears as an idle worktree, and its death is invisible.
 
-## Lightweight mode (verified)
+## Lightweight mode
 
 For independent tasks where the PR is the completion signal.
 
@@ -23,7 +21,7 @@ orca-ide terminal read --terminal <handle> --json
 - Always pass `--agent` and `--prompt` together — an agent without a prompt idles forever.
 - **A dispatch is not done until `terminal read` shows the agent working.** "Worktree created" is not "work started."
 
-## Supervised mode (verified)
+## Supervised mode
 
 For work the PM must track to completion. Uses Orca orchestration: a Run inbox where workers report `worker_done`.
 
@@ -59,7 +57,7 @@ Work is iterative: worker completes → PM reviews → PM comments on the issue 
 ## Tracking and completion
 
 - PM sweep on every wake: `orca-ide orchestration check --json` (unread Run mail) + `orca-ide worktree ps --json` (stuck or in-review worktrees).
-- Workers update their own card at checkpoints: `worktree set --worktree active --comment "..." --workspace-status in-progress`, and report `worker_done` exactly once when dispatched via orchestration (see `docs/ai/worker-guide.md`).
+- Worker-side status reporting (card updates, `worker_done`): `docs/ai/worker-guide.md` §Reporting status.
 - After the worker's PR is merged: `orca-ide worktree rm --worktree id:<repoId>::<path> --force --json`.
 
 ## Anti-patterns

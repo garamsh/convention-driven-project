@@ -35,5 +35,4 @@ Follow the response rules in `docs/convention/review.md`: address or rebut every
 
 ## Limits
 
-- Never modify `docs/convention/`, `docs/ai/`, `.opencode/`, `.claude/`, or `.github/`.
-- Never create, edit, close issues, or merge PRs.
+Your permissions and prohibitions are defined by your agent adapter and the role matrix in `AGENTS.md` — they are not restated here.
