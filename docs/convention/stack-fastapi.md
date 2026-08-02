@@ -13,7 +13,7 @@
 > production layout by default; diverging to a small-project
 > layer-based layout (`api/`, `services/`, `repositories/`,
 > `models/`, `schemas/`, `core/`) is acceptable when the project
-> has only 2-3 domains — note the deviation in PLAN.md §8.
+> has only 2-3 domains — note the deviation in the PR description.
 
 ## Contents
 - 0. Folder & file naming
@@ -689,4 +689,4 @@ Stack-specific MUST/NEVER:
 
 ## 14. Ecosystem versions (verify live)
 
-Stack conventions above are stable; library versions change. Pick libraries via `code-plan` live tech discovery (PyPI / official docs) at PLAN time.
+Stack conventions above are stable; library versions change. Pick libraries via live tech discovery (PyPI / official docs) when choosing them.

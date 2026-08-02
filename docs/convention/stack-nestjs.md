@@ -6,7 +6,7 @@
 > 2025 patterns: class-validator DTOs as runtime classes,
 > `@nestjs/config` with `registerAs`, TypeORM `forRootAsync`/`forFeature`,
 > co-located unit tests, e2e under `test/`. Defaults, not laws —
-> divergence → follow code, note in PLAN.md §8.
+> divergence → follow code, note it in the PR description.
 
 ## Contents
 - 0. Folder & file naming — strict
@@ -457,7 +457,7 @@ Stack-specific MUST/NEVER:
 
 ## 11. Ecosystem versions (verify live)
 
-Stack conventions above are stable; library versions change. Pick libraries via `code-plan` live tech discovery (`npm view`; official docs) at PLAN time.
+Stack conventions above are stable; library versions change. Pick libraries via live tech discovery (`npm view`; official docs) when choosing them.
 
 ## 12. Sources (URL index)
 

@@ -7,7 +7,7 @@
 > Components by default, `'use client'` only for interactivity,
 > Server Actions for form mutations, Route Handlers for external
 > HTTP API, `src/` layout for any non-trivial project. Defaults, not
-> laws — divergence → follow code, note in PLAN.md §8.
+> laws — divergence → follow code, note it in the PR description.
 
 ## Contents
 - 0. Folder & file naming
@@ -479,7 +479,7 @@ Stack-specific MUST/NEVER:
 
 ## 14. Ecosystem versions (verify live)
 
-Stack conventions above are stable; Next.js and library versions change. Pick libraries via `code-plan` live tech discovery (`npm view`; `nextjs.org/docs`) at PLAN time.
+Stack conventions above are stable; Next.js and library versions change. Pick libraries via live tech discovery (`npm view`; `nextjs.org/docs`) when choosing them.
 
 ## 15. Sources (URL index)
 

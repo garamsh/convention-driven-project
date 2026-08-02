@@ -2,7 +2,7 @@
 
 > Defaults for Go projects. Defaults, not laws — if a project's
 > existing code clearly diverges, follow the code and note the
-> divergence in PLAN.md §8.
+> divergence in the PR description.
 
 ## Contents
 - 0. Folder & file naming — strict
@@ -376,7 +376,7 @@ Stack-specific MUST/NEVER:
 
 ## 11. Ecosystem versions (verify live)
 
-Stack conventions above are stable; library versions change. Pick libraries via `code-plan` live tech discovery (`go list -m -versions`; `go.dev`) at PLAN time.
+Stack conventions above are stable; library versions change. Pick libraries via live tech discovery (`go list -m -versions`; `go.dev`) when choosing them.
 
 ## 12. Sources (URL index)
 
