@@ -2,7 +2,7 @@
 
 > Status: **INCOMPLETE** — the PM agent changes this to `COMPLETE (YYYY-MM-DD)` after finishing all steps.
 
-Executed once by the PM agent on `main` after the project is created from the template. All changes land in a single bootstrap PR.
+Executed once by the PM agent on `main` after the project is created from the template. All changes land in a single bootstrap PR. If the project already exists and was not created from the template, start with `docs/ai/adoption.md` instead.
 
 ## Steps
 

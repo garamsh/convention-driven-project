@@ -12,7 +12,7 @@ This file is replaced during bootstrap; do not edit it to describe your project.
 ## Structure
 
 - `AGENTS.md` — role matrix and rules every agent follows
-- `docs/ai/` — agent-only procedures (bootstrap, role guides, orca dispatch)
+- `docs/ai/` — agent-only procedures (bootstrap, adoption, role guides, orca dispatch)
 - `docs/convention/` — conventions for code, reviews, and documentation; stack files are pruned during bootstrap
 - `docs/architecture/` — responsibility documents (current truth) and ADRs (append-only decision log)
 - `.opencode/agents/`, `.claude/agents/` — tool-specific agent adapters
