@@ -18,8 +18,7 @@ tests.
 - 10. `proxy.ts` (v16+) / `middleware.ts`
 - 11. Testing — three layers, two locations
 - 12. Import direction and file naming
-- 13. Hierarchy
-- 14. Sources (URL index)
+- 13. Sources (URL index)
 
 ## 0. Folder & file naming
 
@@ -94,6 +93,9 @@ or at `src/services/<vendor>/` once the adapter outgrows one file.
 
 A route is **not publicly accessible** until a `page.tsx` or
 `route.ts` exists in the segment.
+
+Never mix the App Router and the Pages Router in one project: no
+`pages/` directory beside `app/`. A project runs one router.
 
 | File | Role | Key constraint |
 |---|---|---|
@@ -292,23 +294,7 @@ enforces this — copy it for production.
 - Server Action: `<verb>-<noun>.ts` with `'use server'`.
 - Test: `*.test.ts(x)` inside `__tests__/`.
 
-## 13. Hierarchy
-
-Stack-specific MUST/NEVER:
-
-- `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`,
-  `not-found.tsx`, `route.ts`, `template.tsx`, `default.tsx`
-  filenames — Next.js framework contract; routing breaks
-  otherwise.
-- `proxy.ts` (or `middleware.ts`) authentication on Server Actions
-  (matchers can exclude paths — re-verify in the Server Function).
-- Non-`NEXT_PUBLIC_` env accessed in client code (becomes `""`
-  in client bundle).
-- Mixing App Router and Pages Router.
-- `loading.tsx` for layout-level uncached data (blocks navigation;
-  no fallback shown).
-
-## 14. Sources (URL index)
+## 13. Sources (URL index)
 
 - docs: nextjs.org/docs/app/{getting-started/project-structure, api-reference/file-conventions, getting-started/server-and-client-components, getting-started/mutating-data, guides/environment-variables, api-reference/file-conventions/proxy, getting-started/caching}
 - repos: github.com/{vercel/next.js/tree/canary/examples, vercel/commerce, shadcn-ui/taxonomy, alan2207/bulletproof-react/blob/master/docs/{project-structure,testing}.md, steven-tey/novel}
