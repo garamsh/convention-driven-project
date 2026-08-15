@@ -8,6 +8,8 @@ How branches, commits, and PR titles are written, and what survives a merge.
 - `fix/<short-name>` — bug fixes
 - `chore/<short-name>` — tooling, config, dependencies
 - `docs/<short-name>` — documentation only
+- `refactor/<short-name>` — behavior-preserving restructure
+- `test/<short-name>` — test-only changes
 
 One task, one branch. Branch from `main`; never commit to `main` directly.
 
