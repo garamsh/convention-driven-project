@@ -261,9 +261,9 @@ say. This section states the Go form only.
 
 ## 7. Testing
 
-`testing.md` governs the test layers, the mocking strategy, coverage,
-test naming and what a test may assert on. This section states the Go
-placement and tooling only.
+`testing.md` governs the test layers, the mocking strategy, coverage
+and what a test may assert on. This section states the Go placement,
+tooling and test-name form.
 
 **Runner:** stdlib `testing`, files end with `_test.go`.
 **Assertions:** `testify/assert` + `testify/require` (default unless
@@ -286,6 +286,7 @@ Within `internal/<domain>/`:
 - Tests for `<group>.go` live in `<group>_test.go`.
 - Table-driven subtests: `tests := []struct{ name string; ... }{...}`,
   run through `t.Run("case name", ...)`.
+- Test names: `TestFunctionName` or `TestFunctionName_Scenario`.
 - Benchmarks: `func BenchmarkXxx(b *testing.B)`.
 
 ### Mocks with mockery
