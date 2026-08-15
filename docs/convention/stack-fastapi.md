@@ -649,7 +649,6 @@ monkeypatch internals.
 - Generate migrations with descriptive names and slugs.
 - Review each migration before merge. Schema changes touch
   every environment; they deserve a second pair of eyes.
-- `synchronize: true` is **never** used in production.
 - `HTTPException` for HTTP errors in routes/deps.
 - Cross-cutting domain exceptions live in
   `src/<domain>/exceptions.py` and are mapped to HTTP in
@@ -666,8 +665,6 @@ monkeypatch internals.
 
 Stack-specific MUST/NEVER:
 
-- **Never** `synchronize: true` in production (drops data on
-  schema change).
 - **Never** mock the DB in integration tests (mock/prod drift).
 - **Never** `from jose import jwt` / `from async_asgi_testclient
   import TestClient` (unmaintained footguns).
