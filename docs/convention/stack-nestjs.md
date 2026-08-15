@@ -1,27 +1,19 @@
 # NestJS — Architecture & Style Conventions
 
-> Defaults for NestJS projects in 2025. Source: NestJS official docs,
-> `nestjs/schematics` (source of truth for `nest new`),
-> `nestjs/nest/sample/01-cats-app`, TypeORM/Mongoose/testing guides.
-> 2025 patterns: class-validator DTOs as runtime classes,
-> `@nestjs/config` with `registerAs`, TypeORM `forRootAsync`/`forFeature`,
-> co-located unit tests, e2e under `test/`. Defaults, not laws —
-> divergence → follow code, note it in the PR description.
+Layout, naming, module boundaries, configuration, database access, validation, and test placement for NestJS projects. Only what is specific to NestJS is stated here; the stack-neutral files under `docs/convention/` keep their own rules.
 
 ## Contents
 - 0. Folder & file naming — strict
 - 1. Project layout — feature modules
-- 2. Example feature module
-- 3. Module kinds
-- 4. Configuration
-- 5. Database
-- 6. Validation
-- 7. Testing — two-track
-- 8. CLI conventions
-- 9. Strict-mode TypeScript
-- 10. Hierarchy (stack-specific MUST/NEVER)
-- 11. Ecosystem versions (verify live)
-- 12. Sources (URL index)
+- 2. Module kinds
+- 3. Configuration
+- 4. Database
+- 5. Validation
+- 6. Testing — placement and Nest setup
+- 7. CLI conventions
+- 8. Strict-mode TypeScript
+- 9. Hierarchy — stack-specific MUST/NEVER
+- 10. Sources (URL index)
 
 ## 0. Folder & file naming — strict
 
@@ -52,59 +44,47 @@ Names describe what they own. Banned at any level: `src/utils/`,
 Class names match files: `users.service.ts` → `UsersService`. IDE
 navigation depends on it.
 
-> The table above lists the **filename suffix**; §1 shows where
-> each file lives within the feature folder (e.g.
-> `*.entity.ts` goes in `entities/`).
+The table gives the **filename suffix** only; §1 gives the folder each
+file lives in (e.g. `*.entity.ts` goes in `entities/`).
 
 ## 1. Project layout — feature modules
 
-```
-project/
-├── .env / .env.example              # at repo root, NEVER inside src/
-├── eslint.config.mjs
-├── nest-cli.json
-├── package.json
-├── tsconfig.json / tsconfig.build.json
-├── src/
-│   ├── main.ts                      # bootstrap (global pipes/filters)
-│   ├── app.module.ts                # imports feature modules + CoreModule
-│   ├── config/                      # @nestjs/config wrappers
-│   │   ├── configuration.ts
-│   │   ├── env.validation.ts
-│   │   ├── database.config.ts       # registerAs('database', ...)
-│   │   └── app.config.ts
-│   ├── database/                    # (OR prisma/, orm/, mongo/)
-│   │   ├── database.module.ts       # TypeOrmModule.forRootAsync
-│   │   ├── data-source.ts           # CLI data source for migrations
-│   │   └── migrations/
-│   ├── common/                      # cross-cutting stateless, SORTED BY KIND
-│   │   ├── decorators/              # @CurrentUser(), @Roles()
-│   │   ├── guards/                  # JwtAuthGuard, RolesGuard
-│   │   ├── interceptors/            # LoggingInterceptor
-│   │   ├── pipes/                   # ParseIntPipe, custom ZodPipe
-│   │   ├── filters/                 # AllExceptionsFilter
-│   │   └── middleware/              # correlation-id, logger
-│   ├── auth/                        # cross-cutting shared MODULE
-│   │   ├── auth.module.ts
-│   │   ├── auth.service.ts
-│   │   ├── strategies/
-│   │   └── decorators/
-│   └── <feature>/                   # ONE folder per bounded context
-│       ├── <feature>.module.ts
-│       ├── <feature>.controller.ts
-│       ├── <feature>.service.ts
-│       ├── <feature>.controller.spec.ts
-│       ├── <feature>.service.spec.ts
-│       ├── dto/
-│       │   ├── create-<feature>.dto.ts
-│       │   ├── update-<feature>.dto.ts   # PartialType(CreateXxxDto)
-│       │   └── query-<feature>.dto.ts
-│       └── entities/                # OR schemas/ for Mongoose
-│           └── <feature>.entity.ts
-└── test/                            # E2E ONLY
-    ├── jest-e2e.json
-    └── <feature>/<feature>.e2e-spec.ts
-```
+At the repo root:
+
+- `.env`, `.env.example` — environment files, NEVER inside `src/`.
+- `nest-cli.json`, `package.json`, `tsconfig.json`,
+  `tsconfig.build.json`, `eslint.config.mjs` — tooling config.
+
+Under `src/`:
+
+- `src/main.ts` — bootstrap; registers the global pipes and filters.
+- `src/app.module.ts` — root module; imports `CoreModule` and every
+  feature module.
+- `src/config/` — `@nestjs/config` wrappers: `configuration.ts`,
+  `env.validation.ts`, and one file per namespace
+  (`database.config.ts`, `app.config.ts`).
+- `src/database/` — `database.module.ts` (ORM registration),
+  `data-source.ts` (the CLI data source migrations run against), and
+  `migrations/`. Name the folder for the ORM when that reads better
+  (`prisma/`, `orm/`, `mongo/`).
+- `src/common/<kind>/` — cross-cutting **stateless** enhancers, one
+  subfolder per Nest enhancer kind: `decorators/` (`@CurrentUser()`,
+  `@Roles()`), `guards/`, `interceptors/`, `pipes/`, `filters/`,
+  `middleware/`. One class per file, and no `index.ts` barrel across
+  feature boundaries.
+- `src/auth/` — a cross-cutting concern that owns providers is a
+  shared **module**, not a `common/` folder: `auth.module.ts`,
+  `auth.service.ts`, `strategies/`, `decorators/`.
+- `src/<feature>/` — one folder per bounded context, holding
+  `<feature>.module.ts`, `<feature>.controller.ts`,
+  `<feature>.service.ts`, the co-located `*.spec.ts` files, `dto/`
+  (`create-`, `update-`, `query-<feature>.dto.ts`), and `entities/`
+  (or `schemas/` under Mongoose).
+
+Under `test/` — e2e only:
+
+- `test/jest-e2e.json` — the e2e Jest config.
+- `test/<feature>/<feature>.e2e-spec.ts` — one file per feature.
 
 ### Feature file responsibilities
 
@@ -118,80 +98,7 @@ project/
 | `dto/query-<feature>.dto.ts` | Pagination / filters. |
 | `entities/<feature>.entity.ts` | TypeORM `@Entity()` (or `schemas/<feature>.schema.ts` for Mongoose). |
 
-### Cross-cutting: `src/common/<kind>/`
-
-Each subfolder holds exactly one Nest enhancer kind: `decorators/`,
-`guards/`, `interceptors/`, `pipes/`, `filters/`, `middleware/`.
-One class per file. No `index.ts` barrel across feature boundaries.
-
-## 2. Example feature module
-
-```typescript
-@Module({
-  imports: [TypeOrmModule.forFeature([UserEntity])],
-  controllers: [UsersController],
-  providers: [UsersService],
-  exports: [UsersService],  // only when another module needs it
-})
-export class UsersModule {}
-
-@Controller('users')
-export class UsersController {
-  constructor(private readonly users: UsersService) {}
-
-  @Post()
-  create(@Body() dto: CreateUserDto): Promise<UserEntity> {
-    return this.users.create(dto);
-  }
-
-  @Get(':id')
-  findOne(@Param('id', ParseUUIDPipe) id: string): Promise<UserEntity> {
-    return this.users.findOne(id);
-  }
-}
-
-@Injectable()
-export class UsersService {
-  constructor(
-    @InjectRepository(UserEntity) private readonly users: Repository<UserEntity>,
-  ) {}
-
-  async create(dto: CreateUserDto): Promise<UserEntity> {
-    const entity = this.users.create(dto);
-    await this.users.save(entity);
-    return entity;
-  }
-
-  async findOne(id: string): Promise<UserEntity> {
-    // TypeORM 0.3+ canonical: findOneBy / findOneByOrFail.
-    // findOneByOrFail auto-throws EntityNotFoundError, which
-    // a global exception filter maps to NotFoundException.
-    const entity = await this.users.findOneBy({ id });
-    if (!entity) throw new NotFoundException(`user ${id} not found`);
-    return entity;
-  }
-}
-```
-
-```typescript
-// src/users/dto/create-user.dto.ts
-import { IsEmail, IsString, MinLength } from 'class-validator';
-
-export class CreateUserDto {
-  @IsEmail() email!: string;
-  @IsString() @MinLength(8) password!: string;
-}
-
-// src/users/dto/update-user.dto.ts
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateUserDto } from './create-user.dto';
-export class UpdateUserDto extends PartialType(CreateUserDto) {}
-```
-
-DTOs are **classes**, not interfaces. TS interfaces are erased at
-compile time; `ValidationPipe` reads metadata at runtime.
-
-## 3. Module kinds
+## 2. Module kinds
 
 | Kind | Example | Notes |
 |---|---|---|
@@ -201,250 +108,116 @@ compile time; `ValidationPipe` reads metadata at runtime.
 | Dynamic | `ConfigModule`, `TypeOrmModule` | `forRoot()` once in root; `forFeature()` per feature. |
 
 Avoid `@Global()` unless the provider is genuinely used everywhere
-(logger, request context). Docs say so explicitly.
+(logger, request context).
 
-## 4. Configuration
+## 3. Configuration
 
-```typescript
-// src/config/configuration.ts
-export default () => ({ port: parseInt(process.env.PORT, 10) || 3000 });
+- Configuration is read through `@nestjs/config` wrappers in
+  `src/config/`, registered once in the root module with
+  `ConfigModule.forRoot({ isGlobal: true, load: [...], validate })`.
+- Each config file exports a namespace built with `registerAs`, so
+  consumers read `database.host` rather than a flat key.
+- `src/config/env.validation.ts` exports the `validate` function
+  `ConfigModule` calls: it builds a `class-validator`-decorated
+  `EnvironmentVariables` class from the raw environment and throws on
+  the first invalid value, so a misconfigured process fails at boot
+  instead of at first use.
 
-// src/config/env.validation.ts
-import { plainToInstance } from 'class-transformer';
-import { IsEnum, IsNumber, IsString, validateSync } from 'class-validator';
-
-export enum Environment {
-  Local = 'local', Development = 'development',
-  Production = 'production', Test = 'test',
-}
-
-export class EnvironmentVariables {
-  @IsEnum(Environment) NODE_ENV: Environment = Environment.Local;
-  @IsNumber() PORT: number = 3000;
-  @IsString() DATABASE_HOST!: string;
-}
-
-export function validate(config: Record<string, unknown>) {
-  const validated = plainToInstance(EnvironmentVariables, config, { enableImplicitConversion: true });
-  const errors = validateSync(validated, { skipMissingProperties: false });
-  if (errors.length) throw new Error(errors.toString());
-  return validated;
-}
-
-@Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [configuration, databaseConfig], validate }),
-    DatabaseModule, UsersModule, AuthModule,
-  ],
-})
-export class AppModule {}
-```
-
-## 5. Database
+## 4. Database
 
 ### TypeORM (default)
 
-```typescript
-TypeOrmModule.forRootAsync({
-  imports: [ConfigModule],
-  inject: [ConfigService],
-  useFactory: (cfg: ConfigService) => ({
-    type: 'postgres', host: cfg.get('database.host'),
-    autoLoadEntities: true,
-    synchronize: false,           // NEVER true in production
-    migrationsRun: true,
-  }),
-})
-```
-
-`synchronize: false` in production. Migrations are the only schema
-history.
+- Register with `TypeOrmModule.forRootAsync`, injecting
+  `ConfigService` — connection settings come from configuration, never
+  from literals in the module.
+- `autoLoadEntities: true`, so a feature's entities arrive with its
+  `forFeature()` registration.
+- **`synchronize: false`** — never `true` in production; it drops data
+  on a schema change. Migrations in `src/database/migrations/` are the
+  only schema history, applied with `migrationsRun`.
+- Read single rows with the 0.3+ finders, `findOneBy` /
+  `findOneByOrFail`. `findOneByOrFail` throws `EntityNotFoundError`,
+  which a global exception filter maps to `NotFoundException`.
 
 ### Mongoose
 
-```typescript
-@Schema()
-export class Cat {
-  @Prop() name!: string;
-  @Prop() age!: number;
-}
-export const CatSchema = SchemaFactory.createForClass(Cat);
-export type CatDocument = HydratedDocument<Cat>;
-
-@Injectable()
-export class CatsService {
-  constructor(@InjectModel(Cat.name) private catModel: Model<Cat>) {}
-  // Mongoose 8+ canonical: Model.create (replaces `new Model(dto).save()`)
-  create(dto: CreateCatDto): Promise<Cat> { return this.catModel.create(dto); }
-}
-```
+- Schemas are `@Schema()`-decorated classes in
+  `schemas/<feature>.schema.ts`, exported through
+  `SchemaFactory.createForClass(...)`, with the document type declared
+  as `HydratedDocument<T>`.
+- Inject models with `@InjectModel(Entity.name)` and create documents
+  with `Model.create` — Mongoose 8+ replaced `new Model(dto).save()`.
 
 ### Prisma
 
-No official `@nestjs/prisma` package. Community pattern: `@Global()`
-`PrismaModule` exporting `PrismaService extends PrismaClient`:
+No official `@nestjs/prisma` package exists. The community pattern:
 
-```
-src/prisma/
-├── prisma.module.ts
-└── prisma.service.ts     # OnModuleInit ($connect) / OnModuleDestroy ($disconnect)
-```
+- `src/prisma/prisma.module.ts` — a `@Global()` module exporting the
+  service.
+- `src/prisma/prisma.service.ts` — `PrismaService extends
+  PrismaClient`, connecting in `OnModuleInit` and disconnecting in
+  `OnModuleDestroy`.
 
 Features inject `PrismaService` directly.
 
-## 6. Validation
+## 5. Validation
 
-```typescript
-// src/main.ts
-app.useGlobalPipes(new ValidationPipe({
-  whitelist: true,            // strip non-decorated properties
-  forbidNonWhitelisted: true, // reject request if extras
-  transform: true,            // cast query/path params to declared types
-}));
-```
+- `main.ts` registers `ValidationPipe` globally with `whitelist: true`
+  (strip properties no DTO declares), `forbidNonWhitelisted: true`
+  (reject a request that carries extras) and `transform: true` (cast
+  query and path params to their declared types).
+- DTOs are **classes**, not interfaces: TS interfaces are erased at
+  compile time, and `ValidationPipe` reads the class metadata at
+  runtime.
+- **Never** `import type { CreateUserDto }` — always
+  `import { CreateUserDto }`. A type-only import erases the same
+  metadata.
+- Derive related DTOs with `PartialType` / `PickType` / `OmitType` /
+  `IntersectionType` from `@nestjs/mapped-types`.
 
-DTOs are classes (interfaces are erased at compile time). **Never**
-`import type { CreateUserDto }` — always `import { CreateUserDto }`.
-Use `PartialType`/`PickType`/`OmitType`/`IntersectionType` from
-`@nestjs/mapped-types` to derive DTOs.
-
-## 7. Testing — two-track
+## 6. Testing — placement and Nest setup
 
 | Track | Pattern | Location | Runner |
 |---|---|---|---|
-| Unit | `*.spec.ts` | **co-located** with source | `jest` from `npm test` |
+| Unit | `*.spec.ts` | **co-located** with source | `jest` |
 | E2E | `*.e2e-spec.ts` | `test/` folder | `jest --config ./test/jest-e2e.json` |
 
-```typescript
-// src/users/users.service.spec.ts
-describe('UsersService', () => {
-  let service: UsersService;
-  let repo: { findOne: jest.Mock };
+- Anything that touches DI is assembled with
+  `Test.createTestingModule(...)`.
+- Mock a repository through its injection token,
+  `getRepositoryToken(Entity)` — reach for `useMocker()` only when the
+  dependency graph is too large to enumerate, and then only at module
+  boundaries.
+- A globally registered enhancer cannot be swapped in a test unless it
+  is bound with `useExisting` instead of `useClass`; bind it that way
+  so the provider behind it can be overridden.
+- E2E exercises the built app — `nest start --prod`, or the built
+  artifact — with `@testcontainers/postgresql` /
+  `@testcontainers/mongodb` supplying the services it talks to.
 
-  beforeEach(async () => {
-    repo = { findOne: jest.fn() };
-    const module = await Test.createTestingModule({ providers: [UsersService] })
-      .useMocker((token) => {
-        if (token === getRepositoryToken(UserEntity)) return repo;
-        return {};
-      })
-      .compile();
-    service = module.get(UsersService);
-  });
+Layers, mocking strategy, assertion targets, coverage and naming:
+`testing.md`.
 
-  it('returns the user when found', async () => {
-    repo.findOne.mockResolvedValue({ id: 'u1', email: 'a@b.c' });
-    const user = await service.findOne('u1');
-    expect(user).toEqual({ id: 'u1', email: 'a@b.c' });
-  });
+## 7. CLI conventions
 
-  it('throws NotFoundException when the row is missing', async () => {
-    repo.findOne.mockResolvedValue(null);
-    await expect(service.findOne('missing')).rejects.toBeInstanceOf(NotFoundException);
-  });
-});
-```
+- Scaffold with `nest g <kind> <name>`; it writes into `src/<name>/`,
+  and `--flat` skips the folder. `nest g resource <name>` scaffolds
+  the whole feature — module, controller, service, DTOs, entity.
+- The CLI drops enhancers at `src/<name>/<name>.<kind>.ts`, which is
+  not where they live here: generate them with
+  `--path src/common/<kind>`, or move them after generation. The CLI's
+  default output exists because the CLI has no opinion on
+  cross-cutting layout; §1 does.
+- Always use the CLI's suffixes — tooling and IDE navigation rely on
+  them.
 
-```typescript
-// test/users.e2e-spec.ts
-describe('UsersController (e2e)', () => {
-  let app: INestApplication;
-  beforeEach(async () => {
-    const moduleRef = await Test.createTestingModule({ imports: [AppModule] }).compile();
-    app = moduleRef.createNestApplication();
-    await app.init();
-  });
-  afterEach(async () => await app.close());
-  it('POST /users returns 201', () => {
-    return request(app.getHttpServer()).post('/users')
-      .send({ email: 'x@y.z', password: 'long-enough' }).expect(201);
-  });
-});
-```
+## 8. Strict-mode TypeScript
 
-Use `Test.createTestingModule(...)` for anything touching DI. Mock
-repositories with `getRepositoryToken(Entity)` — not `useMocker()`
-unless the dependency graph is huge. For globally-registered
-enhancers you can't swap, replace `useClass` with `useExisting` so
-the bound provider can be overridden.
+Scaffold new projects with `nest new --strict`; that flag is how this
+stack turns strict compilation on. The type-system rules it serves:
+`runtime-safety.md`.
 
-> **Behavior over implementation.** Assert on controller /
-> service behavior — return values, emitted events, log lines,
-> HTTP responses — never the order of internal calls.
->
-> **Mocking by layer:**
-> - Unit / Integration: `supertest` over a real
->   `INestApplication` exercises the app's controllers in-
->   process. External systems (DB, downstream HTTP, queues)
->   mocked via `@nestjs/testing` providers or substituted with
->   SQLite / in-memory drivers. `useMocker` only at module
->   boundaries.
-> - E2E: `nest start --prod` (or built binary) running against
->   real services via `@testcontainers/postgresql`,
->   `@testcontainers/mongodb`, etc.
->
-> See `references/testing-principles.md` for the full guidance.
-
-### Scripts (from schematics)
-
-```jsonc
-{
-  "scripts": {
-    "build": "nest build",
-    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start", "start:dev": "nest start --watch",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
-    "test": "jest", "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
-  }
-}
-```
-
-## 8. CLI conventions
-
-**Feature scaffold** (goes straight into `src/<name>/`):
-
-```bash
-nest g module users          # src/users/users.module.ts
-nest g controller users      # src/users/users.controller.ts
-nest g service users         # src/users/users.service.ts
-nest g resource users        # full CRUD: module + controller + service + dto + entity
-nest g resolver cats         # src/cats/cats.resolver.ts (GraphQL)
-nest g gateway events        # src/events/events.gateway.ts (WebSocket)
-```
-
-By default `nest g` creates a folder named after the class. Pass
-`--flat` to skip the folder.
-
-**Enhancers** (CLI drops them at `src/<name>/<name>.<kind>.ts` — move
-them into `src/common/<kind>/`):
-
-```bash
-nest g guard auth              # → src/auth/auth.guard.ts (or --path src/common/guards)
-nest g interceptor logging     # → src/logging/logging.interceptor.ts (or --path src/common/interceptors)
-nest g pipe validation         # → src/validation/validation.pipe.ts (or --path src/common/pipes)
-nest g filter http-exception   # → src/http-exception/http-exception.filter.ts (or --path src/common/filters)
-nest g decorator current-user  # → src/current-user/current-user.decorator.ts (or --path src/common/decorators)
-```
-
-The CLI's default output is **not** where the file should live — it
-exists because the CLI has no opinion on cross-cutting layout. Our
-layout places enhancers in `src/common/<kind>/`. Use `--path
-src/common/<kind>` at generation time, or `mv` after generation.
-Pick one and stick to it across the project.
-
-Always use the CLI's suffixes — tooling and IDE rely on them.
-
-## 9. Strict-mode TypeScript
-
-`nest new --strict` enables: `strictNullChecks`, `noImplicitAny`,
-`strictBindCallApply`, `forceConsistentCasingInFileNames`,
-`noFallthroughCasesInSwitch`. Default to `--strict` for new projects.
-
-## 10. Hierarchy
-
-Stack-specific MUST/NEVER:
+## 9. Hierarchy — stack-specific MUST/NEVER
 
 - **Never** `synchronize: true` in TypeORM production (drops data
   on schema change).
@@ -455,11 +228,7 @@ Stack-specific MUST/NEVER:
 - **Never** `import type { CreateUserDto }` (erases runtime
   metadata `ValidationPipe` needs).
 
-## 11. Ecosystem versions (verify live)
-
-Stack conventions above are stable; library versions change. Pick libraries via live tech discovery (`npm view`; official docs) when choosing them.
-
-## 12. Sources (URL index)
+## 10. Sources (URL index)
 
 - docs: docs.nestjs.com/{modules, controllers, providers, techniques/validation, techniques/configuration, techniques/database, techniques/mongo, fundamentals/testing, cli/usages, first-steps}
 - repos: github.com/{nestjs/schematics, nestjs/nest/sample/01-cats-app}
