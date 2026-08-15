@@ -194,7 +194,7 @@ inside the Server Action.**
 
 ## 7. Env (single typed loader at project root)
 
-- One typed loader, at `src/env.ts`. Everything else does
+- One typed, validated loader, at `src/env.ts`. Everything else does
   `import { env } from '@/env'`. **Never** scatter `process.env.X`
   reads throughout the code.
 - Env files stay at the project root. Load order, first match wins:
