@@ -464,7 +464,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.dependencies import get_db
+from src.database import get_db
 from src.auth.schemas import UserCreate, UserPublic
 from src.auth import service as user_service
 
