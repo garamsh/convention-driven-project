@@ -8,7 +8,7 @@ tests.
 - 0. Folder & file naming
 - 1. Project layout (App Router, `src/`)
 - 2. App Router file conventions
-- 3. Server Component vs Client Component vs Server Action vs Route Handler
+- 3. Server Component vs Server Action vs Route Handler
 - 4. Server Components — pages and layouts
 - 5. Server Actions
 - 6. Route Handlers — external use only
@@ -16,10 +16,9 @@ tests.
 - 8. Multi-layout via route groups
 - 9. Parallel routes and intercepts (modal pattern)
 - 10. `proxy.ts` (v16+) / `middleware.ts`
-- 11. Testing — three layers, three locations
+- 11. Testing — three layers, two locations
 - 12. Import direction and file naming
-- 13. Hierarchy
-- 14. Sources (URL index)
+- 13. Sources (URL index)
 
 ## 0. Folder & file naming
 
@@ -95,6 +94,9 @@ or at `src/services/<vendor>/` once the adapter outgrows one file.
 A route is **not publicly accessible** until a `page.tsx` or
 `route.ts` exists in the segment.
 
+Never mix the App Router and the Pages Router in one project: no
+`pages/` directory beside `app/`. A project runs one router.
+
 | File | Role | Key constraint |
 |---|---|---|
 | `layout.tsx` | Shared UI for segment + descendants. State preserved. | Root **must** render `<html>` and `<body>`. |
@@ -125,7 +127,7 @@ Route group rules: routes in different groups at the same segment
 root layouts** causes a full reload. `/` must live in one group when
 using multiple root layouts.
 
-## 3. Server Component vs Client Component vs Server Action vs Route Handler
+## 3. Server Component vs Server Action vs Route Handler
 
 | Concern | Server Component | Server Action | Route Handler |
 |---|---|---|---|
@@ -246,7 +248,7 @@ back/forward. The pieces, for a photo modal:
   rely on it for Server Action security — matchers can exclude
   paths silently (§5).
 
-## 11. Testing — three layers, three locations
+## 11. Testing — three layers, two locations
 
 | Layer | Tool | Location |
 |---|---|---|
@@ -276,8 +278,8 @@ principle behind these targets, is `testing.md`.
 
 Imports run one way: cross-feature modules → features → app.
 
-- `components/`, `hooks/`, `lib/`, `config/`, `services/`, `types/`,
-  `ui/`: cross-feature. Each may import from itself or each other.
+- `components/`, `hooks/`, `lib/`, `services/`, `types/`:
+  cross-feature. Each may import from itself or each other.
 - `features/*`: may import the cross-feature modules; **may not**
   import from `app/` or from another feature.
 - `app/`: may import from both.
@@ -292,23 +294,7 @@ enforces this — copy it for production.
 - Server Action: `<verb>-<noun>.ts` with `'use server'`.
 - Test: `*.test.ts(x)` inside `__tests__/`.
 
-## 13. Hierarchy
-
-Stack-specific MUST/NEVER:
-
-- `page.tsx`, `layout.tsx`, `loading.tsx`, `error.tsx`,
-  `not-found.tsx`, `route.ts`, `template.tsx`, `default.tsx`
-  filenames — Next.js framework contract; routing breaks
-  otherwise.
-- `proxy.ts` (or `middleware.ts`) authentication on Server Actions
-  (matchers can exclude paths — re-verify in the Server Function).
-- Non-`NEXT_PUBLIC_` env accessed in client code (becomes `""`
-  in client bundle).
-- Mixing App Router and Pages Router.
-- `loading.tsx` for layout-level uncached data (blocks navigation;
-  no fallback shown).
-
-## 14. Sources (URL index)
+## 13. Sources (URL index)
 
 - docs: nextjs.org/docs/app/{getting-started/project-structure, api-reference/file-conventions, getting-started/server-and-client-components, getting-started/mutating-data, guides/environment-variables, api-reference/file-conventions/proxy, getting-started/caching}
 - repos: github.com/{vercel/next.js/tree/canary/examples, vercel/commerce, shadcn-ui/taxonomy, alan2207/bulletproof-react/blob/master/docs/{project-structure,testing}.md, steven-tey/novel}
