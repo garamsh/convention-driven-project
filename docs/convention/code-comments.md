@@ -20,7 +20,7 @@ Write comments in declarative or imperative mood, stating facts: `returns the ca
 
 **Inline** (inside function bodies) — earn their place when they flag a non-obvious invariant, an ordering constraint, or an external constraint a future reader would otherwise re-derive incorrectly.
 
-**Doc comments** (above types, functions, modules) — required for any public API exposed to other humans or modules. Style and tooling are language-specific — see the relevant stack reference.
+**Doc comments** (above types, functions, modules) — required for any public API exposed to other humans or modules. Where the project's stack convention file states comment style or tooling, it owns those; this file does not.
 
 ## Forbidden
 
