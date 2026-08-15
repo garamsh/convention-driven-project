@@ -15,9 +15,8 @@
 - 7. Testing
 - 8. Imports & Dependencies
 - 9. Verification Commands
-- 10. Hierarchy (stack-specific MUST/NEVER)
-- 11. Ecosystem versions (verify live)
-- 12. Sources (URL index)
+- 10. Hierarchy
+- 11. Sources (URL index)
 
 ## 0. Folder & file naming — strict
 
@@ -42,39 +41,33 @@ See §0 for the banned-name list (`model.go`, `utils/`, `helpers/`,
 
 ### Layout A — small service (default)
 
-```
-<module>/
-├── cmd/<binary>/main.go                # thin: constructs concrete types
-├── internal/
-│   ├── <domain>/
-│   │   ├── <domain>.go                  # types, DTOs, sentinel errors
-│   │   ├── service.go                   # Service interface + *service struct + NewService + dep interfaces
-│   │   ├── create.go                    # verb split when >1 method
-│   │   ├── update.go
-│   │   ├── query.go
-│   │   ├── service_test.go
-│   │   ├── postgres.go                  # ≤ ~200 LoC → single file
-│   │   └── memory.go                    # in-memory impl (tests/dev)
-│   └── <crosscutting>/                  # ≥3 domains share, named by what it is
-├── go.mod
-└── go.sum
-```
+- `cmd/<binary>/main.go` — thin entry point; constructs concrete
+  types.
+- `internal/<domain>/<domain>.go` — the aggregate: domain types, DTOs
+  and sentinel errors (`User`, `CreateUserInput`, `ErrUserNotFound`).
+- `internal/<domain>/service.go` — the contract: `type Service
+  interface { ... }`, unexported `type service struct { ... }`,
+  `NewService(...) Service`, and the default dependency interfaces
+  (`Repository`, `Mailer`, …).
+- `internal/<domain>/<verb>.go` — one file per verb (`create.go`,
+  `update.go`, `query.go`); method bodies split by responsibility.
+- `internal/<domain>/service_test.go` — the service's tests (§7).
+- `internal/<domain>/postgres.go`, `internal/<domain>/memory.go` —
+  concrete implementations of the dependency interfaces; the
+  in-memory one serves tests and dev.
+- `internal/<crosscutting>/` — a concern at least three domains
+  share, named by what it is.
+- `go.mod`, `go.sum` — module root.
 
-**Three rules for `internal/<domain>/`:**
+**Rules for `internal/<domain>/`:**
 
-- **`<domain>.go`** owns the aggregate: `User` struct,
-  `CreateUserInput` DTO, `ErrUserNotFound` sentinel.
-- **`service.go`** owns the contract: `type Service interface { ... }`,
-  unexported `type service struct { ... }`, `NewService(...) Service`,
-  default dependency interfaces (`Repository`, `Mailer`, …). If a
-  dependency interface grows and **other domain files** need it,
-  promote it into `<domain>/repository.go` (same package).
-- **`<verb>.go`** splits method bodies by responsibility. Only split
-  when the service has more than one verb — single-method services live
-  entirely in `service.go`.
-
-Concrete impls sit where the interface is declared: `postgres.go` /
-`memory.go` / `<impl>/` live inside `internal/<domain>/`.
+- Split into `<verb>.go` only when the service has more than one
+  verb. A single-method service lives entirely in `service.go`.
+- Promote a dependency interface into
+  `internal/<domain>/repository.go` (same package) when it grows and
+  **other domain files** need it.
+- Concrete impls sit where the interface is declared: `postgres.go`,
+  `memory.go` and `<impl>/` live inside `internal/<domain>/`.
 
 **Single file vs package** for an impl:
 
@@ -86,25 +79,19 @@ Concrete impls sit where the interface is declared: `postgres.go` /
 
 ### Layout B — domain-rich service (5k–30k LoC)
 
-```
-<module>/
-├── cmd/<binary>/main.go
-├── internal/
-│   ├── <domain>/
-│   │   ├── <domain>.go
-│   │   ├── service.go
-│   │   ├── lifecycle.go                 # create/activate/deactivate
-│   │   ├── billing.go                   # charge/refund
-│   │   ├── permissions.go               # authorize/deny
-│   │   ├── postgres/                    # too big for one file
-│   │   │   ├── postgres.go
-│   │   │   └── queries.go
-│   │   ├── memory/memory.go
-│   │   └── service_test.go
-│   └── ...                              # other domains, same shape
-├── go.mod
-└── go.sum
-```
+Layout A's shape, with verb files grouped by responsibility and impls
+promoted to packages:
+
+- `internal/<domain>/lifecycle.go`, `internal/<domain>/billing.go`,
+  `internal/<domain>/permissions.go` — method bodies grouped by
+  responsibility (create/activate/deactivate, charge/refund,
+  authorize/deny).
+- `internal/<domain>/postgres/postgres.go`,
+  `internal/<domain>/postgres/queries.go` — impl too big for one
+  file.
+- `internal/<domain>/memory/memory.go` — the in-memory impl, promoted
+  the same way.
+- Every other domain repeats the shape.
 
 **Not every domain has a service.** Pure-domain-model projects (only
 types + persistence) can skip `service.go` entirely. Add `service.go`
@@ -118,26 +105,27 @@ Never pre-emptively create `internal/infra/`, `internal/platform/`,
 
 ### Layout C — library
 
-```
-<module>/
-├── <pkg>.go
-├── <pkg>_test.go
-├── go.mod
-└── README.md
-```
+- `<pkg>.go`, `<pkg>_test.go`, `go.mod`, `README.md` — all at the
+  module root.
 
 Libraries stay flat. `spf13/cobra` style — files named after what
 they own (`command.go`, `args.go`).
 
-### Root-level files (decide per project)
+### Root-level files
 
-Whether `errors.go`, `logger.go`, `config.go`, `httpserver.go` live at
-the module root is **a per-project decision**. `log/slog` is stdlib
-since Go 1.21, so a small project may want **no root-level logger
-file at all** (`slog.Default()` directly). Ask the user which of
-these files the project wants.
+A root-level file exists when the module has that concern, and it is
+named after the concern:
 
-When the decision is "yes, we need this at the root":
+- `errors.go` — sentinels shared across domains (§4). Domain
+  sentinels stay in `internal/<domain>/<domain>.go`.
+- `config.go` — the module's configuration type and its loading.
+- `logger.go` — only when logger setup goes past `slog.Default()`
+  (§5). A project that calls `slog.Default()` directly has no
+  root-level logger file.
+- `httpserver.go` — server construction and route wiring, when the
+  module serves HTTP.
+
+Sizing, for each of them:
 
 - **Single file (`errors.go`, `logger.go`, `config.go`, …)** when ≤
   ~200 LoC. Filename = what's inside.
@@ -173,18 +161,16 @@ A **top-level domain** owns the public contract for everything it produces:
 
 ### Dependency direction
 
-```
-internal/<domain>/<domain>.go     ← types + sentinels
-internal/<domain>/service.go      ← Service interface + *service struct + dep interfaces
-         │
-         ▼
-internal/<domain>/<verb>.go       ← (s *service) Create/Update/Query
-internal/<domain>/postgres.go     ← implements Repository
-(or internal/<domain>/postgres/   ← when impl > ~300 LoC)
-         │
-         ▼
-mocks/                            ← generated by mockery, §7
-```
+Dependencies inside a domain point one way:
+
+- `internal/<domain>/<domain>.go` and `internal/<domain>/service.go`
+  declare the types, sentinels, `Service` interface and dependency
+  interfaces the rest of the domain is written against.
+- `internal/<domain>/<verb>.go` and the impls
+  (`internal/<domain>/postgres.go`, or `internal/<domain>/postgres/`
+  past ~300 LoC) depend on those declarations, never the reverse.
+- `mocks/` — generated by mockery (§7) from the interfaces declared
+  in `service.go`.
 
 **Three rules:**
 
@@ -264,9 +250,10 @@ name and make it the package.
 
 ## 6. Comments & Docs
 
-- Every exported name: doc comment starting with the name.
+`code-comments.md` governs when to comment and what a comment may
+say. This section states the Go form only.
+
 - Doc comments begin with the name being declared.
-- `// TODO(name):` with owner. `// FIXME:` and `// XXX:` discouraged.
 - Package comment in `doc.go` (one short sentence — e.g.
   `// Package auth provides ...`) is conventional and surfaces on
   pkg.go.dev. Long descriptions belong in `service.go` as a doc
@@ -274,31 +261,32 @@ name and make it the package.
 
 ## 7. Testing
 
+`testing.md` governs the test layers, the mocking strategy, coverage,
+test naming and what a test may assert on. This section states the Go
+placement and tooling only.
+
 **Runner:** stdlib `testing`, files end with `_test.go`.
 **Assertions:** `testify/assert` + `testify/require` (default unless
 project says otherwise).
 
 **Organization:**
 
-- **External tests** (`package user_test`): next to source. Black-box
-  — public contract only. **Default to this**; reach for the unit
-  under test through its interfaces, not via unexported helpers.
-- **Internal tests** (`package user`): same directory as code under
-  test. Use only when you genuinely need a white-box seam (uncommon).
-  Even then, **assert on behavior, not on the shape of unexported
-  helpers** — if you can only express a test by reaching into
-  internals, the unit is too tightly coupled.
+- **External tests** (`package user_test`): next to source. Reach the
+  unit under test through its exported API. **Default to this.**
+- **Internal tests** (`package user`): same directory and package as
+  the code under test. Use only when you genuinely need a white-box
+  seam (uncommon).
 - **`tests/` at module root:** integration / E2E tests that wire
   multiple domains. Separate binary.
+- **E2E tooling:** the binary under test is what `go build` produces;
+  real services come from containers (`go-testcontainers`).
 
 Within `internal/<domain>/`:
 
 - Tests for `<group>.go` live in `<group>_test.go`.
-- Table-driven subtests: `tests := []struct{ name string; ... }{...}`.
-- `TestFunctionName` or `TestFunctionName_Scenario`. Subtests via
-  `t.Run("case name", ...)`.
+- Table-driven subtests: `tests := []struct{ name string; ... }{...}`,
+  run through `t.Run("case name", ...)`.
 - Benchmarks: `func BenchmarkXxx(b *testing.B)`.
-- Coverage: target meaningful branches, not 100%.
 
 ### Mocks with mockery
 
@@ -319,20 +307,6 @@ Use **[mockery v3](https://vektra.github.io/mockery/)** (v3.7.x).
 When a top-level domain depends on another top-level's interface, the
 test for the consumer uses the consumer-side mock (generated from the
 interface declared in the **producer's** top level).
-
-> **Behavior over implementation.** Assert on return values, DB
-> rows, log lines, and emitted events — never on call ordering
-> or the shape of unexported helpers.
->
-> **Mocking by layer:**
-> - Unit / Integration: real modules of the app wired together;
->   external systems mocked or in-process substituted (SQLite,
->   `httptest.NewServer`, fake SMTP, in-memory queues).
->   Mockery v3 generates interface mocks at boundaries.
-> - E2E: built binary (`go build`) against real services via
->   `go-testcontainers` for Postgres / Redis / MongoDB / etc.
->
-> See `references/testing-principles.md` for the full guidance.
 
 ## 8. Imports & Dependencies
 
@@ -374,11 +348,7 @@ Stack-specific MUST/NEVER:
 - `go.mod` versioning — unlisted modules refuse to build.
 - Mocks cannot substitute test code at runtime (`go test`).
 
-## 11. Ecosystem versions (verify live)
-
-Stack conventions above are stable; library versions change. Pick libraries via live tech discovery (`go list -m -versions`; `go.dev`) when choosing them.
-
-## 12. Sources (URL index)
+## 11. Sources (URL index)
 
 - Go standard library: <https://pkg.go.dev/std>
 - Effective Go: <https://go.dev/doc/effective_go>
