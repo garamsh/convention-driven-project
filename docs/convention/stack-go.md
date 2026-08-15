@@ -264,6 +264,7 @@ project says otherwise).
   seam (uncommon).
 - **`tests/` at module root:** integration / E2E tests that wire
   multiple domains. Separate binary.
+- **In-process integration test client:** `httptest.NewServer`.
 - **E2E tooling:** the binary under test is what `go build` produces;
   real services come from containers (`go-testcontainers`).
 
