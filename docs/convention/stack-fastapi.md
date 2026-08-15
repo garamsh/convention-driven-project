@@ -336,6 +336,8 @@ Tooling and substitutes:
   downstream HTTP, a fake server for SMTP.
 - Override deps (`app.dependency_overrides[parse_jwt_data] =
   fake_user`), don't monkeypatch internals.
+- Test names: `test_<unit>_<scenario>` — pytest functions named
+  after the unit and the scenario.
 - E2E runs the served app against real services started by
   `testcontainers-python` (Postgres, Redis, etc.).
 
