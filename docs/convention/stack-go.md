@@ -15,7 +15,7 @@
 - 7. Testing
 - 8. Imports & dependencies
 - 9. Verification commands
-- 11. Sources (URL index)
+- 10. Sources (URL index)
 
 ## 0. Folder & file naming — strict
 
@@ -327,7 +327,7 @@ configured.
 If the project uses a task runner (Taskfile, Mage, Make), adapt — but
 the underlying go commands stay the same.
 
-## 11. Sources (URL index)
+## 10. Sources (URL index)
 
 - Go standard library: <https://pkg.go.dev/std>
 - Effective Go: <https://go.dev/doc/effective_go>
