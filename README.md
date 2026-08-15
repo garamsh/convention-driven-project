@@ -39,3 +39,4 @@ Templates do not carry repository settings. Configure these by hand:
 - **Require review before merge** — only if the reviewer uses a separate account. GitHub rejects self-approval, so with one shared account this blocks every merge; leave it off and the merge itself serves as the approval (`docs/convention/review.md`).
 - **Squash-only merges** and **automatically delete head branches** — match `docs/convention/git.md` and keep branches from piling up.
 - **Require status checks** once CI exists, so `make ci` gates merges.
+- **Labels `task` and `proposal`** — the shipped issue templates declare them (`.github/ISSUE_TEMPLATE/task.md`, `.github/ISSUE_TEMPLATE/proposal.md`); a new repository has neither, and an issue filed before they exist loses its label.
