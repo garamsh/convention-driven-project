@@ -33,6 +33,6 @@ Role definitions live in the operator's environment, not in this repository: the
 - Match the user's language in conversation; code, comments, and documents are written in English.
 - On conflict, precedence is: `docs/convention/` > this file > your global configuration.
 
-## Bootstrapping a new project
+## Uninitialized projects
 
-If `docs/ai/BOOTSTRAP.md` has no completion checkmark, the project is uninitialized. The PM agent executes it before any other work.
+If `README.md` still describes the template rather than this project, or `docs/convention/` still carries `stack-*.md` files for stacks this project does not use, the project has not been bootstrapped. Bootstrap it before any other work; the procedure comes from the operator's environment, not from this repository.
