@@ -7,13 +7,22 @@ Nothing here is specific to AI agents. The conventions read the same for a human
 ## Usage
 
 1. Create a repository with **Use this template**.
-2. Bootstrap it: pick the stack conventions, delete the rest, set up CI plumbing, write the architecture documents, and replace this README with the project's own.
+2. Bootstrap it with the steps below.
 
 To bring these conventions into a repository that already exists, copy the parts it will enforce and then bootstrap the same way.
 
-Both procedures — plus syncing later template updates — are carried by tooling on your machine rather than by files in this repository, so a project created from the template does not inherit instructions it has already outgrown.
+This file is replaced during bootstrap; do not edit it to describe your project. The procedure below sits here rather than under `docs/` for that reason — a project created from the template does not inherit instructions it has already outgrown.
 
-This file is replaced during bootstrap; do not edit it to describe your project.
+## Bootstrap
+
+Run in order. Every step touches only paths in this repository.
+
+1. **Pick the stack conventions.** Keep the `docs/convention/stack-*.md` files matching the project's stack; delete the rest.
+2. **Extend `.gitignore`.** Add the build outputs, dependency directories, and tool caches of the kept stacks to the last block of `.gitignore`.
+3. **Set up CI plumbing.** Add the plumbing described in `docs/convention/ci.md`, so local and CI runs invoke the same checks.
+4. **Write the architecture documents.** Add one responsibility document per domain under `docs/architecture/`, following the rules in `docs/architecture/README.md`, and list each one in that file's index. Leave `docs/architecture/adr/0000-template.md` in place.
+5. **Refresh the conventions index.** Update the stack-specific section of `docs/convention/README.md` to name the `stack-*.md` files that remain.
+6. **Replace this README.** Describe the project instead of the template. `AGENTS.md` stays as it is.
 
 ## Structure
 
@@ -30,3 +39,4 @@ Templates do not carry repository settings. Configure these by hand:
 - **Require review before merge** — only if the reviewer uses a separate account. GitHub rejects self-approval, so with one shared account this blocks every merge; leave it off and the merge itself serves as the approval (`docs/convention/review.md`).
 - **Squash-only merges** and **automatically delete head branches** — match `docs/convention/git.md` and keep branches from piling up.
 - **Require status checks** once CI exists, so `make ci` gates merges.
+- **Labels `task` and `proposal`** — the shipped issue templates declare them (`.github/ISSUE_TEMPLATE/task.md`, `.github/ISSUE_TEMPLATE/proposal.md`); a new repository has neither, and an issue filed before they exist loses its label.
