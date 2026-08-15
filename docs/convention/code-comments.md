@@ -1,5 +1,7 @@
 # Code Comment Rules
 
+When and how to comment code — and when to leave it alone.
+
 ## When to comment
 
 Add a comment where it helps a reader. Skip where the code is self-evident. When in doubt, prefer to omit; an absent comment is easier to add later than an absent explanation is to remember.

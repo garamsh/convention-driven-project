@@ -1,5 +1,7 @@
 # Testing Principles
 
+Test layers, mocking, and placement — what each layer proves, what to mock, and where tests live.
+
 ## Contents
 - Three layers — unit / integration / e2e
 - Behavior over implementation

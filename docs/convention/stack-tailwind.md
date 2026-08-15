@@ -1,5 +1,7 @@
 # Tailwind CSS
 
+Defaults for Tailwind CSS projects. How styles are composed: utilities in markup first, with `@apply`, `@utility`, and theme tokens only where they earn their place.
+
 ## Contents
 - Core principle
 - Verify before adopting or upgrading
