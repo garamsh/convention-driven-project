@@ -183,6 +183,7 @@ Features inject `PrismaService` directly.
 | Integration | `*.integration.spec.ts` | **co-located** in `src/<feature>/` | `jest` |
 | E2E | `*.e2e-spec.ts` | `test/` folder | `jest --config ./test/jest-e2e.json` |
 
+- Test names: `describe(...) > it(...)`.
 - Anything that touches DI is assembled with
   `Test.createTestingModule(...)`.
 - Mock a repository through its injection token,

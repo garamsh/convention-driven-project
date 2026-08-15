@@ -254,6 +254,7 @@ back/forward. The pieces, for a photo modal:
 | Integration | Vitest + Testing Library + MSW | `src/features/<f>/__tests__/*.test.ts` or `src/app/<r>/__tests__/*.test.ts` |
 | E2E | Playwright | `e2e/*.spec.ts` |
 
+- Test names: `describe(...) > it(...)`.
 - The in-process client is Testing Library's `render()` for a
   component and route segment fetching for a whole route.
 - MSW handlers live at `src/testing/mocks/handlers.ts`.
