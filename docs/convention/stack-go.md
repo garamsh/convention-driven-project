@@ -278,7 +278,7 @@ Within `internal/<domain>/`:
 
 ### Mocks with mockery
 
-Use **[mockery v3](https://vektra.github.io/mockery/)** (v3.7.x).
+Use **[mockery v3](https://vektra.github.io/mockery/)**.
 
 - **Config:** `<repo-root>/mockery.yaml` (v3 — no leading dot)
   declares which interfaces to mock, output directory, package
