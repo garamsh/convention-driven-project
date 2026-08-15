@@ -44,3 +44,4 @@ When the PM and authors share one GitHub account, GitHub rejects both `approve` 
 - Address every blocker, or rebut it by citing a rule or path that supports your approach. Silent ignoring is not allowed.
 - Answer nits too: fix, or state briefly why not.
 - Push fixes as new commits to the same branch; never open a replacement PR.
+- When the defect is in a commit message, a later commit cannot remove it: amend or rebase that commit and force-push the same branch. Rewrite only what the review flagged.
