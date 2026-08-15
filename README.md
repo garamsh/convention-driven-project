@@ -1,30 +1,31 @@
-# Harness — AI Agent Project Template
+# convention-driven-project
 
-A GitHub template repository for projects developed by AI agents (opencode, Claude Code). Multiple agents work in parallel under three roles: a PM agent on `main` that reviews, merges, and supervises; worker agents that implement tasks following written conventions; and a QA agent that hunts for problems and files them as issues.
+A GitHub template for projects developed by AI agents. It carries the project side of that arrangement: the conventions code is held to, the shape of the architecture documents, the role contract, and the PR and issue templates.
+
+The agent side — the PM, worker, and QA role definitions — is installed per machine from [role-based-agent](https://github.com/garamsh/role-based-agent). A project declares the contract; the roles carry it out.
 
 ## Usage
 
-1. Create a new repository with **Use this template**.
-2. Start a PM agent on `main`. It executes `docs/ai/BOOTSTRAP.md`: selects stack conventions, sets up CI plumbing, writes this README as a project introduction, and opens the bootstrap PR.
+1. Create a repository with **Use this template**.
+2. Start a PM agent on `main` (`claude --agent pm`). It executes `docs/ai/BOOTSTRAP.md`: picks the stack conventions, deletes the rest, sets up CI plumbing, writes the architecture documents, and opens the bootstrap PR.
+
+To bring the template into a repository that already exists, follow `docs/ai/adoption.md` instead.
 
 This file is replaced during bootstrap; do not edit it to describe your project.
 
 ## Structure
 
-- `AGENTS.md` — role matrix and rules every agent follows
-- `docs/ai/` — agent-only procedures (bootstrap, adoption, role guides, orca dispatch)
-- `docs/convention/` — conventions for code, reviews, and documentation; stack files are pruned during bootstrap
+- `AGENTS.md` — role matrix and the rules every agent follows
+- `docs/convention/` — conventions for code, reviews, and documentation; `stack-*.md` files are pruned during bootstrap
 - `docs/architecture/` — responsibility documents (current truth) and ADRs (append-only decision log)
-- `.opencode/agents/`, `.claude/agents/` — tool-specific agent adapters
+- `docs/ai/` — bootstrap and adoption procedures
 - `.github/` — PR and issue templates, CODEOWNERS
 
-## GitHub settings not covered by the template
+## After creating the repository
 
-Templates do not carry repository settings. After creation, configure manually:
+Templates do not carry repository settings. Configure these by hand:
 
-- **Settings → General → Template repository**: leave unchecked for the new project (that checkbox is for this template repo itself).
-- **Branch protection on `main`**: require pull requests and block direct pushes — this mechanically enforces the PM role.
-- **Require review before merge**: enable only if the PM acts under a separate GitHub account (bot or GitHub App). GitHub rejects self-approval, so when workers and the PM share one account, enabling this blocks every merge — leave it off; the PM's merge then serves as the approval (see `docs/convention/review.md` §Single-account setups).
-- **Require status checks**: enable once CI exists, so `make ci` gates merges.
-- **Merge methods**: restrict to squash only (matches `docs/convention/git.md`).
-- **Automatically delete head branches** (Settings → General → Pull Requests): removes a PR's remote branch on merge, preventing branch accumulation.
+- **Branch protection on `main`** — require pull requests and block direct pushes. This is what mechanically enforces the PM role.
+- **Require review before merge** — only if the PM uses a separate GitHub account. GitHub rejects self-approval, so with one shared account this blocks every merge; leave it off and the PM's merge serves as the approval (`docs/convention/review.md`).
+- **Squash-only merges** and **automatically delete head branches** — match `docs/convention/git.md` and keep branches from piling up.
+- **Require status checks** once CI exists, so `make ci` gates merges.
