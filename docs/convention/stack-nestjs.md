@@ -186,6 +186,8 @@ Features inject `PrismaService` directly.
 - Test names: `describe(...) > it(...)`.
 - Anything that touches DI is assembled with
   `Test.createTestingModule(...)`.
+- The in-process integration test client is `supertest` against the
+  `INestApplication`.
 - Mock a repository through its injection token,
   `getRepositoryToken(Entity)` — reach for `useMocker()` only when the
   dependency graph is too large to enumerate, and then only at module
