@@ -12,8 +12,7 @@ Layout, naming, module boundaries, configuration, database access, validation, a
 - 6. Testing — placement and Nest setup
 - 7. CLI conventions
 - 8. Strict-mode TypeScript
-- 9. Hierarchy — stack-specific MUST/NEVER
-- 10. Sources (URL index)
+- 9. Sources (URL index)
 
 ## 0. Folder & file naming — strict
 
@@ -221,18 +220,7 @@ Scaffold new projects with `nest new --strict`; that flag is how this
 stack turns strict compilation on. The type-system rules it serves:
 `runtime-safety.md`.
 
-## 9. Hierarchy — stack-specific MUST/NEVER
-
-- **Never** `synchronize: true` in TypeORM production (drops data
-  on schema change).
-- **Never** `@Global()` on every shared module (hides dependencies;
-  defeats DI legibility).
-- **Never** DTOs as TS interfaces (erased at compile time;
-  `ValidationPipe` can't read them).
-- **Never** `import type { CreateUserDto }` (erases runtime
-  metadata `ValidationPipe` needs).
-
-## 10. Sources (URL index)
+## 9. Sources (URL index)
 
 - docs: docs.nestjs.com/{modules, controllers, providers, techniques/validation, techniques/configuration, techniques/database, techniques/mongo, fundamentals/testing, cli/usages, first-steps}
 - repos: github.com/{nestjs/schematics, nestjs/nest/sample/01-cats-app}
