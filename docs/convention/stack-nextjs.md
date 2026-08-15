@@ -31,30 +31,28 @@ or folder after what it owns.
   assets), the optional `src/`, and the App Router file conventions
   (`layout.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`, `route.ts`,
   `template.tsx`, `default.tsx`, `proxy.ts` / `middleware.ts`).
-- `lib/utils.ts`, the shadcn-ui companion file, is allowed. It is
+- `src/lib/utils.ts`, the shadcn-ui companion file, is allowed. It is
   the conventional home for `cn()` plus a few formatting and type
   helpers, and it stays small.
 - Banned, because Next.js ships none of them: `utils/`, `helpers/`,
   `common/`, `misc/`, `shared/`, `stuff/`.
 - Two helpers sharing an idea → name the idea:
-  `lib/format-currency.ts`, `lib/email-validation.ts`.
+  `src/lib/format-currency.ts`, `src/lib/email-validation.ts`.
 
 ## 1. Project layout (App Router, `src/`)
 
-Any non-trivial project uses the `src/` layout. `src/` holds
-application code, and `src/app/` holds routes and nothing else.
-`src/components/`, `src/features/`, and `src/hooks/` are an optional
-layer on top of the official routes, earned once the project has
-more than a handful of cross-cutting components or vertical slices.
-A small project keeps `src/` minimal: `src/app/`, `src/components/`,
-and a small `src/lib/`.
+Use the `src/` layout. `src/app/` holds routes and nothing else;
+every other folder under `src/` holds code by its responsibility,
+named for what it does.
 
 At the project root:
 
-- `public/` — static assets. Never inside `src/`.
-- `e2e/` — Playwright specs (§11).
-- `proxy.ts` — the request proxy, when the project has no `src/`
-  (§10).
+- `app/` OR `src/app/` — exactly one of the two. Routes and the
+  App Router file conventions of §2, and nothing else.
+- `public/` — static assets, at the root, never inside `src/`.
+- `e2e/` — Playwright E2E specs, at the root, never inside `src/`.
+- `proxy.ts` — the v16 request proxy, at the root when there is
+  no `src/`; at `src/proxy.ts` when `src/` is used (§10).
 - `tsconfig.json` — maps the `@/*` path alias to `./src/*`.
 - `next.config.ts`, `package.json`, `eslint.config.mjs`,
   `playwright.config.ts`, `vitest.config.ts` — project config.
@@ -63,31 +61,30 @@ At the project root:
 
 Under `src/`:
 
-- `src/app/` — routes only: route groups, dynamic segments, parallel
-  slots, and the files of §2.
+- `src/app/` — routes only when `src/` is used.
 - `src/app/api/` — Route Handlers, for external callers only (§6).
 - `src/app/<segment>/_components/` — components belonging to one
   route, kept beside it; the `_` prefix opts the folder out of
   routing.
-- `src/components/` — cross-feature components, with
-  `src/components/ui/` for shadcn primitives.
-- `src/features/<feature>/` — a vertical slice, owning its own
-  `api`, `components`, `hooks`, and `types`.
-- `src/lib/` — pre-configured third-party clients and small shared
-  helpers: `auth.ts`, `db.ts`, `api-client.ts`, `utils.ts`.
+- `src/features/<name>/` — a vertical slice, owning its own
+  `api/`, `components/`, `hooks/`, `types/` — only the ones the
+  feature needs, not a fixed set per feature.
+- `src/components/` — shared UI; `src/components/ui/` is the
+  shadcn primitives home.
+- `src/hooks/` — shared React hooks.
+- `src/lib/<vendor>.ts` — pre-configured third-party clients and
+  small shared helpers: `auth.ts`, `db.ts`, `api-client.ts`,
+  `utils.ts` (the shadcn companion), `rate-limit.ts`, …. A
+  vendor that has outgrown one file gets `src/lib/<vendor>/`.
 - `src/env.ts` — the typed env loader (§7).
-- `src/services/<vendor>/` — an external API adapter too heavy for
-  one file in `src/lib/`.
-- `src/hooks/` — cross-feature hooks.
-- `src/styles/globals.css` and `src/types/` — global styles and
-  shared type declarations.
-- `src/testing/` — test infrastructure (§11).
-- `src/proxy.ts` — the request proxy, when the project uses `src/`
-  (§10).
+- `src/testing/` — test infrastructure: render helper, MSW
+  handlers, MSW server (§11).
+- `src/types/` — types used by two or more features.
+- `src/styles/globals.css` — global styles.
 - `src/instrumentation.ts` — optional OpenTelemetry hook.
 
 A cross-cutting third-party client belongs at `src/lib/<vendor>.ts`,
-or at `src/services/<vendor>/` once the adapter outgrows one file.
+or at `src/lib/<vendor>/` once the adapter outgrows one file.
 
 ## 2. App Router file conventions
 
@@ -278,8 +275,8 @@ principle behind these targets, is `testing.md`.
 
 Imports run one way: cross-feature modules → features → app.
 
-- `components/`, `hooks/`, `lib/`, `services/`, `types/`:
-  cross-feature. Each may import from itself or each other.
+- `components/`, `hooks/`, `lib/`, `types/`: cross-feature.
+  Each may import from itself or each other.
 - `features/*`: may import the cross-feature modules; **may not**
   import from `app/` or from another feature.
 - `app/`: may import from both.
