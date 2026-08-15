@@ -1,6 +1,6 @@
 # Conventions Index
 
-Rules every agent follows when writing code. The PM owns these files; workers read and apply them.
+Rules every agent follows when writing code, tests, commits, and documents. The PM owns these files; workers read and apply them.
 
 ## Stack-neutral
 
@@ -18,7 +18,7 @@ Rules every agent follows when writing code. The PM owns these files; workers re
 
 ## Stack-specific
 
-`stack-*.md` files apply only when the project uses that stack. The bootstrap process keeps the relevant ones and deletes the rest.
+`stack-*.md` files apply only when the project uses that stack. The bootstrap process (root `README.md` §Bootstrap) keeps the relevant ones and deletes the rest.
 
 ## Independence
 
