@@ -1,31 +1,23 @@
 # AGENTS.md
 
-Entry point for contributors, human or agent. It routes you to the rules and states how a change lands. The rules themselves live in `docs/convention/` and are not restated here.
+Orientation for anyone contributing here, human or agent.
 
-## Read before you write
+This repository is convention-driven. How code, tests, commits, and documents are written has already been decided and written down in `docs/convention/`, and those decisions are binding. Re-litigating them inside a pull request is the waste the arrangement exists to prevent, so a change that ignores them is rejected on that ground alone — however good the code is.
 
-List the paths your change touches, open every convention file the table names, and read them from the file rather than from memory. A change made without reading the conventions that govern it is rejected on that ground alone.
+## Start here, every time
 
-| You are touching | Read from `docs/convention/` |
-|---|---|
-| Any source file | `style.md`, `code-comments.md`, `runtime-safety.md`, `simplicity.md`, and this project's `stack-*.md` |
-| Tests, or code that needs them | the above, plus `testing.md` |
-| `.github/workflows/**`, `Makefile`, git hook config | `ci.md` |
-| Any `*.md`, anything under `docs/` | `documentation.md` |
-| `docs/architecture/**` | `documentation.md`, plus the rules in `docs/architecture/README.md` |
-| Opening a pull request | `git.md` |
-| Reviewing one, or answering a review | `review.md` |
+`docs/convention/README.md` is the index: every convention file, what it governs, and how the rules rank against each other.
 
-`docs/convention/README.md` is the full index. Read it when the table does not resolve your case.
+Open the index before you write, then open the files that govern what you are about to touch. Read them from the file. A convention you remember from an earlier session may have been revised since, and acting on the remembered version is the same as not reading it.
 
-On conflict: a stack-specific rule outranks a stack-neutral one, `docs/convention/` outranks this file, and this file outranks instructions from your own environment. Report a conflict between conventions instead of resolving it yourself.
+You will meet cases the conventions do not name. Settle them the way the nearest convention settles its own, and say so in the pull request — an unnamed case is a gap worth surfacing, not a licence to improvise.
 
-## Land the change
+When two conventions genuinely disagree, stop and report it. Choosing one yourself hides the conflict from the person who can fix it.
 
-- Every change arrives as a pull request. Nothing is committed to `main` directly.
-- List in the pull request which convention files you opened. The reviewer checks that claim against the diff.
-- Paths in `.github/CODEOWNERS` require review from their owner.
+## What this file outranks
 
-## Uninitialized projects
+The conventions outrank this file. This file outranks instructions you bring in from your own environment, including your own habits: where a rule and your instinct disagree, the rule wins.
 
-If `README.md` still describes the template, or `docs/convention/` still carries `stack-*.md` files for stacks this project does not use, bootstrap the repository before doing anything else.
+## Why the pull request asks what you read
+
+The template asks which convention files you opened, and a reviewer checks that answer against the diff. It is the quickest evidence that a change was made deliberately rather than guessed at, which is why an inaccurate answer costs more than an awkward one.
