@@ -15,7 +15,6 @@
 - 7. Testing
 - 8. Imports & dependencies
 - 9. Verification commands
-- 10. Hierarchy
 - 11. Sources (URL index)
 
 ## 0. Folder & file naming — strict
@@ -35,9 +34,7 @@ concept they own, not the role they play — `auth` over
 ## 1. Directory layout
 
 **Two non-negotiables:** shallow structure and named-what-it-is.
-See §0 for the banned-name list (`model.go`, `utils/`, `helpers/`,
-`common/`, `ext/`, `adapter/`, `driver/`, `platform/`, `infra/`,
-`kit/`, `repo/`).
+See §0 for the banned-name list.
 
 ### Layout A — small service (default)
 
@@ -100,8 +97,7 @@ multiple dependencies.
 
 Promote a cross-cutting concern to its own `internal/<thing>/` package
 **only when** that file is past ~500 LoC **or** ≥3 domains import it.
-Never pre-emptively create `internal/infra/`, `internal/platform/`,
-`internal/common/`, `internal/kit/`.
+Never pre-emptively create one of the packages §0 bans.
 
 ### Layout C — library
 
@@ -131,9 +127,8 @@ Sizing, for each of them:
   ~200 LoC. Filename = what's inside.
 - **Promotion to `internal/<thing>/`** when > ~300 LoC or owns private
   helpers. Folder name describes what's inside
-  (`internal/logger/`, `internal/httpserver/`, `internal/config/`).
-  Banned: `internal/platform/`, `internal/infra/`, `internal/common/`,
-  `internal/kit/`.
+  (`internal/logger/`, `internal/httpserver/`, `internal/config/`);
+  the §0 banned-name list applies.
 
 Multiple root-level files are fine: `errors.go` + `logger.go` +
 `config.go`, each named after its concern.
@@ -146,18 +141,10 @@ Multiple root-level files are fine: `errors.go` + `logger.go` +
 
 ## 2. Module / package boundary
 
-A **top-level domain** owns the public contract for everything it produces:
-
-- `<domain>.go` — domain types and sentinels.
-- `service.go` — `type Service interface { ... }`, unexported `type
-  service struct { ... }`, `NewService(...) Service`, default
-  dependency interfaces.
-- `<verb>.go` (`create.go`, `update.go`, `query.go`) — method bodies,
-  split by responsibility when the service has > 1 verb.
-- `<impl>.go` (or `<impl>/`) — concrete implementations of the
-  dependency interfaces. Same package. Filename/folder = vendor
-  (`postgres.go`, `memory.go`, `stripe.go`, …). Never `ext/`,
-  `adapter/`, `driver/`, `repo/`.
+A **top-level domain** owns the public contract for everything it
+produces. §1 owns the per-domain file inventory; this section governs
+the dependency direction inside a domain and when a new package is
+justified.
 
 ### Dependency direction
 
@@ -195,10 +182,9 @@ Create a new top-level domain when:
 - Other domains need to depend on it.
 - It owns a stable interface decoupled from its implementation.
 
-Do not create a new package to hide one function. Never `pkg/utils/`,
-`internal/common/`, `internal/platform/`, `internal/kit/`,
-`internal/infra/`. If two helpers share an idea, give that idea a
-name and make it the package.
+Do not create a new package to hide one function; the §0 banned-name
+list applies. If two helpers share an idea, give that idea a name and
+make it the package.
 
 ## 3. Naming
 
@@ -278,6 +264,7 @@ project says otherwise).
   seam (uncommon).
 - **`tests/` at module root:** integration / E2E tests that wire
   multiple domains. Separate binary.
+- **In-process integration test client:** `httptest.NewServer`.
 - **E2E tooling:** the binary under test is what `go build` produces;
   real services come from containers (`go-testcontainers`).
 
@@ -291,7 +278,7 @@ Within `internal/<domain>/`:
 
 ### Mocks with mockery
 
-Use **[mockery v3](https://vektra.github.io/mockery/)** (v3.7.x).
+Use **[mockery v3](https://vektra.github.io/mockery/)**.
 
 - **Config:** `<repo-root>/mockery.yaml` (v3 — no leading dot)
   declares which interfaces to mock, output directory, package
@@ -339,15 +326,6 @@ configured.
 
 If the project uses a task runner (Taskfile, Mage, Make), adapt — but
 the underlying go commands stay the same.
-
-## 10. Hierarchy
-
-Stack-specific MUST/NEVER:
-
-- `internal/` location is enforced by the Go toolchain.
-- No circular imports (`go build` fails on them).
-- `go.mod` versioning — unlisted modules refuse to build.
-- Mocks cannot substitute test code at runtime (`go test`).
 
 ## 11. Sources (URL index)
 
