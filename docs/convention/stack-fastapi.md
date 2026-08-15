@@ -12,8 +12,8 @@
 > domain-by-package layout scales better. Adopting the
 > production layout by default; diverging to a small-project
 > layer-based layout (`api/`, `services/`, `repositories/`,
-> `models/`, `schemas/`, `core/`) is acceptable when the project
-> has only 2-3 domains — note the deviation in the PR description.
+> `models/`, `schemas/`, `core/`) is acceptable within the
+> thresholds §1 sets — note the deviation in the PR description.
 
 ## Contents
 - 0. Folder & file naming
@@ -204,7 +204,7 @@ app.include_router(router)
 ## 3. Configuration
 
 ```python
-# app/core/config.py
+# src/config.py
 from functools import lru_cache
 from pydantic import PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -411,7 +411,7 @@ async def create_user(session: AsyncSession, data: UserCreate) -> User:
 Transactions live here. `async with session.begin():` for
 multi-statement work. Cross-aggregate calls go through other
 services. Joins / aggregations are SQL. Services never import
-from `app.routers` (back-edge). Services may raise domain
+from `src.<domain>.router` (back-edge). Services may raise domain
 exceptions from `src.<domain>.exceptions`.
 
 **Layer split (production standard):**
@@ -464,7 +464,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.dependencies import get_db
+from src.database import get_db
 from src.auth.schemas import UserCreate, UserPublic
 from src.auth import service as user_service
 
@@ -649,11 +649,10 @@ monkeypatch internals.
 - Generate migrations with descriptive names and slugs.
 - Review each migration before merge. Schema changes touch
   every environment; they deserve a second pair of eyes.
-- `synchronize: true` is **never** used in production.
 - `HTTPException` for HTTP errors in routes/deps.
 - Cross-cutting domain exceptions live in
   `src/<domain>/exceptions.py` and are mapped to HTTP in
-  `app/main.py`'s exception handlers
+  `src/main.py`'s exception handlers
   (`@app.exception_handler(MyDomainError)`).
 - **Never** `except Exception:` in routes. Catch the narrowest
   class.
@@ -666,8 +665,6 @@ monkeypatch internals.
 
 Stack-specific MUST/NEVER:
 
-- **Never** `synchronize: true` in production (drops data on
-  schema change).
 - **Never** mock the DB in integration tests (mock/prod drift).
 - **Never** `from jose import jwt` / `from async_asgi_testclient
   import TestClient` (unmaintained footguns).
