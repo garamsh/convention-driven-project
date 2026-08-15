@@ -1,18 +1,7 @@
 # FastAPI — Architecture & Style Conventions
 
-> Defaults for FastAPI projects. The canonical production
-> convention is **domain-by-package** (a bounded context owns its
-> folder, with router / schemas / models / service / dependencies /
-> exceptions all in that folder) — the shape used by
-> `zhanymkanov/fastapi-best-practices` and inspired by Netflix's
-> Dispatch. The official `fastapi/full-stack-fastapi-template` is
-> a role-based starter template that works well for small
-> projects and microservices; for production multi-domain
-> codebases the domain-by-package layout scales better. Adopting
-> the production layout by default; diverging to a small-project
-> layer-based layout (`api/`, `services/`, `repositories/`,
-> `models/`, `schemas/`, `core/`) is acceptable within the
-> thresholds §1 sets — note the deviation in the PR description.
+> Defaults for FastAPI projects: layout, naming, and
+> stack-specific rules. Applies when the project uses FastAPI.
 
 ## Contents
 - 0. Folder & file naming
@@ -60,9 +49,7 @@ wrong for it. Two helpers sharing an idea → name the idea:
 
 A bounded context owns its folder. URL versioning is a **URL
 prefix** at `include_router` time — never a directory name like
-`api/v1/`. This is the zhanymkanov production layout; the
-official FastAPI starter template is mentioned at the end of
-this section as a small-project alternative.
+`api/v1/`. This is the zhanymkanov production layout.
 
 Paths outside the domain folders:
 
@@ -91,7 +78,8 @@ For **small projects (≤3 domains, ≤5 tables)** where the
 domain-by-package shape is overkill, the layer-based layout
 (`src/api/`, `src/services/`, `src/repositories/`, `src/models/`,
 `src/schemas/`, `src/core/`) is acceptable. Switch to
-domain-by-package the moment either threshold is crossed.
+domain-by-package the moment either threshold is crossed. Note
+the deviation in the PR description.
 
 For **microservices / very small services** the official
 `fastapi/full-stack-fastapi-template` flat layout
@@ -134,10 +122,8 @@ Cross-domain imports use explicit aliases:
 - Routers are included in a loop, each with
   `prefix=settings.API_V1_STR`.
 
-`API_V1_STR` lives in `Settings`; only URL prefix at
-`include_router` time. v1 → v2 migration = one-line constant
-change. URL versioning stays in the prefix, never in the
-directory name (no `src/v1/`).
+`API_V1_STR` lives in `Settings`; a v1 → v2 migration is a
+one-line constant change.
 
 ### Serving a built SPA (optional)
 
@@ -161,9 +147,9 @@ mount when the frontend needs client-side routing.
   classes when warranted (see §1 for the per-domain
   `config.py`).
 
-**Package manager:** `uv` (Astral) is the production standard in
-2026. `pyproject.toml` is the manifest; `uv.lock` is the
-lockfile. `pip install -r requirements.txt` is legacy.
+**Package manager:** `uv` (Astral) is the production standard.
+`pyproject.toml` is the manifest; `uv.lock` is the lockfile.
+`pip install -r requirements.txt` is legacy.
 
 ### Running the app
 
@@ -193,9 +179,6 @@ needed.
   driver is `asyncpg` (used by the `postgresql+asyncpg://` URL).
 - Use Core `select()/insert()/update()/delete()` — not legacy
   Query API.
-- Migrations: `alembic init -t async`. Import each
-  `<domain>.models` in `alembic/env.py` so autogenerate sees
-  them.
 - Naming: `lower_case_snake`, **singular** tables. Group with
   prefix (`payment_account`). `_at` for datetimes, `_date` for
   dates.
@@ -359,7 +342,8 @@ assert on are governed by `testing.md`.
 ## 11. Migrations & errors
 
 - `alembic init -t async`. Import every `<domain>.models` in
-  `alembic/env.py`. Set a human-readable file template:
+  `alembic/env.py` so autogenerate sees them. Set a
+  human-readable file template:
   `file_template = %%(year)d-%%(month).2d-%%(day).2d_%%(slug)s`
   (e.g. `2022-08-24_post_content_idx.py`).
 - **Migrations must be static and reversible.** If a migration
