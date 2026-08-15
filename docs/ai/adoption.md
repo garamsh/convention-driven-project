@@ -2,7 +2,7 @@
 
 How an agent brings this template into a repository that already exists, and keeps it current afterwards. Executed by the PM agent; lands via PR.
 
-Role definitions are not part of this: they are installed per machine from [role-based-agent](https://github.com/garamsh/role-based-agent) and never copied into a project.
+Role definitions are not part of this: they belong to the operator's environment and are never copied into a project.
 
 ## Principles
 

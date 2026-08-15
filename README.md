@@ -2,7 +2,7 @@
 
 A GitHub template for projects developed by AI agents. It carries the project side of that arrangement: the conventions code is held to, the shape of the architecture documents, the role contract, and the PR and issue templates.
 
-The agent side — the PM, worker, and QA role definitions — is installed per machine from [role-based-agent](https://github.com/garamsh/role-based-agent). A project declares the contract; the roles carry it out.
+The agent side — what a PM, worker, or QA agent actually does — is supplied by the operator's own environment. A project declares the contract; the roles carry it out.
 
 ## Usage
 
