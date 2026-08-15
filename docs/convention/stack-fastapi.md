@@ -12,8 +12,8 @@
 > domain-by-package layout scales better. Adopting the
 > production layout by default; diverging to a small-project
 > layer-based layout (`api/`, `services/`, `repositories/`,
-> `models/`, `schemas/`, `core/`) is acceptable when the project
-> has only 2-3 domains — note the deviation in the PR description.
+> `models/`, `schemas/`, `core/`) is acceptable within the
+> thresholds §1 sets — note the deviation in the PR description.
 
 ## Contents
 - 0. Folder & file naming
