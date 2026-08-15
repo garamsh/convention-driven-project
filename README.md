@@ -22,7 +22,8 @@ Run in order. Every step touches only paths in this repository.
 3. **Set up CI plumbing.** Add the plumbing described in `docs/convention/ci.md`, so local and CI runs invoke the same checks.
 4. **Write the architecture documents.** Add one responsibility document per domain under `docs/architecture/`, following the rules in `docs/architecture/README.md`, and list each one in that file's index. Leave `docs/architecture/adr/0000-template.md` in place.
 5. **Refresh the conventions index.** Update the stack-specific section of `docs/convention/README.md` to name the `stack-*.md` files that remain.
-6. **Replace this README.** Describe the project instead of the template. `AGENTS.md` stays as it is.
+6. **Replace the CODEOWNERS placeholder.** Replace `@project-owner-placeholder` in `.github/CODEOWNERS` with the project owner.
+7. **Replace this README.** Describe the project instead of the template. `AGENTS.md` stays as it is.
 
 ## Structure
 
