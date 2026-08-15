@@ -20,9 +20,9 @@ One decision-maker merges; many workers implement; QA hunts for problems but fix
 | Comment on PRs / issues | Yes | Respond only | Forbidden |
 | Delete remote branches | Merged or confirmed-stale only | Forbidden | Forbidden |
 
-A session is bound to one role at launch with the tool's own `--agent <role>` flag; the role cannot be switched mid-session. Role adapters live in `.claude/agents/` and `.opencode/agents/`.
+A session is bound to one role at launch with the tool's own `--agent <role>` flag, and cannot change role mid-session.
 
-Detailed procedures: `docs/ai/pm-guide.md`, `docs/ai/worker-guide.md`, `docs/ai/qa-guide.md`. The PM dispatches workers into orca worktrees per `docs/ai/orca-dispatch.md`.
+Role definitions are installed per machine from [role-based-agent](https://github.com/garamsh/role-based-agent), not carried in this repository: they describe how an operator runs agents, which is the same in every project and depends on the machine. This file defines what each role may do **here** — that part is project law, and it holds whether or not those definitions are installed.
 
 ## Rules that apply to every agent
 
