@@ -1,6 +1,4 @@
-# Conventions are owned by the PM; worker changes to these paths require PM review.
+# The rules are owned; changes to these paths require review from their owner.
+/AGENTS.md @pm
 /docs/convention/ @pm
-/docs/ai/ @pm
-/.opencode/ @pm
-/.claude/ @pm
 /.github/ @pm

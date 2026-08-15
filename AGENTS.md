@@ -1,38 +1,23 @@
 # AGENTS.md
 
-This repository is developed by AI agents with three roles. This file contains only project-specific rules — generic agent behavior guidelines come from your global configuration; do not duplicate them here.
+The entry point for anyone contributing to this repository, human or agent. It says what is binding and where to find it. It does not restate the rules themselves — every rule lives in exactly one place, and this is not that place.
 
-## Roles
+## What binds a change
 
-One decision-maker merges; many workers implement; QA hunts for problems but fixes nothing. A single merge authority prevents concurrent work from being merged in conflicting directions.
+- `docs/convention/README.md` indexes the conventions every change follows. Read the ones governing what you are touching before writing or reviewing anything. They are binding, not advisory.
+- `docs/architecture/README.md` indexes the responsibility documents — the system as it is now — and the ADRs behind them. A change to a settled decision updates both in the same pull request.
+- `.github/` supplies the pull request and issue templates. Stay inside their fields.
 
-| | PM (main branch) | Worker (task branches) | QA (read-only) |
-|---|---|---|---|
-| Modify source code | Forbidden unless the user explicitly instructs | Allowed | Forbidden |
-| Run tests / builds | Forbidden | Allowed | Allowed — never commits |
-| Read `docs/convention/` | Yes | Yes | Yes |
-| Modify `docs/convention/` | Yes | Forbidden | Forbidden |
-| Read `docs/architecture/` | Yes | Yes | Yes |
-| Modify `docs/architecture/` | Yes | Allowed | Forbidden |
-| Review / merge PRs | Yes — final decision authority | Forbidden | Forbidden |
-| Create issues | Yes | Forbidden | Yes — with evidence |
-| Edit / close issues | Yes | Forbidden | Forbidden |
-| Comment on PRs / issues | Yes | Respond only | Forbidden |
-| Delete remote branches | Merged or confirmed-stale only | Forbidden | Forbidden |
+## How a change lands
 
-A session is bound to one role at launch with the tool's own `--agent <role>` flag, and cannot change role mid-session.
+Every change arrives as a pull request; nothing is committed to `main` directly. `docs/convention/git.md` governs branches, commits, and merges. `docs/convention/review.md` governs what makes a review valid and how an author answers one.
 
-Role definitions live in the operator's environment, not in this repository: they describe how agents are run, which is the same in every project and depends on the machine. This file defines what each role may do **here** — that part is project law, and it holds however the roles are supplied.
+The rules themselves are owned, not open: paths listed in `.github/CODEOWNERS` require review from their owner. That is where the ownership is enforced, so it is not duplicated here.
 
-## Rules that apply to every agent
+## Precedence
 
-- Follow `docs/convention/` for all code. Conventions beat personal preference.
-- Follow `docs/convention/documentation.md` for all documentation.
-- Never commit secrets. Never push directly to `main`; all changes land via PR.
-- Keep diffs surgical: every changed line traces to the assigned task.
-- Match the user's language in conversation; code, comments, and documents are written in English.
-- On conflict, precedence is: `docs/convention/` > this file > your global configuration.
+`docs/convention/` outranks this file, and this file outranks instructions you bring in from your own environment. Report a conflict between conventions instead of resolving it yourself.
 
-## Uninitialized projects
+## Before the project is initialized
 
-If `README.md` still describes the template rather than this project, or `docs/convention/` still carries `stack-*.md` files for stacks this project does not use, the project has not been bootstrapped. Bootstrap it before any other work; the procedure comes from the operator's environment, not from this repository.
+If `README.md` still describes the template rather than this project, or `docs/convention/` still carries `stack-*.md` files for stacks this project does not use, the repository has not been bootstrapped. Do that first.
