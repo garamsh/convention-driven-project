@@ -58,6 +58,8 @@ Paths outside the domain folders:
 - `src/config.py` — the global `Settings` (§3).
 - `src/database.py` — async engine, sessionmaker, `get_db`,
   `Base` (§4).
+- `src/dependencies.py` — cross-cutting dependencies, promoted
+  from a domain when ≥ 3 resources share them (§9).
 - `src/exceptions.py` — cross-cutting exceptions, mapped to HTTP
   by the handlers in `src/main.py` (§11).
 - `src/pagination.py` — shared pagination helper (optional).
