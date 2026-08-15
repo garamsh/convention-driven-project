@@ -20,6 +20,7 @@ What makes a PR review valid, and how authors respond. Applies to every review a
 Decision: approve / request changes / reject
 ```
 
+- An approve requires the Scope, Verification, and Depth rows to be `pass` or `fail` — never `unverified`. The other three rows may be `unverified` only with a stated reason (some PRs touch nothing a convention governs).
 - A check you did not verify is marked `unverified` — never guessed. Skipping a check is allowed; hiding the skip is not. A review full of `unverified` rows tells the reader the review did not really happen.
 
 ## Citing violations
