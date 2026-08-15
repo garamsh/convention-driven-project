@@ -15,7 +15,6 @@
 - 7. Testing
 - 8. Imports & dependencies
 - 9. Verification commands
-- 10. Hierarchy
 - 11. Sources (URL index)
 
 ## 0. Folder & file naming — strict
@@ -326,15 +325,6 @@ configured.
 
 If the project uses a task runner (Taskfile, Mage, Make), adapt — but
 the underlying go commands stay the same.
-
-## 10. Hierarchy
-
-Stack-specific MUST/NEVER:
-
-- `internal/` location is enforced by the Go toolchain.
-- No circular imports (`go build` fails on them).
-- `go.mod` versioning — unlisted modules refuse to build.
-- Mocks cannot substitute test code at runtime (`go test`).
 
 ## 11. Sources (URL index)
 
