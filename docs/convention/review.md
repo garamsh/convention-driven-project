@@ -22,6 +22,7 @@ Decision: approve / request changes / reject
 
 - An approve requires the Scope, Verification, and Depth rows to be `pass` or `fail` — never `unverified`. The other three rows may be `unverified` only with a stated reason (some PRs touch nothing a convention governs).
 - A check you did not verify is marked `unverified` — never guessed. Skipping a check is allowed; hiding the skip is not. A review full of `unverified` rows tells the reader the review did not really happen.
+- **Reject maps to request changes.** GitHub has no `reject` review state, so a reject decision is submitted as a request-changes review whose decision line reads `reject` (in single-account setups, the `comment` substitute per §Single-account setups). What reject does that request changes does not: the reviewer closes the PR and files an issue describing the right direction.
 
 ## Citing violations
 
@@ -38,7 +39,7 @@ Decision: approve / request changes / reject
 When the PM and authors share one GitHub account, `comment` is the only review state GitHub accepts on one's own pull request — `approve` and `request changes` are both refused. Every decision is submitted as a `comment` review carrying the evidence table and its decision line, plus one line saying the state was substituted because GitHub allows no other. That comment is the review; it is not a bare comment.
 
 - **Approve.** Post the review, then merge immediately — the merge is the approval.
-- **Request changes or reject.** Post the review and leave the PR open. The author responds to it as to any request-changes review.
+- **Request changes.** Post the review and leave the PR open. The author responds to it as to any request-changes review.
 
 ## Responding to a review (author)
 
