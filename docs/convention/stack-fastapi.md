@@ -16,8 +16,7 @@
 - 9. Dependencies
 - 10. Tests
 - 11. Migrations & errors
-- 12. Hierarchy
-- 13. Sources (URL index)
+- 12. Sources (URL index)
 
 ## 0. Folder & file naming
 
@@ -309,6 +308,8 @@ For JSON Lines or byte streaming, use `StreamingResponse` (from
   splitting token parsing (`parse_jwt_data`) from an ownership
   check (`valid_owned_post`) costs nothing and makes both
   reusable.
+- **Never** `from jose import jwt` for JWT parsing
+  (`parse_jwt_data`) — the package is unmaintained.
 - Cross-cutting deps live in `src/dependencies.py`. Promote a
   domain dep to `src/dependencies.py` only when ≥ 3 resources
   share it.
@@ -366,21 +367,7 @@ assert on are governed by `testing.md`.
   `BackgroundTasks` is fine. Otherwise use Celery + Redis (or
   arq / Taskiq for async-native).
 
-## 12. Hierarchy
-
-Stack-specific MUST/NEVER:
-
-- **Never** mock the DB in integration tests (mock/prod drift).
-- **Never** `from jose import jwt` / `from async_asgi_testclient
-  import TestClient` (unmaintained footguns).
-- **Never** sync DB session inside `async def` (may deadlock
-  the pool).
-- **Never** sync `requests` inside `async def` (blocks the
-  event loop).
-- **Never** `@app.on_event("startup")` — deprecated since
-  FastAPI lifespan.
-
-## 13. Sources (URL index)
+## 12. Sources (URL index)
 
 - production convention: github.com/zhanymkanov/fastapi-best-practices
 - official template (small / microservices): github.com/fastapi/full-stack-fastapi-template
