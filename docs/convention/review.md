@@ -44,3 +44,4 @@ When the PM and authors share one GitHub account, `comment` is the only review s
 - Address every blocker, or rebut it by citing a rule or path that supports your approach. Silent ignoring is not allowed.
 - Answer nits too: fix, or state briefly why not.
 - Push fixes as new commits to the same branch; never open a replacement PR.
+- A point about a commit message is fixed in the commit that carries it — amend or rebase, then force-push the same branch. A later commit cannot remove text from an earlier one, so it cannot carry that fix. The branch and the PR stay the same.
