@@ -16,4 +16,4 @@ Current architecture of the system and the decisions behind it. This file is the
 
 ## Index
 
-_Populated during bootstrap (`docs/ai/BOOTSTRAP.md`)._
+_Populated during bootstrap._
