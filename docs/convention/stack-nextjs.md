@@ -264,9 +264,12 @@ back/forward. The pieces, for a photo modal:
   test double or SQLite for the database, a fake session for auth,
   `testcontainers-node` for real service dependencies.
 - The built app is `next start`.
+- Assert on rendered text, ARIA, emitted form payloads, and
+  navigated URLs — **never** on the internal React tree shape or
+  component identity.
 
-What each layer mocks, and what a test may assert on, is
-`testing.md`.
+What each layer mocks, and the behavior-over-implementation
+principle behind these targets, is `testing.md`.
 
 ## 12. Import direction and file naming
 
