@@ -6,15 +6,15 @@
 
 ## Contents
 - 0. Folder & file naming — strict
-- 1. Directory Layout
-- 2. Module / Package Boundary
+- 1. Directory layout
+- 2. Module / package boundary
 - 3. Naming
-- 4. Error Handling
-- 5. Logging & Observability
-- 6. Comments & Docs
+- 4. Error handling
+- 5. Logging & observability
+- 6. Comments & docs
 - 7. Testing
-- 8. Imports & Dependencies
-- 9. Verification Commands
+- 8. Imports & dependencies
+- 9. Verification commands
 - 10. Hierarchy
 - 11. Sources (URL index)
 
@@ -32,7 +32,7 @@ the file does.
 concept they own, not the role they play — `auth` over
 `auth_utils`. `spf13/cobra` and `go-kit/kit` both follow this.)
 
-## 1. Directory Layout
+## 1. Directory layout
 
 **Two non-negotiables:** shallow structure and named-what-it-is.
 See §0 for the banned-name list (`model.go`, `utils/`, `helpers/`,
@@ -144,7 +144,7 @@ Multiple root-level files are fine: `errors.go` + `logger.go` +
 - `internal/` is enforced by the Go toolchain. Use it for everything not explicitly public.
 - `pkg/` is for code other modules import. Most services don't need it.
 
-## 2. Module / Package Boundary
+## 2. Module / package boundary
 
 A **top-level domain** owns the public contract for everything it produces:
 
@@ -217,7 +217,7 @@ name and make it the package.
 - **Initialisms:** `URL`, `ID`, `HTTP`, `JSON`, `XML`, `API`, `SQL` —
   always uppercase or lowercase, never mixed.
 
-## 4. Error Handling
+## 4. Error handling
 
 - Errors are values. Use `error` interface, never panics in libraries.
 - Wrap: `fmt.Errorf("op x: %w", err)` or `errors.Join`.
@@ -231,7 +231,7 @@ name and make it the package.
   decide to log).
 - Wrap at boundaries (network, IO, external calls), not on every line.
 
-## 5. Logging & Observability
+## 5. Logging & observability
 
 - Stdlib `log/slog` (Go 1.21+). Prefer it over `log` and third-party
   loggers for new code.
@@ -248,7 +248,7 @@ name and make it the package.
 - Metrics: `prometheus/client_golang`. Define the registry once.
 - Tracing: OpenTelemetry (`go.opentelemetry.io/otel`).
 
-## 6. Comments & Docs
+## 6. Comments & docs
 
 `code-comments.md` governs when to comment and what a comment may
 say. This section states the Go form only.
@@ -309,7 +309,7 @@ When a top-level domain depends on another top-level's interface, the
 test for the consumer uses the consumer-side mock (generated from the
 interface declared in the **producer's** top level).
 
-## 8. Imports & Dependencies
+## 8. Imports & dependencies
 
 Three groups, separated by blank lines:
 
@@ -322,7 +322,7 @@ Use `go mod tidy` after every change. Don't commit `go.sum` updates
 you don't recognize. `go vet ./...`. `golangci-lint run` if
 configured.
 
-## 9. Verification Commands
+## 9. Verification commands
 
 | Task | Command |
 |------|---------|
