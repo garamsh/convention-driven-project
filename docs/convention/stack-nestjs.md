@@ -180,6 +180,7 @@ Features inject `PrismaService` directly.
 | Track | Pattern | Location | Runner |
 |---|---|---|---|
 | Unit | `*.spec.ts` | **co-located** with source | `jest` |
+| Integration | `*.integration.spec.ts` | **co-located** in `src/<feature>/` | `jest` |
 | E2E | `*.e2e-spec.ts` | `test/` folder | `jest --config ./test/jest-e2e.json` |
 
 - Anything that touches DI is assembled with
