@@ -116,7 +116,7 @@ Cross-domain imports use explicit aliases:
 - Startup and shutdown work — opening the connection pool and
   closing it — runs in a `lifespan` `asynccontextmanager` handed
   to `FastAPI(...)`. `@app.on_event("startup")` /
-  `@app.on_event("shutdown")` are deprecated.
+  `@app.on_event("shutdown")` are deprecated as of 0.93.
 - CORS is added with `CORSMiddleware`, its origins read from
   `Settings`.
 - Routers are included in a loop, with no arguments at the call
@@ -149,8 +149,8 @@ mount when the frontend needs client-side routing.
   `config.py`).
 
 **Package manager:** `uv` (Astral) is the production standard.
-`pyproject.toml` is the manifest; `uv.lock` is the lockfile.
-`pip install -r requirements.txt` is legacy.
+`pyproject.toml` is the manifest; `uv.lock` is the lockfile — not
+`requirements.txt`.
 
 ### Running the app
 
@@ -270,7 +270,8 @@ from the internal return value (filtering fields, computed
 properties, etc.).
 
 **Never `ORJSONResponse` or `UJSONResponse`.** Both are
-deprecated — declaring a return type (or `response_model`) lets
+deprecated as of 0.131 — declaring a return type (or
+`response_model`) lets
 Pydantic v2 handle JSON serialization on the Rust side, which
 is faster than either and avoids the
 `jsonable_encoder` round-trip in the route.
@@ -311,8 +312,8 @@ For JSON Lines or byte streaming, use `StreamingResponse` (from
   splitting token parsing (`parse_jwt_data`) from an ownership
   check (`valid_owned_post`) costs nothing and makes both
   reusable.
-- **Never** `from jose import jwt` for JWT parsing
-  (`parse_jwt_data`) — the package is unmaintained.
+- **`PyJWT` is the JWT library** (`parse_jwt_data`). Never
+  `from jose import jwt`.
 - Cross-cutting deps live in `src/dependencies.py`. Promote a
   domain dep to `src/dependencies.py` only when ≥ 3 resources
   share it.
@@ -332,8 +333,7 @@ Tooling and substitutes:
 - `pytest` + `pytest-asyncio`. The in-process client is
   **always** `httpx.AsyncClient(transport=ASGITransport(app=app))`.
   Never `TestClient` once the project uses `AsyncSession`.
-  **Never** `from async_asgi_testclient import TestClient` —
-  unmaintained.
+  **Never** `from async_asgi_testclient import TestClient`.
 - **Never** mock the DB in integration tests. Substitutes are
   in-process: a SQLite session for the DB, `httpx_mock` for
   downstream HTTP, a fake server for SMTP.
