@@ -38,7 +38,7 @@ Decision: approve / request changes / reject
 |---|---|
 | Scope | The diff carries a line no acceptance criterion asked for. |
 | Conventions | A changed line breaks a rule in a file that governs it. |
-| Architecture | A decision changed without the documents that describe it. |
+| Architecture | A decision or a domain changed without the documents that describe it. |
 | Documentation | A change to structure, workflow, or conventions left an affected document stale. |
 | Verification | The PR claims a check the reviewer cannot confirm ran. |
 | Depth | The change obeys every rule and is still the wrong thing to keep. |
