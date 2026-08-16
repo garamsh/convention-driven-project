@@ -264,6 +264,10 @@ back/forward. The pieces, for a photo modal:
   `render()`, and wrapping whatever providers the root layout mounts.
   A provider mounted over one segment is wrapped by the tests of that
   segment, not here.
+- The test setup stubs `server-only` to an empty module. That package
+  throws wherever it is imported outside a Server Component, so
+  without the stub every test reaching a server-only module fails
+  before it runs.
 - This stack's substitutes: MSW for outbound HTTP, a Prisma/Drizzle
   test double or SQLite for the database, a fake session for auth,
   `testcontainers-node` for real service dependencies.
