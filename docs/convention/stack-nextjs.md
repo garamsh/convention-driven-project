@@ -232,8 +232,8 @@ back/forward. The pieces, for a photo modal:
 
 ## 10. `proxy.ts` (v16+) / `middleware.ts`
 
-- The file lives at `src/proxy.ts`, or at the project root when the
-  project has no `src/`. It exports a `proxy` function and a
+- The file lives at `src/proxy.ts` (§1). It exports a `proxy`
+  function and a
   `config` object whose `matcher` selects the paths it runs on —
   conventionally everything except `/api`, `_next/static`,
   `_next/image`, and `favicon.ico`.
