@@ -10,7 +10,6 @@ Defaults for Tailwind CSS projects. How styles are composed: utilities in markup
 - `@apply` and `@utility`: when each earns its keep
 - Theme tokens via `@theme`
 - Common idioms
-- Anti-patterns
 
 ## Core principle
 
@@ -94,7 +93,7 @@ Define design tokens once. Components reference tokens, never raw values.
 }
 ```
 
-Use as `bg-brand-500`, `font-display`, `rounded-card`. Hardcoded hex or px in markup is a smell — extract it.
+Use as `bg-brand-500`, `font-display`, `rounded-card`. Hardcoded hex or px in markup is a smell — extract it. Tailwind's own `--tw-*` variables sit behind that surface and are an implementation detail; reference your tokens, never those.
 
 ## Common idioms
 
@@ -106,11 +105,3 @@ Use as `bg-brand-500`, `font-display`, `rounded-card`. Hardcoded hex or px in ma
 - **Color with opacity** — `bg-black/50` (slash syntax). v3's `bg-opacity-*` is removed.
 - **Arbitrary values** — `bg-[#ff00aa]` or `bg-(--brand-color)` for CSS vars. Search the docs first; a utility usually exists.
 
-## Anti-patterns
-
-- Long arbitrary-value chains. If the chain survives 3 uses, extract it to a token or, by the ladder above, to a class.
-- A single CSS class wrapping one or two utilities — the class then duplicates what a utility does.
-- Custom CSS where a utility already exists. Search `/docs` before writing CSS.
-- Mixing v3 and v4 patterns — `@tailwind` directives and `tailwind.config.js` are v3; they break under v4.
-- Reaching for `--tw-*` internal variables in user code. They're an implementation detail.
-- Designing styles that need to be hand-tuned per breakpoint instead of using Tailwind's responsive prefixes.
