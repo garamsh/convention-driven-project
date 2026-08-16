@@ -275,15 +275,19 @@ back/forward. The pieces, for a photo modal:
 
 ## 12. Import direction and file naming
 
-The three tiers, and what each may import:
+Three tiers, and what each may import:
 
 - `components/`, `hooks/`, `lib/`, `types/`: cross-feature.
   Each may import from itself or each other.
 - `features/*`: may import the cross-feature modules; **may not**
   import from `app/` or from another feature.
 - `app/`: may import from both.
+- `src/testing/`: outside the tiers. Test scaffolding may import from
+  anywhere, and nothing outside a test imports it.
 
-The ESLint rule `import/no-restricted-paths` enforces this.
+The tiers are not self-enforcing: configure `import/no-restricted-paths`
+to fail the build on a crossing, in the same pull request that creates
+the first feature.
 
 ### File naming
 
