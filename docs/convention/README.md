@@ -17,6 +17,8 @@ Rules every agent follows when writing code, tests, commits, and documents. The 
 | `review.md` | What a review must carry to be valid, and how an author responds |
 | `documentation.md` | What makes a document or a GitHub artifact valid, review comments included |
 
+Every project keeps all of these. They are the floor, and bootstrap prunes only the table below.
+
 ## Stack-specific
 
 These apply only when the project uses that stack. The bootstrap process (root `README.md` §Bootstrap) keeps the relevant ones and deletes the rest, removing the rows below for the files it deletes.
