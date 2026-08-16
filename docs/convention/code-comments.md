@@ -6,6 +6,8 @@ When and how to comment code — and when to leave it alone.
 
 Add a comment where it helps a reader. Skip where the code is self-evident. When in doubt, prefer to omit; an absent comment is easier to add later than an absent explanation is to remember.
 
+A comment that no longer describes the code below it is corrected or deleted in the same change that moved the code. A stale comment is worse than an absent one: it is read as true.
+
 ## Brevity
 
 When you do comment, write the shortest version that conveys the essential point. One short sentence beats a paragraph.
