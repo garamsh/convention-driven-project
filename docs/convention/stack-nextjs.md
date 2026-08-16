@@ -285,6 +285,19 @@ Three tiers, and what each may import:
 - `src/testing/`: outside the tiers. Test scaffolding may import from
   anywhere, and nothing outside a test imports it.
 
+A feature declares two entry points, not one:
+
+- `features/<name>/index.ts` — what a Server Component may read.
+  Server-only modules reach the graph through here.
+- `features/<name>/actions.ts` — the feature's Server Actions. A
+  client module imports from here.
+
+One barrel over both breaks the build. A barrel that exports anything
+client-reachable is treated as client-reachable whole, so a client
+module importing a single action drags the server-only modules beside
+it into the client graph. The error then names the client module,
+which is innocent — the shape of the barrel is the cause.
+
 The tiers are not self-enforcing: configure `import/no-restricted-paths`
 to fail the build on a crossing, in the same pull request that creates
 the first feature.
