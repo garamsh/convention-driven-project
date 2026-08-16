@@ -129,8 +129,8 @@ using multiple root layouts.
 | Concern | Server Component | Server Action | Route Handler |
 |---|---|---|---|
 | Read data | yes, async render | — | yes, in handler |
-| Mutations from forms | — | yes, **default** | allowed |
-| Mutations from `onClick` | — | yes, via `useTransition` | allowed |
+| Mutations from forms | — | yes, **default** | no (§6) |
+| Mutations from `onClick` | — | yes, via `useTransition` | no (§6) |
 | Webhooks from third parties | — | no | **only choice** |
 | Public REST/JSON API | — | no | **only choice** |
 | OAuth callbacks | — | no | yes |
