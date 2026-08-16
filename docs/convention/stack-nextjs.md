@@ -187,7 +187,6 @@ inside the Server Action.**
 - Route Handlers serve external callers: webhooks, OAuth callbacks,
   public REST/JSON endpoints, streamed responses. **Never** use one
   for a mutation your own UI submits — that is a Server Action (§3).
-- External endpoints declare `export const dynamic = 'force-dynamic'`.
 - A webhook handler verifies the provider's signature against the
   raw request body before acting on the event, and answers 400 when
   the signature is missing or fails. A body already parsed as JSON
