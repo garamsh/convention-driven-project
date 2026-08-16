@@ -14,7 +14,7 @@ Long comments drift out of sync with the code they explain; short ones age well.
 
 ## Voice
 
-Write comments in declarative or imperative mood, stating facts: `returns the cached token`, `retries once on timeout`. Never narrate ("this will now…"), apologize ("unfortunately we have to…"), or justify the author's choices ("I chose this because…") — rationale belongs in the commit message or an ADR.
+Write comments in declarative or imperative mood, stating facts: `returns the cached token`, `retries once on timeout`. Never narrate ("this will now…", or `// loop through users` above a for-loop), apologize ("unfortunately we have to…"), or justify the author's choices ("I chose this because…") — rationale belongs in the commit message or an ADR.
 
 ## Inline vs doc comments
 
@@ -25,7 +25,6 @@ Write comments in declarative or imperative mood, stating facts: `returns the ca
 ## Forbidden
 
 - **Paraphrasing** (`// increment counter` above `i++`)
-- **Narrating** (`// loop through users` above a for-loop)
 - **Section dividers** (`// constructor` / `// getters` / `// setters`)
 - **Wall-of-text** above a function — one line at the top of the body, or a doc comment on the type/module, is enough
 
