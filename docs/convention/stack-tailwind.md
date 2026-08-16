@@ -56,14 +56,31 @@ Decision order:
 
 Avoid `@apply` for 1–3 utilities — inline them. `@apply` chains longer than ~10 utilities usually signal the wrong abstraction; the design likely needs a token or a component, not more classes.
 
+Rung 2 — the chain repeats, so it becomes a class:
+
 ```css
-/* In your CSS — when a chain repeats */
-@utility btn-primary {
+.btn-primary {
   @apply inline-flex items-center gap-2 px-4 py-2 rounded-md
          bg-blue-500 text-white font-medium
          hover:bg-blue-600 focus:outline-2 focus:outline-blue-500;
 }
 ```
+
+Rung 3 — a class Tailwind does not ship, left open so variants can
+target it (`lg:scrollbar-none`, `hover:scrollbar-none`):
+
+```css
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+```
+
+Do not write the variants into a `@utility` body. A rung-3 class
+exists so the caller can apply them; baking them in is rung 2 with
+the wrong keyword.
 
 ## Theme tokens via `@theme`
 
@@ -91,7 +108,7 @@ Use as `bg-brand-500`, `font-display`, `rounded-card`. Hardcoded hex or px in ma
 
 ## Anti-patterns
 
-- Long arbitrary-value chains. If the chain survives 3 uses, extract it to a token or `@utility`.
+- Long arbitrary-value chains. If the chain survives 3 uses, extract it to a token or, by the ladder above, to a class.
 - A single CSS class wrapping one or two utilities — the class then duplicates what a utility does.
 - Custom CSS where a utility already exists. Search `/docs` before writing CSS.
 - Mixing v3 and v4 patterns — `@tailwind` directives and `tailwind.config.js` are v3; they break under v4.
