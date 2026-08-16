@@ -59,7 +59,8 @@ Each convention file is self-contained: reading it alone is enough to apply its 
 ## Precedence
 
 1. The stack-specific file, when one applies.
-2. The stack-neutral files.
-3. This index.
+2. The architecture file, when one applies.
+3. The stack-neutral files.
+4. This index.
 
 On conflict, the more specific rule wins. Report conflicts to the PM in the PR description — do not resolve them yourself.
