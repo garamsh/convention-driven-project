@@ -128,14 +128,14 @@ using multiple root layouts.
 
 | Concern | Server Component | Server Action | Route Handler |
 |---|---|---|---|
-| Read data | ✅ async render | — | ✅ in handler |
-| Mutations from forms | — | ✅ **default** | OK |
-| Mutations from `onClick` | — | ✅ via `useTransition` | ✅ |
-| Webhooks from third parties | — | ❌ | ✅ **only choice** |
-| Public REST/JSON API | — | ❌ | ✅ **only choice** |
-| OAuth callbacks | — | ❌ | ✅ |
-| Streaming (ReadableStream) | partial (Suspense) | — | ✅ |
-| Works without JS | ✅ | ✅ | ❌ |
+| Read data | yes, async render | — | yes, in handler |
+| Mutations from forms | — | yes, **default** | allowed |
+| Mutations from `onClick` | — | yes, via `useTransition` | allowed |
+| Webhooks from third parties | — | no | **only choice** |
+| Public REST/JSON API | — | no | **only choice** |
+| OAuth callbacks | — | no | yes |
+| Streaming (ReadableStream) | partial, via Suspense | — | yes |
+| Works without JS | yes | yes | no |
 
 ### Decision rule
 
