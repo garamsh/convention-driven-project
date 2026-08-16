@@ -20,7 +20,7 @@ Local checks and CI checks are the same checks, invoked by the same names. CI re
 - **One name per task.** Each of lint, format, test, and build has exactly one name that a human and CI both invoke. What implements that name — a task runner, a script, a package manifest entry — is the project's choice; the name is the contract.
 - **One name for the whole set.** A single name runs lint, format, test, and build in order, so "run the checks" is one command locally and one step in CI.
 - **CI calls the names, not the commands behind them.** A pipeline that spells out the underlying tool invocations has created a second set of commands, and the two drift.
-- **Entry points stay thin.** When a step outgrows a one-liner, the answer is a maintained action (§Reuse), not a script. A script is the last resort for what no action does; a step that grew into a script is a signal the entry point needs re-splitting, not that the script needs adding.
+- **Entry points stay thin.** An entry point that has grown past a few lines is one name doing several jobs; re-split it into named tasks rather than letting it become a script. What it may not become is a pipeline component: it runs on a contributor's machine as well as in CI.
 
 ## Run the checks before pushing
 
@@ -47,7 +47,7 @@ Before pinning anything the pipeline pulls in — a published component, contain
 
 Pre-trained recollection is a starting point, not source of truth. An agent that picks a version from memory silently uses a stale or nonexistent release.
 
-Pin the result immutably: a tag or a digest, never a branch or `latest`.
+Pin to a reference that cannot move: a digest, or a full commit SHA. A tag can be repointed at any time and a branch moves by design, so neither pins anything.
 
 For every third-party dependency, also check the ecosystem's advisory source for known vulnerabilities in the candidate version.
 
@@ -93,4 +93,4 @@ Replace `<lint-cmd>` and the rest with the project's actual commands (`npm run l
 - **Artifacts**: use the artifact action.
 - **Permissions**: `permissions: read-all` at the workflow top; `write` granted per job.
 - **Secrets**: repo or environment secrets, OIDC for cloud deploys, `::add-mask::VALUE` for values derived from secrets.
-- **Pinning**: a SHA or a tag, never `@main`.
+- **Pinning**: a full commit SHA.
