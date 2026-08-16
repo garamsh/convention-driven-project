@@ -46,9 +46,9 @@ wrong for it. Two helpers sharing an idea → name the idea:
 
 ## 1. Project layout — domain-by-package (production)
 
-A bounded context owns its folder. URL versioning is a **URL
-prefix** on the `APIRouter` (§7) — never a directory name like
-`api/v1/`. This is the zhanymkanov production layout.
+URL versioning is a **URL prefix** on the `APIRouter` (§7) — never
+a directory name like `api/v1/`. This is the zhanymkanov production
+layout.
 
 Paths outside the domain folders:
 
@@ -79,8 +79,7 @@ For **small projects (≤3 domains, ≤5 tables)** where the
 domain-by-package shape is overkill, the layer-based layout
 (`src/api/`, `src/services/`, `src/repositories/`, `src/models/`,
 `src/schemas/`, `src/core/`) is acceptable. Switch to
-domain-by-package the moment either threshold is crossed. Note
-the deviation in the PR description.
+domain-by-package the moment either threshold is crossed.
 
 For **microservices / very small services** the official
 `fastapi/full-stack-fastapi-template` flat layout
