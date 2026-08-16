@@ -167,9 +167,9 @@ Declare the entrypoint under `[tool.fastapi]` in
 argument.
 
 `fastapi run` is single-process by default; front it with a
-process manager (or `gunicorn` with
-`uvicorn.workers.UvicornWorker`) only when horizontal scaling is
-needed.
+process manager — or `gunicorn` with `uvicorn_worker.UvicornWorker`
+from the `uvicorn-worker` package, which `uvicorn.workers` was split
+into at 0.30 — only when horizontal scaling is needed.
 
 ## 4. Database
 
@@ -242,16 +242,14 @@ For small domains the repository can be inlined into
 called from more than one service, or when the service file
 starts mixing orchestration with raw query building.
 
-**Mixing async and blocking code.** When a service is `async def`
-but part of its work calls a sync library (e.g. `requests`,
-synchronous ORM, file I/O, or a third-party SDK that doesn't
-support `async`), wrap that call with `asyncify` from
-**[Asyncer](https://asyncer.tiangolo.com/)** (also from the
-FastAPI / Tiangolo team) — it runs the blocking call in a
-threadpool without manually managing `run_in_threadpool` or
-wrapping the whole service in `def`. Asyncer is the canonical
-answer for "I have an async endpoint but I need to call a sync
-library cleanly."
+**Mixing async and blocking code.** A sync call inside `async def`
+— `requests`, a synchronous ORM, file I/O, an SDK with no async
+form — blocks the event loop for every request in flight, not only
+its own. Run it off the loop, either way FastAPI documents: declare
+the path operation `def` and let FastAPI hand the whole function to
+a threadpool, or keep `async def` and wrap the blocking call with
+Starlette's `run_in_threadpool`. Asyncer's `asyncify` wraps the
+second with a typed signature.
 
 ## 7. Routers
 
