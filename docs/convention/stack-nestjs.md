@@ -56,7 +56,8 @@ At the repo root:
 
 Under `src/`:
 
-- `src/main.ts` — bootstrap; registers the global pipes and filters.
+- `src/main.ts` — bootstrap only. Global pipes and filters are bound
+  as providers in `AppModule` (§5), not here.
 - `src/app.module.ts` — root module; imports `CoreModule` and every
   feature module.
 - `src/config/` — `@nestjs/config` wrappers: `configuration.ts`,
@@ -161,10 +162,13 @@ Features inject `PrismaService` directly.
 
 ## 5. Validation
 
-- `main.ts` registers `ValidationPipe` globally with `whitelist: true`
-  (strip properties no DTO declares), `forbidNonWhitelisted: true`
-  (reject a request that carries extras) and `transform: true` (cast
-  query and path params to their declared types).
+- `ValidationPipe` is bound globally through an `APP_PIPE` provider
+  in `AppModule` — never `app.useGlobalPipes()` in `main.ts`, which
+  binds no provider and so cannot be overridden in a test (§6).
+  Configure it with `whitelist: true` (strip properties no DTO
+  declares), `forbidNonWhitelisted: true` (reject a request that
+  carries extras) and `transform: true` (cast query and path params
+  to their declared types).
 - DTOs are **classes**, not interfaces: TS interfaces are erased at
   compile time, and `ValidationPipe` reads the class metadata at
   runtime.
@@ -191,9 +195,10 @@ Features inject `PrismaService` directly.
   `getRepositoryToken(Entity)` — reach for `useMocker()` only when the
   dependency graph is too large to enumerate, and then only at module
   boundaries.
-- A globally registered enhancer cannot be swapped in a test unless it
-  is bound with `useExisting` instead of `useClass`; bind it that way
-  so the provider behind it can be overridden.
+- A globally registered enhancer — `APP_PIPE`, `APP_GUARD`,
+  `APP_INTERCEPTOR`, `APP_FILTER` — cannot be swapped in a test
+  unless it is bound with `useExisting` instead of `useClass`; bind
+  it that way so the provider behind it can be overridden.
 - E2E exercises the built app — `nest start --prod`, or the built
   artifact — with `@testcontainers/postgresql` /
   `@testcontainers/mongodb` supplying the services it talks to.
