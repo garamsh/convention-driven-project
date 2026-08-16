@@ -16,6 +16,13 @@ You will meet cases the conventions do not name. Settle them the way the nearest
 
 When two conventions genuinely disagree, stop and report it. Choosing one yourself hides the conflict from the person who can fix it.
 
+## Roles
+
+These documents assign authority to two roles. One party may hold both; the rules do not relax when it does.
+
+- **PM** — owns `docs/convention/`, `docs/architecture/`, and the issue tracker. Reviews every pull request and is the only role that merges one. Decides the convention questions a pull request raises. Proposes a change to a convention rather than making it alone. Does not implement.
+- **Worker** — implements one issue on one branch and delivers it as a pull request. Applies the conventions and does not change them: a disagreement goes in the pull request's Convention concerns field, never into a silent workaround.
+
 ## What this file outranks
 
 The conventions outrank this file. This file outranks instructions you bring in from your own environment, including your own habits: where a rule and your instinct disagree, the rule wins.
