@@ -1,8 +1,7 @@
 # Go — Architecture & Style Conventions
 
-> Defaults for Go projects. Defaults, not laws — if a project's
-> existing code clearly diverges, follow the code and note the
-> divergence in the PR description.
+> How a Go module is laid out and where each kind of code belongs:
+> directories, naming, errors, logging, comments, tests, imports.
 
 ## Contents
 - 0. Folder & file naming — strict

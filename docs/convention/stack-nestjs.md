@@ -1,6 +1,6 @@
 # NestJS — Architecture & Style Conventions
 
-Layout, naming, module boundaries, configuration, database access, validation, and test placement for NestJS projects. Only what is specific to NestJS is stated here; the stack-neutral files under `docs/convention/` keep their own rules.
+Layout, naming, module kinds, configuration, database access, validation, and test placement for NestJS projects.
 
 ## Contents
 - 0. Folder & file naming — strict
