@@ -314,6 +314,10 @@ configured.
 
 ## 9. Verification commands
 
+These are the commands that sit behind the project's entry-point
+names. What CI invokes is the names, not these — `ci.md` §One entry
+point per task owns that.
+
 | Task | Command |
 |------|---------|
 | Build | `go build ./...` |
@@ -327,8 +331,8 @@ configured.
 | Coverage | `go test -cover ./...` |
 | Generate (mockery) | `mockery` (config) or `go generate ./...` |
 
-If the project uses a task runner (Taskfile, Mage, Make), adapt — but
-the underlying go commands stay the same.
+A task runner (Taskfile, Mage, Make) wraps these under the entry-point
+names; the underlying go commands stay the same.
 
 ## 10. Sources (URL index)
 
