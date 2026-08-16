@@ -137,8 +137,9 @@ Avoid `@Global()` unless the provider is genuinely used everywhere
   on a schema change. Migrations in `src/database/migrations/` are the
   only schema history, applied with `migrationsRun`.
 - Read single rows with the 0.3+ finders, `findOneBy` /
-  `findOneByOrFail`. `findOneByOrFail` throws `EntityNotFoundError`,
-  which a global exception filter maps to `NotFoundException`.
+  `findOneByOrFail`. `findOneByOrFail` throws `EntityNotFoundError`;
+  a filter in `src/common/filters/` maps it to `NotFoundException`,
+  and a project using `findOneByOrFail` writes that filter.
 
 ### Mongoose
 
@@ -151,7 +152,7 @@ Avoid `@Global()` unless the provider is genuinely used everywhere
 
 ### Prisma
 
-No official `@nestjs/prisma` package exists. The community pattern:
+Prisma is wired by hand rather than through a Nest package:
 
 - `src/prisma/prisma.module.ts` — a `@Global()` module exporting the
   service.
