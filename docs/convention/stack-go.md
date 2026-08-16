@@ -315,8 +315,8 @@ configured.
 ## 9. Verification commands
 
 These are the commands that sit behind the project's entry-point
-names. What CI invokes is the names, not these — `ci.md` §One entry
-point per task owns that.
+names. What CI invokes is the names, not these; that rule belongs to
+`ci.md` §One entry point per task.
 
 | Task | Command |
 |------|---------|

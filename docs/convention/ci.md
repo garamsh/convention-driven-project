@@ -6,7 +6,7 @@ How a project's checks are named, run, and secured. The rules hold on any toolch
 - Core principle
 - One entry point per task
 - Run the checks before pushing
-- Reuse before writing pipeline steps
+- Reuse
 - Verify a pinned dependency before adopting it
 - Security baseline
 - Anti-patterns
@@ -28,7 +28,7 @@ Local checks and CI checks are the same checks, invoked by the same names. CI re
 - Run the project's checks locally before code leaves the machine. CI is the second line of defence, not the only one.
 - Automating that locally — a version-control hook, a watch task, an on-save editor command — is the contributor's choice. No tool is mandated, and running the checks by hand satisfies the rule.
 
-## Reuse before writing pipeline steps
+## Reuse
 
 For each step in the pipeline:
 
