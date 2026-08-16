@@ -2,6 +2,14 @@
 
 What makes a PR review valid, and how authors respond. Applies to every review and every response; violations are grounds for rejection.
 
+## Contents
+- Submitting a review
+- What each check verifies
+- Citing violations
+- Blockers and nits
+- Single-account setups
+- Responding to a review (author)
+
 ## Submitting a review
 
 - **Reviews are formal.** Decisions are submitted as approve / request changes / comment via the review mechanism — never as bare comments. Review states gate merges; comments do not.
@@ -23,6 +31,21 @@ Decision: approve / request changes / reject
 - An approve requires the Scope, Verification, and Depth rows to be `pass` or `fail` — never `unverified`. The other three rows may be `unverified` only with a stated reason (some PRs touch nothing a convention governs).
 - A check you did not verify is marked `unverified` — never guessed. Skipping a check is allowed; hiding the skip is not. A review full of `unverified` rows tells the reader the review did not really happen.
 - **Reject maps to request changes.** GitHub has no `reject` review state, so a reject decision is submitted as a request-changes review whose decision line reads `reject` (in single-account setups, the `comment` substitute per §Single-account setups). What reject does that request changes does not: the reviewer closes the PR and files an issue describing the right direction.
+
+## What each check verifies
+
+| Check | Fails when | Rule |
+|---|---|---|
+| Scope | The diff carries a line no acceptance criterion asked for. | Here |
+| Conventions | A changed line breaks a rule in a file that governs it. | The governing file in `docs/convention/` |
+| Architecture | A decision changed without the documents that describe it. | `docs/architecture/README.md` §Rules |
+| Documentation | A change to structure, workflow, or conventions left an affected document stale. | `documentation.md` §Keep it current |
+| Verification | The PR claims a check the reviewer cannot confirm ran. | `.github/PULL_REQUEST_TEMPLATE.md` |
+| Depth | The change obeys every rule and is still the wrong thing to keep. | Here |
+
+**Scope** is measured against the issue, never against taste. A line that traces to an acceptance criterion is in scope however large it is, and a correct one-line drive-by is out of scope however small. Out-of-scope work is not wrong — it is a separate issue.
+
+**Depth** is the check the other five cannot make. They ask whether the change follows the rules; Depth asks whether it is right: a correctness risk the tests do not cover, a materially simpler approach passed over, a defect no convention happens to name. Marking it `pass` asserts the reviewer looked for those and found none, so it is the one row that cannot be filled without reading the change itself.
 
 ## Citing violations
 
