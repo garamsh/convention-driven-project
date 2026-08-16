@@ -28,10 +28,10 @@ Templates do not carry repository settings. Configure these by hand:
 
 Run in order. Every step touches only paths in this repository.
 
-1. **Pick the stack conventions.** Keep the `docs/convention/stack-*.md` files matching the project's stack; delete the rest.
+1. **Pick the stack conventions.** Keep the `docs/convention/stack-*.md` files matching the project's stack; delete the rest. Keeping none is a valid outcome — a project whose stack no file covers runs on the stack-neutral files alone. Done when every remaining `stack-*.md` names a stack the project uses.
 2. **Extend `.gitignore`.** Add the build outputs, dependency directories, and tool caches of the kept stacks to the last block of `.gitignore`.
-3. **Set up CI plumbing.** Add the plumbing described in `docs/convention/ci.md`, so local and CI runs invoke the same checks.
-4. **Write the architecture documents.** Add one responsibility document per domain under `docs/architecture/`, following the rules in `docs/architecture/README.md`, and list each one in that file's index. Leave `docs/architecture/adr/0000-template.md` in place.
+3. **Set up CI plumbing.** Define the entry-point names `docs/convention/ci.md` §One entry point per task requires — one per task, one for the whole set — and a pipeline that invokes them. Done when the whole-set name runs the checks locally and the pipeline calls that same name.
+4. **Write the architecture documents.** Add one responsibility document per domain the project already has under `docs/architecture/`, following the rules in `docs/architecture/README.md`. A project with no code yet adds none. Leave `docs/architecture/adr/0000-template.md` in place. Done when `docs/architecture/README.md` §Index lists every responsibility document in that folder and no longer reads `_Populated during bootstrap._` — an empty list is the right answer when there are none.
 5. **Refresh the conventions index.** Update the stack-specific section of `docs/convention/README.md` to name the `stack-*.md` files that remain.
 6. **Replace the CODEOWNERS placeholder.** Replace `@project-owner-placeholder` in `.github/CODEOWNERS` with the project owner.
 7. **Replace this README.** Describe the project instead of the template. `AGENTS.md` stays as it is.
