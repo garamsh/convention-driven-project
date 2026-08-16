@@ -4,6 +4,9 @@ How a Next.js project is laid out and where each kind of code
 belongs: routes, the server/client boundary, mutations, env, and
 tests.
 
+Checked against Next.js 16. A claim below that names no version holds
+for it.
+
 ## Contents
 - 0. Folder & file naming
 - 1. Project layout (App Router, `src/`)

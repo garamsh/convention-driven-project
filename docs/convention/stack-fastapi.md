@@ -3,6 +3,9 @@
 > How a FastAPI project is laid out and where each kind of code
 > belongs: bootstrap, configuration, database, schemas, services,
 > routers, and tests.
+>
+> Checked against FastAPI 0.138, Pydantic 2, SQLAlchemy 2. A claim
+> below that names no version holds for these.
 
 ## Contents
 - 0. Folder & file naming

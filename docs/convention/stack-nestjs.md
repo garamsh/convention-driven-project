@@ -2,6 +2,8 @@
 
 Layout, naming, module kinds, configuration, database access, validation, and test placement for NestJS projects.
 
+Checked against NestJS 11, TypeORM 0.3, and Mongoose 8. A claim below that names no version holds for these.
+
 ## Contents
 - 0. Folder & file naming — strict
 - 1. Project layout — feature modules
