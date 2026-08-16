@@ -32,4 +32,4 @@ Issues, PRs, and comments are documentation too.
 - A file past ~50 lines opens with a `## Contents` list of its section headings; a shorter one does not. A Contents list is never the remedy for a file that has outgrown one topic — see §Keep it maintainable.
 - **No decoration.** No emojis, badges, or ornamental headers. This holds for files under `docs/` as much as for GitHub artifacts: a check-mark glyph in a table is decoration where `yes` is a word.
 - Use file paths (`src/auth/service.ts`) instead of drawn hierarchies.
-- File names: lowercase kebab-case (`runtime-safety.md`). Uppercase is reserved for fixed-entry files tools and humans look for first: `README.md`, `AGENTS.md`, `CLAUDE.md`.
+- File names: lowercase kebab-case (`runtime-safety.md`). Uppercase is reserved for files a tool or a reader looks for by an exact name it did not choose: `README.md`, `AGENTS.md`, `CLAUDE.md`, and the names GitHub requires under `.github/`.
