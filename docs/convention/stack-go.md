@@ -266,7 +266,8 @@ project says otherwise).
   multiple domains. Separate binary.
 - **In-process integration test client:** `httptest.NewServer`.
 - **E2E tooling:** the binary under test is what `go build` produces;
-  real services come from containers (`go-testcontainers`).
+  real services come from containers
+  (`github.com/testcontainers/testcontainers-go`).
 
 Within `internal/<domain>/`:
 
