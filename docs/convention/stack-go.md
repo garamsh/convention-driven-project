@@ -304,7 +304,9 @@ Three groups, separated by blank lines:
 2. Third-party
 3. Internal module
 
-`goimports` enforces this automatically (`gofmt -w .` + `goimports -w .`).
+`goimports -local <module path>` produces the third group. Plain
+`goimports` emits two — standard library and everything else — so the
+`-local` flag is what separates the internal module.
 Use `go mod tidy` after every change. Don't commit `go.sum` updates
 you don't recognize. `go vet ./...`. `golangci-lint run` if
 configured.
