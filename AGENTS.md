@@ -10,6 +10,8 @@ This repository is convention-driven. How code, tests, commits, and documents ar
 
 Open the index before you write, then open the files that govern what you are about to touch. Read them from the file. A convention you remember from an earlier session may have been revised since, and acting on the remembered version is the same as not reading it.
 
+`docs/architecture/README.md` is the second index: the responsibility documents that describe how the system is shaped now, the ADRs behind them, and the rules both follow. Open it before you touch code, and again before you write a pull request that changes a decision — a decision and the documents describing it land together or not at all.
+
 You will meet cases the conventions do not name. Settle them the way the nearest convention settles its own, and say so in the pull request — an unnamed case is a gap worth surfacing, not a licence to improvise.
 
 When two conventions genuinely disagree, stop and report it. Choosing one yourself hides the conflict from the person who can fix it.
