@@ -68,7 +68,7 @@ See §0 for the banned-name list.
 
 **Single file vs package** for an impl:
 
-- **Single file** (`postgres.go`, `memory.go`) when impl ≤ ~200 LoC
+- **Single file** (`postgres.go`, `memory.go`) when impl ≤ ~300 LoC
   and has no private helpers worth isolating. Filename = vendor.
 - **Package** (`postgres/`, `memory/`) when impl > ~300 LoC or owns
   private helpers / connection-pool / per-SQL constants. Folder name
@@ -96,7 +96,7 @@ types + persistence) can skip `service.go` entirely. Add `service.go`
 multiple dependencies.
 
 Promote a cross-cutting concern to its own `internal/<thing>/` package
-**only when** that file is past ~500 LoC **or** ≥3 domains import it.
+**only when** that file is past ~300 LoC **or** ≥3 domains import it.
 Never pre-emptively create one of the packages §0 bans.
 
 ### Layout C — library
@@ -124,7 +124,7 @@ named after the concern:
 Sizing, for each of them:
 
 - **Single file (`errors.go`, `logger.go`, `config.go`, …)** when ≤
-  ~200 LoC. Filename = what's inside.
+  ~300 LoC. Filename = what's inside.
 - **Promotion to `internal/<thing>/`** when > ~300 LoC or owns private
   helpers. Folder name describes what's inside
   (`internal/logger/`, `internal/httpserver/`, `internal/config/`);
