@@ -18,7 +18,15 @@ Rules every agent follows when writing code, tests, commits, and documents. The 
 
 ## Stack-specific
 
-`stack-*.md` files apply only when the project uses that stack. The bootstrap process (root `README.md` §Bootstrap) keeps the relevant ones and deletes the rest.
+These apply only when the project uses that stack. The bootstrap process (root `README.md` §Bootstrap) keeps the relevant ones and deletes the rest, removing the rows below for the files it deletes.
+
+| File | Governs |
+|---|---|
+| `stack-fastapi.md` | FastAPI and Pydantic v2 services |
+| `stack-go.md` | Go modules and services |
+| `stack-nestjs.md` | NestJS services |
+| `stack-nextjs.md` | Next.js App Router applications |
+| `stack-tailwind.md` | Tailwind CSS styling |
 
 ## Independence
 
