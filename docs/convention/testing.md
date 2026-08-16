@@ -31,6 +31,8 @@ Assert on outputs and side-effects only:
 
 Do not assert on: call order, unexported helper shape, private type structure, internal refactors. **If a refactor forces test updates, the tests were testing implementation.**
 
+The concrete targets for a given stack are owned by the project's stack convention file; the lists above state only the kinds that qualify.
+
 ## Mocking strategy
 
 - **Unit**: mock any module boundary you control.
