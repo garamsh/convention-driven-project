@@ -198,7 +198,8 @@ Per domain: `Base`, `Create`, `Update`, `Public`. Add
 
 - `ConfigDict(from_attributes=True)` on the public schema
   enables `<Resource>Public.model_validate(orm_row)`.
-- **Never** `ConfigDict(json_encoders={...})` — removed in v2.
+- **Never** `ConfigDict(json_encoders={...})` — deprecated in
+  v2. Serialize with `@field_serializer` instead.
 - **Never** `Field(ge=18, default=None)` — constraint contradicts
   default.
 - **Never** merge schema with ORM model in one file.
