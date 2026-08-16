@@ -12,7 +12,6 @@ Layout, naming, module boundaries, configuration, database access, validation, a
 - 6. Testing — placement and Nest setup
 - 7. CLI conventions
 - 8. Strict-mode TypeScript
-- 9. Sources (URL index)
 
 ## 0. Folder & file naming — strict
 
@@ -222,7 +221,3 @@ Features inject `PrismaService` directly.
 Scaffold new projects with `nest new --strict`; that flag is how this
 stack turns strict compilation on.
 
-## 9. Sources (URL index)
-
-- docs: docs.nestjs.com/{modules, controllers, providers, techniques/validation, techniques/configuration, techniques/database, techniques/mongo, fundamentals/testing, cli/usages, first-steps}
-- repos: github.com/{nestjs/schematics, nestjs/nest/sample/01-cats-app}

@@ -15,7 +15,6 @@
 - 7. Testing
 - 8. Imports & dependencies
 - 9. Verification commands
-- 10. Sources (URL index)
 
 ## 0. Folder & file naming — strict
 
@@ -331,14 +330,3 @@ names.
 A task runner (Taskfile, Mage, Make) wraps these under the entry-point
 names; the underlying go commands stay the same.
 
-## 10. Sources (URL index)
-
-- Go standard library: <https://pkg.go.dev/std>
-- Effective Go: <https://go.dev/doc/effective_go>
-- Go Code Review Comments: <https://github.com/golang/go/wiki/CodeReviewComments>
-- Standard Go Project Layout: <https://github.com/golang-standards/project-layout>
-- spf13/cobra (CLI conventions): <https://github.com/spf13/cobra>
-- testify (test framework): <https://github.com/stretchr/testify>
-- mockery v3 (mock generator): <https://github.com/vektra/mockery>
-- pgx/v5 (Postgres driver): <https://github.com/jackc/pgx>
-- go-kit (canonical example of package naming): <https://github.com/go-kit/kit>

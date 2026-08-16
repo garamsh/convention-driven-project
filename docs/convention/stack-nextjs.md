@@ -18,7 +18,6 @@ tests.
 - 10. `proxy.ts` (v16+) / `middleware.ts`
 - 11. Testing — three layers, two locations
 - 12. Import direction and file naming
-- 13. Sources (URL index)
 
 ## 0. Folder & file naming
 
@@ -289,7 +288,3 @@ enforces this — copy it for production.
 - Server Action: `<verb>-<noun>.ts` with `'use server'`.
 - Test: `*.test.ts(x)` inside `__tests__/`.
 
-## 13. Sources (URL index)
-
-- docs: nextjs.org/docs/app/{getting-started/project-structure, api-reference/file-conventions, getting-started/server-and-client-components, getting-started/mutating-data, guides/environment-variables, api-reference/file-conventions/proxy, getting-started/caching}
-- repos: github.com/{vercel/next.js/tree/canary/examples, vercel/commerce, shadcn-ui/taxonomy, alan2207/bulletproof-react/blob/master/docs/{project-structure,testing}.md, steven-tey/novel}
