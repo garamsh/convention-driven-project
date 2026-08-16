@@ -270,7 +270,7 @@ back/forward. The pieces, for a photo modal:
 
 ## 12. Import direction and file naming
 
-Imports run one way: cross-feature modules → features → app.
+The three tiers, and what each may import:
 
 - `components/`, `hooks/`, `lib/`, `types/`: cross-feature.
   Each may import from itself or each other.
