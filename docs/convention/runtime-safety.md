@@ -1,11 +1,11 @@
 # Runtime Safety
 
-How types, boundaries, and error handling keep runtime errors out of production code.
+How types, trust boundaries, and error handling keep runtime errors out of production code.
 
 ## Contents
 - Core principle
 - Type system
-- Boundaries
+- Trust boundaries
 - Illegal states
 - Total functions and exhaustive matching
 - Errors as values
@@ -22,7 +22,7 @@ Enable the strictest mode your stack supports — strict nullability, no implici
 - **Non-nullable by default.** A type that allows absence everywhere spreads absence-handling through every caller. Mark absence explicitly (with an `Option` / `Maybe` / `Result` shape or a nullable wrapper) only where it is a real state — never as a default.
 - **Domain primitives over raw types.** Define `UserId`, `Money`, `Email` as distinct named types (newtypes, branded types, value objects) rather than as raw strings or numbers. They prevent passing the wrong value at the type level.
 
-## Boundaries
+## Trust boundaries
 
 External data is untrusted. The boundary between outside and inside is where you prove what's true.
 

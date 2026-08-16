@@ -8,7 +8,7 @@ Rules every agent follows when writing code, tests, commits, and documents. The 
 |---|---|
 | `code-comments.md` | When and how to comment code |
 | `module-boundaries.md` | Where code lives, import direction, when a boundary is earned |
-| `runtime-safety.md` | Types, boundaries, error handling |
+| `runtime-safety.md` | Types, trust boundaries, error handling |
 | `testing.md` | Test layers, mocking, placement |
 | `ci.md` | Local/CI parity, pipeline authoring, security |
 | `git.md` | Branches, commits, PR titles, merging |
