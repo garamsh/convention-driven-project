@@ -1,7 +1,8 @@
 # FastAPI — Architecture & Style Conventions
 
-> Defaults for FastAPI projects: layout, naming, and
-> stack-specific rules. Applies when the project uses FastAPI.
+> How a FastAPI project is laid out and where each kind of code
+> belongs: bootstrap, configuration, database, schemas, services,
+> routers, and tests.
 
 ## Contents
 - 0. Folder & file naming
