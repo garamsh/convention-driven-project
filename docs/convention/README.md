@@ -31,7 +31,12 @@ These apply only when the project uses that stack. The bootstrap process (root `
 
 ## Independence
 
-Each convention file is self-contained: reading it alone is enough to apply its rules. Cross-references may mark scope boundaries ("stack files govern X") but never hold required content. No rule appears in two files.
+Each convention file is self-contained: reading it alone is enough to apply its rules.
+
+- **One file, one territory.** No artifact is governed by two files. Where two files could both decide a case, one of them is holding the wrong rule.
+- **A rule appears once** — inside a file as much as across files. A section that restates earlier rules in the negative is a second site to keep in sync, not a summary.
+- **Two files' rules may share a reason.** That is not duplication. Each states its own reason; neither points at the other for it.
+- Cross-references may mark scope boundaries ("stack files govern X") but never hold required content.
 
 ## Precedence
 
