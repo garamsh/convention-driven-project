@@ -13,9 +13,3 @@ Every abstraction names a real, repeated problem. An abstraction that hides no c
 - **Clarity is testable.** If a competent engineer cannot understand a unit in a few seconds of reading, restructure it before shipping. Nesting depth, indirection hops, and the number of concepts a reader must hold at once are all reviewable.
 - **Delete, don't wrap.** Prefer deleting dead code and dead paths over layering compatibility shims on top of them.
 
-## Anti-patterns
-
-- Wrapper or helper layers that pass everything through without adding meaning.
-- "Generic" utilities with parameters for cases that do not exist.
-- Frameworks inside the project: plugin systems, registries, and dispatch tables built before a second user exists.
-- Deep call chains where each hop only forwards arguments.
