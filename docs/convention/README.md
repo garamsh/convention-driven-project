@@ -2,12 +2,18 @@
 
 Rules every agent follows when writing code, tests, commits, and documents. The PM owns these files; workers read and apply them.
 
+## Contents
+- Stack-neutral
+- Architecture
+- Stack-specific
+- Independence
+- Precedence
+
 ## Stack-neutral
 
 | File | Governs |
 |---|---|
 | `code-comments.md` | When and how to comment code |
-| `module-boundaries.md` | Where code lives, import direction, when a boundary is earned |
 | `runtime-safety.md` | Types, trust boundaries, error handling |
 | `testing.md` | Test layers, mocking, placement |
 | `ci.md` | Local/CI parity, pipeline authoring, security |
@@ -17,7 +23,15 @@ Rules every agent follows when writing code, tests, commits, and documents. The 
 | `review.md` | What a review must carry to be valid, and how an author responds |
 | `documentation.md` | What makes a document or a GitHub artifact valid, review comments included |
 
-Every project keeps all of these. They are the floor, and bootstrap prunes only the table below.
+Every project keeps all of these. They are the floor, and bootstrap prunes only the tables below.
+
+## Architecture
+
+The shape the system is partitioned into. Bootstrap keeps the one the project uses and deletes the rest; each file states the structure it assumes.
+
+| File | Governs |
+|---|---|
+| `arch-domain.md` | Domain-partitioned systems: boundaries, dependency direction, when a boundary is earned |
 
 ## Stack-specific
 
