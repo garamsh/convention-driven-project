@@ -9,7 +9,6 @@ How types, boundaries, and error handling keep runtime errors out of production 
 - Illegal states
 - Total functions and exhaustive matching
 - Errors as values
-- Anti-patterns
 
 ## Core principle
 
@@ -55,11 +54,3 @@ Exceptions cross function boundaries invisibly. A return type that bundles a res
 - **Unexpected failure** (programmer bug, OOM, invariant violation): exceptions / panics are fine — they should crash visibly and be logged.
 - **Don't use exceptions for control flow in normal cases.** A `try { ... } catch { /* ignore */ }` is silent failure.
 
-## Anti-patterns
-
-- **Type assertions** — syntax that tells the compiler to treat a value as a different type without runtime checks (e.g. `x as T`).
-- **Lint suppressions** — a directive that disables a specific type-check warning (e.g. a comment that turns the lint off). The lint is usually catching a real issue.
-- **Silent catch** — code that swallows an error without handling, logging, or re-raising it (e.g. `try { ... } catch { /* ignore */ }`).
-- **`JSON.parse(...)` then immediate use** without schema validation — `any` in disguise.
-- **Re-validating at every call** instead of at the boundary — duplicates work and lets invalid values leak past.
-- **Boolean flag combinations** as state — encode as a sum type instead.
