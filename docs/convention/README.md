@@ -18,7 +18,7 @@ Rules every agent follows when writing code, tests, commits, and documents. The 
 
 ## Stack-specific
 
-These apply only when the project uses that stack, and they outrank the stack-neutral files. The bootstrap process (root `README.md` §Bootstrap) keeps the relevant ones and deletes the rest, removing the rows below for the files it deletes.
+These apply only when the project uses that stack. The bootstrap process (root `README.md` §Bootstrap) keeps the relevant ones and deletes the rest, removing the rows below for the files it deletes.
 
 | File | Governs |
 |---|---|
