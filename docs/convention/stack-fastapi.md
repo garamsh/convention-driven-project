@@ -47,7 +47,7 @@ wrong for it. Two helpers sharing an idea → name the idea:
 ## 1. Project layout — domain-by-package (production)
 
 A bounded context owns its folder. URL versioning is a **URL
-prefix** at `include_router` time — never a directory name like
+prefix** on the `APIRouter` (§7) — never a directory name like
 `api/v1/`. This is the zhanymkanov production layout.
 
 Paths outside the domain folders:
@@ -120,8 +120,9 @@ Cross-domain imports use explicit aliases:
   `@app.on_event("shutdown")` are deprecated.
 - CORS is added with `CORSMiddleware`, its origins read from
   `Settings`.
-- Routers are included in a loop, each with
-  `prefix=settings.API_V1_STR`.
+- Routers are included in a loop, with no arguments at the call
+  site — each `APIRouter` already carries its own `prefix` (§7),
+  built from `settings.API_V1_STR`.
 
 `API_V1_STR` lives in `Settings`; a v1 → v2 migration is a
 one-line constant change.
