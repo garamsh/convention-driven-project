@@ -25,6 +25,8 @@ Rules every agent follows when writing code, tests, commits, and documents. The 
 
 Every project keeps all of these. They are the floor, and bootstrap prunes only the tables below.
 
+Selection is not once. A project that changes its stack or its structure takes the file that now matches and drops the one that no longer does, in the pull request that makes the change.
+
 ## Architecture
 
 The shape the system is partitioned into. Bootstrap keeps the one the project uses and deletes the rest; each file states the structure it assumes.
