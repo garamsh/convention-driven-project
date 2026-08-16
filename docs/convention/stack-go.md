@@ -236,8 +236,7 @@ make it the package.
 
 ## 6. Comments & docs
 
-`code-comments.md` governs when to comment and what a comment may
-say. This section states the Go form only.
+This section states the Go comment form only.
 
 - Doc comments begin with the name being declared.
 - Package comment in `doc.go` (one short sentence — e.g.
@@ -247,9 +246,8 @@ say. This section states the Go form only.
 
 ## 7. Testing
 
-`testing.md` governs the test layers, the mocking strategy, coverage
-and what a test may assert on. This section states the Go placement,
-tooling and test-name form.
+This section states the Go test placement, tooling and test-name
+form.
 
 **Runner:** stdlib `testing`, files end with `_test.go`.
 **Assertions:** `testify/assert` + `testify/require` (default unless
@@ -315,8 +313,7 @@ configured.
 ## 9. Verification commands
 
 These are the commands that sit behind the project's entry-point
-names. What CI invokes is the names, not these; that rule belongs to
-`ci.md` §One entry point per task.
+names.
 
 | Task | Command |
 |------|---------|

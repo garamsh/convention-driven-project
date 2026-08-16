@@ -14,8 +14,8 @@ Rules every agent follows when writing code, tests, commits, and documents. The 
 | `git.md` | Branches, commits, PR titles, merging |
 | `style.md` | Naming and pattern consistency in code |
 | `simplicity.md` | Clarity over complexity; consolidation judgment |
-| `review.md` | What makes a review valid; how authors respond |
-| `documentation.md` | What makes documentation valid |
+| `review.md` | What a review must carry to be valid, and how an author responds |
+| `documentation.md` | What makes a document or a GitHub artifact valid, review comments included |
 
 ## Stack-specific
 
@@ -29,6 +29,8 @@ These apply only when the project uses that stack. The bootstrap process (root `
 | `stack-nextjs.md` | Next.js App Router applications |
 | `stack-tailwind.md` | Tailwind CSS styling |
 
+A stack file states the concrete form of what a stack-neutral file governs: the test client and file placement behind `testing.md`, the comment syntax behind `code-comments.md`, the commands behind an entry-point name in `ci.md`. It never restates the rule itself. This table and the one above are where that split is recorded — the files do not point at each other.
+
 ## Independence
 
 Each convention file is self-contained: reading it alone is enough to apply its rules.
@@ -36,7 +38,7 @@ Each convention file is self-contained: reading it alone is enough to apply its 
 - **One file, one territory.** No artifact is governed by two files. Where two files could both decide a case, one of them is holding the wrong rule.
 - **A rule appears once** — inside a file as much as across files. A section that restates earlier rules in the negative is a second site to keep in sync, not a summary.
 - **Two files' rules may share a reason.** That is not duplication. Each states its own reason; neither points at the other for it.
-- Cross-references may mark scope boundaries ("stack files govern X") but never hold required content.
+- **A convention file does not send the reader to another convention file.** Where one file's territory ends and the next begins is recorded in the tables above, not inside the files themselves.
 
 ## Precedence
 

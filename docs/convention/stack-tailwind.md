@@ -17,7 +17,7 @@ Compose simple utilities in markup. The cheapest style is the one the framework 
 
 ## Verify before adopting or upgrading
 
-The rule for verifying a dependency against its live documentation lives in `ci.md` (§Verify a pinned dependency before adopting it); it applies to Tailwind unchanged, and this file restates none of it. Tailwind-specific locators: `tailwindcss.com/docs/installation`, `tailwindcss.com/docs/upgrade-guide`.
+Tailwind's own locators for a version check: `tailwindcss.com/docs/installation`, `tailwindcss.com/docs/upgrade-guide`.
 
 ## Tailwind v4 specifics
 

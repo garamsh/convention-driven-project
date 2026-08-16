@@ -268,8 +268,6 @@ back/forward. The pieces, for a photo modal:
   navigated URLs — **never** on the internal React tree shape or
   component identity.
 
-What each layer mocks, and the behavior-over-implementation
-principle behind these targets, is `testing.md`.
 
 ## 12. Import direction and file naming
 
