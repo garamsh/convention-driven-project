@@ -278,8 +278,7 @@ The three tiers, and what each may import:
   import from `app/` or from another feature.
 - `app/`: may import from both.
 
-The bulletproof-react `import/no-restricted-paths` ESLint rule
-enforces this — copy it for production.
+The ESLint rule `import/no-restricted-paths` enforces this.
 
 ### File naming
 

@@ -185,10 +185,9 @@ needed.
   dates.
 - A reproducible constraint / index naming scheme is set via
   `MetaData(naming_convention={...})` on `Base`, with a dict
-  you define yourself (SQLAlchemy does not ship a `POSTGRES_*`
-  constant — see zhanymkanov for an authoritative recipe).
-  Predictable names matter more for Alembic autogenerate than
-  any specific convention.
+  you define yourself; SQLAlchemy ships no `POSTGRES_*` constant.
+  Any consistent scheme works — predictable names matter more for
+  Alembic autogenerate than any particular convention.
 
 ## 5. Schemas (Pydantic v2)
 
