@@ -2,4 +2,5 @@
 # @project-owner-placeholder is a placeholder; bootstrap replaces it with the project owner.
 /AGENTS.md @project-owner-placeholder
 /docs/convention/ @project-owner-placeholder
+/docs/architecture/ @project-owner-placeholder
 /.github/ @project-owner-placeholder
