@@ -1,6 +1,20 @@
-# Module Boundaries
+# Domain Architecture
 
-Where code lives, what may reference what, and when a new boundary is earned.
+How a domain-partitioned system is shaped: what a boundary is, what may reference what, and when a new boundary is earned.
+
+## Contents
+- When this applies
+- What a boundary is
+- Structure is earned, not laid out in advance
+- Dependencies point one way
+- Crossing a boundary
+- When a new boundary is earned
+
+## When this applies
+
+This assumes the system is partitioned by domain — one folder per domain, feature, or bounded context. A project partitioned by layer, a library with no internal boundaries, or a single-purpose tool takes a different structure and does not take this document.
+
+Nothing here states what goes *inside* a boundary. That divides by stack, not by architecture, and a boundary owns whichever parts it needs.
 
 ## What a boundary is
 
