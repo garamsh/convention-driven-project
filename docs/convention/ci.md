@@ -9,7 +9,6 @@ How a project's checks are named, run, and secured. The rules hold on any toolch
 - Reuse
 - Verify a pinned dependency before adopting it
 - Security baseline
-- Anti-patterns
 - Reference implementation
 
 ## Core principle
@@ -48,6 +47,8 @@ Before pinning anything the pipeline pulls in — a published component, contain
 
 Pre-trained recollection is a starting point, not source of truth. An agent that picks a version from memory silently uses a stale or nonexistent release.
 
+Pin the result immutably: a tag or a digest, never a branch or `latest`.
+
 For every third-party dependency, also check the ecosystem's advisory source for known vulnerabilities in the candidate version.
 
 ## Security baseline
@@ -56,15 +57,6 @@ For every third-party dependency, also check the ecosystem's advisory source for
 - **No plain-text secrets**: keep tokens, keys, and credentials in the platform's secret store. Prefer short-lived federated credentials (OIDC) over long-lived keys for cloud access.
 - **Avoid script injection**: pass attacker-controlled input to a command through the environment, never interpolated into the command text.
 - **Mask derived values**: values derived from secrets that can reach the logs are masked with the platform's masking mechanism.
-
-## Anti-patterns
-
-- Hand-written steps for what a maintained component already does.
-- Pipeline commands that diverge from the project's entry points — local and CI must match.
-- A self-rolled CI runner that uses different commands than local.
-- Entry points carrying long shell logic — either reduce to a maintained action (§Reuse) or re-split the entry point into multiple named tasks.
-- Pinning to a mutable reference (a branch, `latest`). Pin a tag or a digest.
-- Reusing a pipeline component without auditing its contents — treat it like any other dependency.
 
 ## Reference implementation
 
