@@ -95,7 +95,7 @@ multi-domain production code.
 
 | File | Owns |
 |------|------|
-| `router.py` | `APIRouter(...)`. Routes stay thin: parse via Pydantic, call `service.<method>`, return `schemas.<Domain>Public`. |
+| `router.py` | `APIRouter(...)`. Routes stay thin: parse via Pydantic, call `service.<method>`, return what it hands back under the `schemas.<Domain>Public` type (§7). |
 | `schemas.py` | Pydantic v2 input/output. **Never** merged with ORM models. |
 | `models.py` | SQLAlchemy 2.x ORM tables. One file per aggregate. |
 | `service.py` | Business logic, transactions, cross-aggregate calls. |
@@ -280,8 +280,11 @@ is faster than either and avoids the
 Thin: parse, call `service`, return. Always
 `Annotated[T, Depends(...)]` — **never** `def foo(x: T =
 Depends(...))`. `async def` for I/O deps; `def` for pure deps.
-`response_model=...` validates; don't also `return` a Pydantic
-instance.
+
+Return what the endpoint already holds — the ORM row, or the
+value `service` handed back — and let the declared return type
+or `response_model` validate and serialize it. Constructing the
+public schema inside the endpoint validates the same data twice.
 
 ## 8. Streaming (SSE / JSON Lines / bytes)
 
