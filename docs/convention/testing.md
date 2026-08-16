@@ -5,6 +5,7 @@ Test layers, mocking, and placement — what each layer proves, what to mock, an
 ## Contents
 - Three layers — different goals, different scopes
 - Behavior over implementation
+- Waiting
 - Mocking strategy
 - Coverage and naming
 - Placement
@@ -32,6 +33,15 @@ Assert on outputs and side-effects only:
 Do not assert on: call order, unexported helper shape, private type structure, internal refactors. **If an internal refactor forces test updates, the tests were testing implementation.**
 
 The concrete targets for a given stack are owned by the project's stack convention file; the lists above state only the kinds that qualify.
+
+## Waiting
+
+A test that waits on the wrong condition passes for the wrong reason, and the failure surfaces later on a machine with different timing.
+
+- **A step waits on the condition it depends on.** Waiting for something already true proves nothing, and waiting for something unrelated proves less. A step that needs a form to be interactive waits for that, not for a label that was on screen before the step began.
+- **The condition waited on and the condition asserted are the same.** A wait that passes while the assertion reads a stale value waited on the wrong thing.
+- **Raising a timeout is not a fix.** It only lengthens how long the test tolerates the wrong condition. Find what the step depends on.
+- **An intermittent failure is reproduced before it is fixed**, and the fix is shown by the failure rate before against after — not by one green run. The conditions that expose it are not always the loaded ones: a slow machine can hide a race by delaying the thing that would otherwise arrive too early.
 
 ## Mocking strategy
 
