@@ -28,7 +28,8 @@ a `create-next-app` default, adopt it; if it does not, name the file
 or folder after what it owns.
 
 - Official, and kept as shipped: `app/` (routes), `public/` (static
-  assets), the optional `src/`, and the App Router file conventions
+  assets), `src/` — optional in Next.js, required here (§1) — and
+  the App Router file conventions
   (`layout.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`, `route.ts`,
   `template.tsx`, `default.tsx`, `proxy.ts` / `middleware.ts`).
 - `src/lib/utils.ts`, the shadcn-ui companion file, is allowed. It is
@@ -47,12 +48,9 @@ named for what it does.
 
 At the project root:
 
-- `app/` OR `src/app/` — exactly one of the two. Routes and the
-  App Router file conventions of §2, and nothing else.
+- `src/` — all application source. Its contents are listed below.
 - `public/` — static assets, at the root, never inside `src/`.
 - `e2e/` — Playwright E2E specs, at the root, never inside `src/`.
-- `proxy.ts` — the v16 request proxy, at the root when there is
-  no `src/`; at `src/proxy.ts` when `src/` is used (§10).
 - `tsconfig.json` — maps the `@/*` path alias to `./src/*`.
 - `next.config.ts`, `package.json`, `eslint.config.mjs`,
   `playwright.config.ts`, `vitest.config.ts` — project config.
@@ -61,7 +59,9 @@ At the project root:
 
 Under `src/`:
 
-- `src/app/` — routes only when `src/` is used.
+- `src/proxy.ts` — the v16 request proxy (§10).
+- `src/app/` — routes and the App Router file conventions of §2,
+  and nothing else.
 - `src/app/api/` — Route Handlers, for external callers only (§6).
 - `src/app/<segment>/_components/` — components belonging to one
   route, kept beside it; the `_` prefix opts the folder out of
