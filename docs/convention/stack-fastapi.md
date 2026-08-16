@@ -346,8 +346,6 @@ Tooling and substitutes:
 - E2E runs the served app against real services started by
   `testcontainers-python` (Postgres, Redis, etc.).
 
-Test layers, what each layer may mock, and what a test may
-assert on are governed by `testing.md`.
 
 ## 11. Migrations & errors
 

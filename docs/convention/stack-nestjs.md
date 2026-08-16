@@ -203,8 +203,6 @@ Features inject `PrismaService` directly.
   artifact — with `@testcontainers/postgresql` /
   `@testcontainers/mongodb` supplying the services it talks to.
 
-Layers, mocking strategy, assertion targets, coverage and naming:
-`testing.md`.
 
 ## 7. CLI conventions
 
@@ -222,8 +220,7 @@ Layers, mocking strategy, assertion targets, coverage and naming:
 ## 8. Strict-mode TypeScript
 
 Scaffold new projects with `nest new --strict`; that flag is how this
-stack turns strict compilation on. The type-system rules it serves:
-`runtime-safety.md`.
+stack turns strict compilation on.
 
 ## 9. Sources (URL index)
 

@@ -34,14 +34,14 @@ Decision: approve / request changes / reject
 
 ## What each check verifies
 
-| Check | Fails when | Rule |
-|---|---|---|
-| Scope | The diff carries a line no acceptance criterion asked for. | Here |
-| Conventions | A changed line breaks a rule in a file that governs it. | The governing file in `docs/convention/` |
-| Architecture | A decision changed without the documents that describe it. | `docs/architecture/README.md` §Rules |
-| Documentation | A change to structure, workflow, or conventions left an affected document stale. | `documentation.md` §Keep it current |
-| Verification | The PR claims a check the reviewer cannot confirm ran. | `.github/PULL_REQUEST_TEMPLATE.md` |
-| Depth | The change obeys every rule and is still the wrong thing to keep. | Here |
+| Check | Fails when |
+|---|---|
+| Scope | The diff carries a line no acceptance criterion asked for. |
+| Conventions | A changed line breaks a rule in a file that governs it. |
+| Architecture | A decision changed without the documents that describe it. |
+| Documentation | A change to structure, workflow, or conventions left an affected document stale. |
+| Verification | The PR claims a check the reviewer cannot confirm ran. |
+| Depth | The change obeys every rule and is still the wrong thing to keep. |
 
 **Scope** is measured against the issue, never against taste. A line that traces to an acceptance criterion is in scope however large it is, and a correct one-line drive-by is out of scope however small. Out-of-scope work is not wrong — it is a separate issue.
 
