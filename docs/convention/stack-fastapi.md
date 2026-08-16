@@ -178,8 +178,8 @@ needed.
 - **Async-first.** Sync DB calls inside `async def` are a
   classic deadlock source — pick the async API. The Postgres
   driver is `asyncpg` (used by the `postgresql+asyncpg://` URL).
-- Use Core `select()/insert()/update()/delete()` — not legacy
-  Query API.
+- Query with `select()` / `insert()` / `update()` / `delete()`
+  executed through `Session.execute()` — never `Session.query()`.
 - Naming: `lower_case_snake`, **singular** tables. Group with
   prefix (`payment_account`). `_at` for datetimes, `_date` for
   dates.
