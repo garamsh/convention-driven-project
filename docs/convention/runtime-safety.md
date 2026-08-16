@@ -12,7 +12,7 @@ How types, trust boundaries, and error handling keep runtime errors out of produ
 
 ## Core principle
 
-A runtime error is a bug the type system let through. Catch as many as possible at compile time and parse time; production code then only does what the types prove it can do.
+Many runtime errors are bugs the type system could have caught. Catch those at compile time and parse time, so that what remains at runtime is the class no type can rule out — a machine out of memory, a network that stopped answering, an invariant nothing declared. Production code then does only what the types prove it can do.
 
 ## Type system
 
@@ -43,7 +43,7 @@ A type that allows `{ isPaid: true, isShipped: false }` and `{ isPaid: false, is
 Prefer functions that handle every case explicitly.
 
 - **Exhaustive pattern matching** — when you add a variant, the compiler forces you to handle it (via a `never` / `unreachable` annotation or an exhaustive match).
-- **A function returning an optional / sum shape is total** — every input produces an output. A function returning the raw value may panic on edge inputs.
+- **An optional or sum return type is what lets a function be total** — the failing input has a value to return instead of a panic. Returning one does not make a function total by itself; it removes the reason it would not be.
 - **Where the input space is small and finite, prefer total functions** to partial ones.
 
 ## Errors as values
