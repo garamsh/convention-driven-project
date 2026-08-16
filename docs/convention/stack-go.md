@@ -249,9 +249,11 @@ Within `internal/<domain>/`:
 
 Use **[mockery v3](https://vektra.github.io/mockery/)**.
 
-- **Config:** `<repo-root>/.mockery.yml` declares which interfaces to
-  mock, output directory, package names, per-interface overrides.
-- **Generated location:** declared in `.mockery.yml` via `outdir` per
+- **Config:** `.mockery.yml` at the module root — or `.mockery.yaml`,
+  which mockery reads equally. One or the other, not both. It declares
+  which interfaces to mock, output directory, package names,
+  per-interface overrides.
+- **Generated location:** declared in that file via `outdir` per
   `interface:` block. Default: `mocks/<package>/<Interface>.go` at
   module root. When interface is scoped to one domain, set
   `outdir: internal/<domain>/mocks/`. Pick one convention per project.
