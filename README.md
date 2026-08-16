@@ -7,11 +7,22 @@ Nothing here is specific to AI agents. The conventions read the same for a human
 ## Usage
 
 1. Create a repository with **Use this template**.
-2. Bootstrap it with the steps below.
+2. Configure its settings — §Configure the repository, below.
+3. Bootstrap it — §Bootstrap, below.
 
 To bring these conventions into a repository that already exists, copy the parts it will enforce and then bootstrap the same way.
 
 This file is replaced during bootstrap; do not edit it to describe your project. The procedure below sits here rather than under `docs/` for that reason — a project created from the template does not inherit instructions it has already outgrown.
+
+## Configure the repository
+
+Templates do not carry repository settings. Configure these by hand:
+
+- **Branch protection on `main`** — require pull requests and block direct pushes. This enforces that changes reach `main` through a pull request rather than a direct push; it does not decide who merges one, since merging stays available to anyone with write access. Separating author from reviewer takes a second identity, so with one shared account the single merge authority holds by convention rather than by enforcement.
+- **Require review before merge** — only if the reviewer uses a separate account. GitHub rejects self-approval, so with one shared account this blocks every merge; leave it off and the merge itself serves as the approval (`docs/convention/review.md`).
+- **Squash-only merges** and **automatically delete head branches** — match `docs/convention/git.md` and keep branches from piling up.
+- **Require status checks** once CI exists, so the project's single entry point for the whole check set gates merges (`docs/convention/ci.md`).
+- **Labels `task` and `proposal`** — the shipped issue templates declare them (`.github/ISSUE_TEMPLATE/task.md`, `.github/ISSUE_TEMPLATE/proposal.md`); a new repository has neither, and an issue filed before they exist loses its label.
 
 ## Bootstrap
 
@@ -31,13 +42,3 @@ Run in order. Every step touches only paths in this repository.
 - `docs/convention/` — conventions for code, reviews, and documentation; `stack-*.md` files are pruned during bootstrap
 - `docs/architecture/` — responsibility documents (current truth) and ADRs (append-only decision log)
 - `.github/` — PR and issue templates, CODEOWNERS
-
-## After creating the repository
-
-Templates do not carry repository settings. Configure these by hand:
-
-- **Branch protection on `main`** — require pull requests and block direct pushes. This enforces that changes reach `main` through a pull request rather than a direct push; it does not decide who merges one, since merging stays available to anyone with write access. Separating author from reviewer takes a second identity, so with one shared account the single merge authority holds by convention rather than by enforcement.
-- **Require review before merge** — only if the reviewer uses a separate account. GitHub rejects self-approval, so with one shared account this blocks every merge; leave it off and the merge itself serves as the approval (`docs/convention/review.md`).
-- **Squash-only merges** and **automatically delete head branches** — match `docs/convention/git.md` and keep branches from piling up.
-- **Require status checks** once CI exists, so the project's single entry point for the whole check set gates merges (`docs/convention/ci.md`).
-- **Labels `task` and `proposal`** — the shipped issue templates declare them (`.github/ISSUE_TEMPLATE/task.md`, `.github/ISSUE_TEMPLATE/proposal.md`); a new repository has neither, and an issue filed before they exist loses its label.
