@@ -30,7 +30,9 @@ Local checks and CI checks are the same checks, invoked by the same names. CI re
 
 ## Reuse
 
-For each step in the pipeline:
+A pipeline step is one of two kinds. A check — lint, format, test, build — is invoked by its entry-point name (§One entry point per task). Everything else a pipeline needs — toolchain setup, caching, artifacts, deploys — is a step this section governs.
+
+For each of those steps:
 
 1. **Search for a maintained component** — a published action, plugin, or reusable job — at its current version, before writing pipeline code.
 2. **Verify it** per the next section before pinning.
