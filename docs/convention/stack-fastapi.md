@@ -16,7 +16,6 @@
 - 9. Dependencies
 - 10. Tests
 - 11. Migrations & errors
-- 12. Sources (URL index)
 
 ## 0. Folder & file naming
 
@@ -372,11 +371,3 @@ Tooling and substitutes:
   `BackgroundTasks` is fine. Otherwise use Celery + Redis (or
   arq / Taskiq for async-native).
 
-## 12. Sources (URL index)
-
-- production convention: github.com/zhanymkanov/fastapi-best-practices
-- official template (small / microservices): github.com/fastapi/full-stack-fastapi-template
-- official docs: fastapi.tiangolo.com/{tutorial/bigger-applications, advanced/settings, advanced/async-tests}
-- secondary repo (real-world): github.com/nsidnev/fastapi-realworld-example-app
-- inspiration: Netflix Dispatch
-- ecosystem: docs.sqlalchemy.org/en/20/orm/extensions/asyncio, docs.pydantic.dev/latest/migration
