@@ -26,7 +26,7 @@ Templates do not carry repository settings. Configure these by hand:
 
 ## Bootstrap
 
-Run in order. Every step touches only paths in this repository.
+Run in order. Every step touches only paths in this repository. Bootstrap is a change like any other: it runs on a branch and lands as a pull request (`docs/convention/git.md`).
 
 1. **Pick the stack conventions.** Keep the `docs/convention/stack-*.md` files matching the project's stack; delete the rest. Keeping none is a valid outcome — a project whose stack no file covers runs on the stack-neutral files alone. Done when every remaining `stack-*.md` names a stack the project uses.
 2. **Extend `.gitignore`.** Add the build outputs, dependency directories, and tool caches of the kept stacks to the last block of `.gitignore`.
