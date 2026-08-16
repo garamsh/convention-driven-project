@@ -27,10 +27,9 @@ Inside a boundary, declarations come first and implementations depend
 on them — never the reverse. A file declaring a contract does not
 import the file that satisfies it.
 
-Across boundaries the direction runs general to specific: shared code,
-then boundaries, then the layer that composes them. The composing
-layer may reach a boundary; a boundary may not reach the composing
-layer.
+Across boundaries, imports run from the specific to the general: the
+layer that composes the system imports a boundary, a boundary imports
+shared code, and neither direction reverses.
 
 ## Crossing a boundary
 
@@ -39,8 +38,10 @@ layer.
   enforces it.
 - **Reaching past the declared surface is a defect**, even where the
   language permits it and even where it works.
-- **A cycle between two boundaries means the split is wrong.** Merge
-  them, or extract what both need into a third.
+- **A cycle between two boundaries means the split is wrong.** Break
+  it by inverting one direction — the side that needs the behaviour
+  declares the contract and the other implements it — or by merging
+  them, or by extracting what both need into a third.
 
 ## When a new boundary is earned
 
@@ -50,5 +51,7 @@ A concept earns its own boundary when all three hold:
 - Something outside it needs to depend on it.
 - It has a surface that can stay stable while its inside changes.
 
-A concern shared by three or more boundaries is extracted; one shared
-by two stays where it is.
+A concern shared by three or more boundaries is extracted. One shared
+by two stays with the boundary that owns it and is reached through its
+declared surface — unless a boundary may not reach a sibling at all,
+in which case it is extracted too.
