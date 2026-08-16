@@ -143,9 +143,10 @@ mount when the frontend needs client-side routing.
 
 - The global `Settings(BaseSettings)` lives in `src/config.py`
   and reads `.env`.
-- Reach it through an `@lru_cache`-decorated `get_settings()`,
-  which lets tests use
-  `app.dependency_overrides[get_settings] = ...`.
+- Reach it through `Depends(get_settings)`, where `get_settings()`
+  is `@lru_cache`-decorated. The dependency is what a test replaces
+  with `app.dependency_overrides[get_settings] = ...`; a module-level
+  call to the same function cannot be overridden.
 - **Avoid one mega-Settings class** — split into a global
   `Settings` and small per-domain `<Domain>Config(BaseSettings)`
   classes when warranted (see §1 for the per-domain
