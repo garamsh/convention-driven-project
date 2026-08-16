@@ -32,7 +32,7 @@ Write comments in declarative or imperative mood, stating facts: `returns the ca
 
 ## TODOs
 
-`// TODO(name): …` with an owner. `FIXME` / `XXX` decay — prefer TODO.
+`// TODO(name): …` with an owner. One marker, so one search finds every open item — never `FIXME` or `XXX` beside it.
 
 ## Language
 
