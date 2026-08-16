@@ -6,6 +6,7 @@ Test layers, mocking, and placement — what each layer proves, what to mock, an
 - Three layers — different goals, different scopes
 - Behavior over implementation
 - Waiting
+- Failing
 - Mocking strategy
 - Coverage and naming
 - Placement
@@ -42,6 +43,14 @@ A test that waits on the wrong condition passes for the wrong reason, and the fa
 - **The condition waited on and the condition asserted are the same.** A wait that passes while the assertion reads a stale value waited on the wrong thing.
 - **Raising a timeout is not a fix.** It only lengthens how long the test tolerates the wrong condition. Find what the step depends on.
 - **An intermittent failure is reproduced before it is fixed**, and the fix is shown by the failure rate before against after — not by one green run. The conditions that expose it are not always the loaded ones: a slow machine can hide a race by delaying the thing that would otherwise arrive too early.
+
+## Failing
+
+A test that cannot fail is not evidence. It passes on the day the behaviour is deleted, and it reads exactly like one that would have caught it.
+
+- **A test is shown to fail before it is trusted.** Remove the behaviour it names, watch it break, put the behaviour back. An assertion that survives that is measuring something else, and the pull request says which tests were seen to fail.
+- **A test asserting a refusal carries a control that passes.** A rejection holds for reasons that have nothing to do with the one under test — two unrelated keys fail to match as readily as two wrongly separated ones. Assert the accepted case beside it, in the same test, so the two are read together.
+- **Assert the property, not the absence of its consequence.** A field that is false and a field that is absent are different states, and most assertions cannot tell them apart. Only one of them is the property.
 
 ## Mocking strategy
 
