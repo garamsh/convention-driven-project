@@ -14,7 +14,7 @@ What makes documentation valid in this project. Applies to every file under `doc
 - A PR that changes structure, workflow, or conventions updates the affected docs in the same PR. Stale docs are worse than missing docs.
 - Delete docs that no longer describe anything real. Do not archive.
 - Every claim about this repository must be verifiable in it. If you cannot point at it, remove it.
-- A claim about anything outside it names the release it holds for — `deprecated in v2` can be checked against the library, `deprecated` cannot. Where the claim is about a package's health rather than a release (`unmaintained`, `legacy`), do not rest a rule on it: name what to use instead, which does not expire.
+- A claim about anything outside it names the release it holds for — `deprecated in v2` can be checked against the library, `deprecated` cannot. A file may name its versions once at the top instead, and then every claim in it holds for those. Where the claim is about a package's health rather than a release (`unmaintained`, `legacy`), do not rest a rule on it: name what to use instead, which does not expire.
 - Update an existing document when the topic is already covered there; do not create a parallel document for a new facet of the same topic. Total document volume is a managed cost — a new file earns its place by adding a topic no existing file owns.
 
 ## GitHub artifacts

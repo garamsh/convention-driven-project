@@ -2,6 +2,9 @@
 
 > How a Go module is laid out and where each kind of code belongs:
 > directories, naming, errors, logging, comments, tests, imports.
+>
+> Checked against Go 1.21 and mockery 3. A claim below that names no
+> version holds for these.
 
 ## Contents
 - 0. Folder & file naming — strict
