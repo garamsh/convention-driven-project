@@ -19,7 +19,7 @@ Rules every agent follows when writing code, tests, commits, and documents. The 
 | `ci.md` | Local/CI parity, pipeline authoring, security |
 | `git.md` | Branches, commits, PR titles, merging |
 | `style.md` | Naming and pattern consistency in code |
-| `simplicity.md` | Clarity over complexity; consolidation judgment |
+| `simplicity.md` | Whether to add or to change the shape; when an abstraction earns its place |
 | `review.md` | What a review must carry to be valid, and how an author responds |
 | `documentation.md` | What makes a document or a GitHub artifact valid, review comments included |
 
