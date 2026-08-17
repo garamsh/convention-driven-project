@@ -214,10 +214,10 @@ will do with it, and turned into a response in one place.
 - **A panic does not cross a package boundary.** A violated invariant
   may panic — recovering from one hides the bug that caused it — but
   that ends the program rather than answering the caller. An HTTP
-  server still holds a recover middleware: `net/http` catches a
-  handler's panic and closes the connection without a response, so
-  the client gets a broken pipe unless something turns it into a 500
-  and logs the stack.
+  server still holds a recover middleware: `net/http` recovers a
+  handler's panic and logs the stack itself, but aborts the response
+  instead of answering — the client gets a closed connection, or an
+  HTTP/2 `RST_STREAM` — so the middleware exists to reply 500.
 
 ## 5. Logging & observability
 
