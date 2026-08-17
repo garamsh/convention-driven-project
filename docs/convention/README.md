@@ -39,28 +39,30 @@ The shape the system is partitioned into. Bootstrap keeps the one the project us
 
 These apply only when the project uses that stack. The bootstrap process (root `README.md` §Bootstrap) keeps the relevant ones and deletes the rest, removing the rows below for the files it deletes.
 
-| File | Governs |
-|---|---|
-| `stack-fastapi.md` | FastAPI and Pydantic v2 services |
-| `stack-go.md` | Go modules and services |
-| `stack-nestjs.md` | NestJS services |
-| `stack-nextjs.md` | Next.js App Router applications |
-| `stack-tailwind.md` | Tailwind CSS styling |
+| File | Extends | Governs |
+|---|---|---|
+| `stack-fastapi.md` | — | FastAPI and Pydantic v2 services |
+| `stack-go.md` | — | Go modules and services |
+| `stack-nestjs.md` | — | NestJS services |
+| `stack-nextjs.md` | — | Next.js App Router applications |
+| `stack-tailwind.md` | — | Tailwind CSS styling |
 
 A stack file states the concrete form of what a stack-neutral file governs: the test client and file placement behind `testing.md`, the comment syntax behind `code-comments.md`, the commands behind an entry-point name in `ci.md`. It never restates the rule itself. This table and the one above are where that split is recorded — the files do not point at each other.
 
+A stack built on another stack takes a row with a base in the Extends column. The derived file holds only the sections where its stack differs and the base governs the rest, so a project keeping the derived file keeps the base too. A base has no base of its own: one level, so that opening two files is always enough.
+
 ## Independence
 
-Each convention file is self-contained: reading it alone is enough to apply its rules.
+Reading a convention file is enough to apply its rules. Where the Extends column gives it a base, it is that file and its base, and there reading stops.
 
-- **One file, one territory.** No artifact is governed by two files. Where two files could both decide a case, one of them is holding the wrong rule.
-- **A rule appears once** — inside a file as much as across files. A section that restates earlier rules in the negative is a second site to keep in sync, not a summary.
+- **One file, one territory.** No artifact is governed by two files, unless one extends the other: the derived file decides the sections it holds and the base decides the rest. Where two files with no such relationship could both decide a case, one of them is holding the wrong rule.
+- **A rule appears once** — inside a file as much as across files. A section that restates earlier rules in the negative is a second site to keep in sync, not a summary. A derived file that repeats a base rule it does not change is that same defect: what it does not hold, it does not copy.
 - **Two files' rules may share a reason.** That is not duplication. Each states its own reason; neither points at the other for it.
-- **A convention file does not send the reader to another convention file.** Where one file's territory ends and the next begins is recorded in the tables above, not inside the files themselves.
+- **A convention file does not send the reader to another convention file.** Where one file's territory ends and the next begins, a base included, is recorded in the tables above, not inside the files themselves.
 
 ## Precedence
 
-1. The stack-specific file, when one applies.
+1. The stack-specific file, when one applies; the derived file before the base it extends.
 2. The architecture file, when one applies.
 3. The stack-neutral files.
 4. This index.
