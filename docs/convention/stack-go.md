@@ -272,9 +272,10 @@ Within `internal/<domain>/`:
 - Test names: `TestFunctionName` or `TestFunctionName_Scenario`.
 - Benchmarks: `func BenchmarkXxx(b *testing.B)`.
 
-### Mocks with mockery
+### Generated mocks
 
-Use **[mockery v3](https://vektra.github.io/mockery/)**.
+Where the project generates mocks, generate them with
+**[mockery v3](https://vektra.github.io/mockery/)**.
 
 - **Config:** `.mockery.yml` at the module root — or `.mockery.yaml`,
   which mockery reads equally. One or the other, not both. It declares
