@@ -278,11 +278,11 @@ Within `internal/<domain>/`:
 Where the project generates mocks, generate them with
 **[mockery v3](https://vektra.github.io/mockery/)**, built with a
 toolchain at least the module's `go` directive. `go install …@latest`
-takes the toolchain from mockery's own `go.mod`, not from the module
-being generated: mockery 3.7.3 installed that way builds with go1.25
-and dies on a `go 1.26` module — "package requires newer Go version" —
-before it finds an interface. `GOTOOLCHAIN` set to the module's
-version fixes it.
+ignores the current module's `go.mod` and takes the toolchain from
+mockery's own — v3.7.3 declares `go 1.25.5` — so a module on a newer
+Go gets a binary that refuses to load it, and the failure is fatal at
+package-load time. `GOTOOLCHAIN` set to the module's version builds
+one that reads it.
 
 - **Config:** `.mockery.yml` at the module root — or `.mockery.yaml`,
   which mockery reads equally. One or the other, not both. It declares
