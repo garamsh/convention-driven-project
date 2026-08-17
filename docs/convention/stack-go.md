@@ -38,8 +38,7 @@ See §0 for the banned-name list.
 
 ### Layout A — small service (default)
 
-- `cmd/<binary>/main.go` — thin entry point; constructs concrete
-  types.
+- `cmd/<binary>/main.go` — the binary's entry point.
 - `internal/<domain>/<domain>.go` — the aggregate: domain types, DTOs
   and sentinel errors (`User`, `CreateUserInput`, `ErrUserNotFound`).
 - `internal/<domain>/service.go` — the contract: `type Service
