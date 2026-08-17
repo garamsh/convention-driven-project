@@ -206,9 +206,9 @@ inside the Server Action.**
   production an error thrown on the server arrives at `error.tsx` as
   a generic message and a `digest` hash matching the server log. What
   the user must read is returned; what you must read is logged.
-- **A return value is serialized to the client.** Shape it to what
-  the UI renders — returning a row hands the browser every column the
-  query selected.
+- **The error you return crosses the wire.** Return the sentence the
+  UI renders, not the failure you caught: an action's return value is
+  serialized to the client, so whatever detail rides on it goes too.
 - **`error.tsx` does not cover the `layout.tsx` beside it**, only the
   segment's page and what nests below. A layout that throws is caught
   one segment up, and the root layout only by `global-error.tsx`.
