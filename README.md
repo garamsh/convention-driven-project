@@ -24,6 +24,8 @@ Templates do not carry repository settings. Configure these by hand:
 - **Require status checks** once CI exists, so the project's single entry point for the whole check set gates merges (`docs/convention/ci.md`).
 - **Labels `task` and `proposal`** — the shipped issue templates declare them (`.github/ISSUE_TEMPLATE/task.md`, `.github/ISSUE_TEMPLATE/proposal.md`); a new repository has neither, and an issue filed before they exist loses its label.
 
+A setting the platform puts out of reach — a plan that gates it, an organisation policy, a forge that has no such thing — does not release the rule it would have enforced. That rule holds the way the single merge authority does above: by convention, with the review the only thing standing between a change and `main`.
+
 ## Bootstrap
 
 Run in order. Every step touches only paths in this repository. Bootstrap is a change like any other: it runs on a branch and lands as a pull request (`docs/convention/git.md`).
