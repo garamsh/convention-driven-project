@@ -256,7 +256,9 @@ project says otherwise).
   unit under test through its exported API. **Default to this.**
 - **Internal tests** (`package user`): same directory and package as
   the code under test. Use only when you genuinely need a white-box
-  seam (uncommon).
+  seam (uncommon), or when the package cannot be imported — `package
+  main` cannot, so a test of one is internal by necessity rather than
+  by choice.
 - **`tests/` at module root:** integration / E2E tests that wire
   multiple domains. Separate binary.
 - **In-process integration test client:** `httptest.NewServer`.
