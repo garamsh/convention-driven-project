@@ -175,9 +175,6 @@ file declares and which depends.
 
 ## 4. Error handling
 
-An error is made where it is first known, shaped by what its caller
-will do with it, and turned into a response in one place.
-
 - **An adapter translates before it returns.** `postgres.go` turns
   `pgx.ErrNoRows` into `ErrUserNotFound`; the driver's error does not
   leave the file that imports the driver. The errors an
@@ -186,15 +183,13 @@ will do with it, and turned into a response in one place.
   `memory.go` can stand in for.
 - **Sentinel** when the caller branches on which failure and the
   failure carries no data: `var ErrNotFound = errors.New("not
-  found")`, read with `errors.Is`. Domain sentinels in `<domain>.go`
-  (`internal/user/user.go` for `ErrUserNotFound`); sentinels shared
-  across domains in `errors.go`.
+  found")`, read with `errors.Is`.
 - **Typed** when the caller needs data out of the failure: a struct
   with `Error()`, read with `errors.As`, and `Is(target error) bool`
   or `Unwrap() error` where it wraps another.
-- **Opaque** when the caller has no business branching. Ask what the
-  caller does with it; where the answer is nothing, hand it nothing
-  to reach for.
+- **Opaque** when the caller has no business branching. A sentinel or
+  a type a caller can match on is API you have to keep working; where
+  nothing needs to branch, publish neither.
 - **`%w` publishes the error it wraps.** A caller can reach through
   it with `errors.Is` and `errors.As`, so replacing what is inside
   breaks them later. Wrap with `%w` where a caller is meant to branch
