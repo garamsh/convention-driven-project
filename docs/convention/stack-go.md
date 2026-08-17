@@ -175,17 +175,49 @@ file declares and which depends.
 
 ## 4. Error handling
 
-- Errors are values. Use `error` interface, never panics in libraries.
-- Wrap: `fmt.Errorf("op x: %w", err)` or `errors.Join`.
-- Sentinels: `var ErrNotFound = errors.New("not found")` +
-  `errors.Is(err, ErrNotFound)`. Domain sentinels in `<domain>.go`
-  (`internal/user/user.go` for `ErrUserNotFound`); shared sentinels
-  in `errors.go`.
-- Custom error types: implement `Error()` and possibly
-  `Is(target error) bool` / `Unwrap() error`.
-- Don't log and return — pick one (usually return; let the caller
-  decide to log).
-- Wrap at boundaries (network, IO, external calls), not on every line.
+An error is made where it is first known, shaped by what its caller
+will do with it, and turned into a response in one place.
+
+- **An adapter translates before it returns.** `postgres.go` turns
+  `pgx.ErrNoRows` into `ErrUserNotFound`; the driver's error does not
+  leave the file that imports the driver. The errors an
+  implementation returns are part of the interface declared in
+  `service.go`, so one that leaks its library's errors is not one
+  `memory.go` can stand in for.
+- **Sentinel** when the caller branches on which failure and the
+  failure carries no data: `var ErrNotFound = errors.New("not
+  found")`, read with `errors.Is`. Domain sentinels in `<domain>.go`
+  (`internal/user/user.go` for `ErrUserNotFound`); sentinels shared
+  across domains in `errors.go`.
+- **Typed** when the caller needs data out of the failure: a struct
+  with `Error()`, read with `errors.As`, and `Is(target error) bool`
+  or `Unwrap() error` where it wraps another.
+- **Opaque** when the caller has no business branching. Ask what the
+  caller does with it; where the answer is nothing, hand it nothing
+  to reach for.
+- **`%w` publishes the error it wraps.** A caller can reach through
+  it with `errors.Is` and `errors.As`, so replacing what is inside
+  breaks them later. Wrap with `%w` where a caller is meant to branch
+  on the wrapped error, `%v` where it is not, `errors.Join` where the
+  caller needs all of several.
+- Add context at a boundary — network, IO, an external call — not on
+  every line: `fmt.Errorf("create user: %w", err)`.
+- **One translator turns errors into transport.** `httpserver.go`
+  holds the only place that answers 404 to `ErrUserNotFound` and 400
+  to a validation error; nothing under `internal/<domain>/` names a
+  status code. The domain outlives the transport it is served over,
+  and a mapping spread across handlers gives one sentinel several
+  codes.
+- **Don't log and return.** Return, and let the translator log once.
+  Logging on the way up prints one failure several times, some lines
+  carrying the request's `trace_id` and some not.
+- **A panic does not cross a package boundary.** A violated invariant
+  may panic — recovering from one hides the bug that caused it — but
+  that ends the program rather than answering the caller. An HTTP
+  server still holds a recover middleware: `net/http` catches a
+  handler's panic and closes the connection without a response, so
+  the client gets a broken pipe unless something turns it into a 500
+  and logs the stack.
 
 ## 5. Logging & observability
 
