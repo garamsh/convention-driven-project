@@ -69,10 +69,9 @@ See §0 for the banned-name list.
 **Single file vs package** for an impl:
 
 - **Single file** (`postgres.go`, `memory.go`) when impl ≤ ~300 LoC
-  and has no private helpers worth isolating. Filename = vendor.
+  and has no private helpers worth isolating.
 - **Package** (`postgres/`, `memory/`) when impl > ~300 LoC or owns
-  private helpers / connection-pool / per-SQL constants. Folder name
-  = vendor.
+  private helpers / connection-pool / per-SQL constants.
 
 ### Layout B — domain-rich service (5k–30k LoC)
 
