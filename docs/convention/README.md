@@ -41,6 +41,7 @@ These apply only when the project uses that stack. The bootstrap process (root `
 
 | File | Extends | Governs |
 |---|---|---|
+| `stack-container.md` | — | Container images the project builds |
 | `stack-fastapi.md` | — | FastAPI and Pydantic v2 services |
 | `stack-go.md` | — | Go modules and services |
 | `stack-nestjs.md` | — | NestJS services |
