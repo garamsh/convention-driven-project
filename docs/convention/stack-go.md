@@ -276,7 +276,13 @@ Within `internal/<domain>/`:
 ### Generated mocks
 
 Where the project generates mocks, generate them with
-**[mockery v3](https://vektra.github.io/mockery/)**.
+**[mockery v3](https://vektra.github.io/mockery/)**, built with a
+toolchain at least the module's `go` directive. `go install …@latest`
+takes the toolchain from mockery's own `go.mod`, not from the module
+being generated: mockery 3.7.3 installed that way builds with go1.25
+and dies on a `go 1.26` module — "package requires newer Go version" —
+before it finds an interface. `GOTOOLCHAIN` set to the module's
+version fixes it.
 
 - **Config:** `.mockery.yml` at the module root — or `.mockery.yaml`,
   which mockery reads equally. One or the other, not both. It declares
