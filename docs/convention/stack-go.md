@@ -196,15 +196,17 @@ file declares and which depends.
   caller needs all of several.
 - Add context at a boundary — network, IO, an external call — not on
   every line: `fmt.Errorf("create user: %w", err)`.
-- **One translator turns errors into transport.** `httpserver.go`
-  holds the only place that answers 404 to `ErrUserNotFound` and 400
-  to a validation error; nothing under `internal/<domain>/` names a
-  status code. The domain outlives the transport it is served over,
-  and a mapping spread across handlers gives one sentinel several
-  codes.
-- **Don't log and return.** Return, and let the translator log once.
-  Logging on the way up prints one failure several times, some lines
-  carrying the request's `trace_id` and some not.
+- **Each transport translates in one place.** Whatever implements a
+  transport owns the mapping from domain error to that transport's
+  codes — `httpserver.go` answering 404 to `ErrUserNotFound`, or the
+  type satisfying a generated gRPC service — and nothing else names
+  one. A second transport gets its own translator, not a share of the
+  first. A domain outlives the transport it is served over, and a
+  mapping spread across handlers gives one sentinel several codes.
+- **Don't log and return.** Return, and let the outermost boundary log
+  once: the transport translator where the module has one, `main`
+  where it has none. Logging on the way up prints one failure several
+  times, some lines carrying the request's `trace_id` and some not.
 - **A panic does not cross a package boundary.** A violated invariant
   may panic — recovering from one hides the bug that caused it — but
   that ends the program rather than answering the caller. An HTTP
