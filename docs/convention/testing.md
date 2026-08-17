@@ -23,7 +23,9 @@ The concrete in-process client per stack is owned by the project's stack convent
 
 What separates the layers is the subject: integration exercises real modules in process, e2e exercises what the build produces.
 
-**No testcontainers in integration** — reaching for a container to get a real service means the test wanted the deployed system, and real Postgres for an integration test is e2e. The exception is a dependency no in-process substitute can stand in for, because the code exists to interact with it: a controller's API server, not a database. Run that as a fixture and the test is still integration, because the subject is still in-process modules.
+**No testcontainers in integration.** Reaching for a container to get a real service means the test wanted the deployed system. A suite of in-process modules stays an integration test however real its Postgres, so substitute the service — renaming the suite e2e leaves the project with nothing exercising the built artifact, which is what the e2e row is for. Where the deployed system is what you meant, build it and test that.
+
+The exception is a dependency no in-process substitute can stand in for, because the code exists to interact with it: a controller's API server, not a database. Run that as a fixture and the test is still integration, because the subject is still in-process modules.
 
 ## Behavior over implementation
 
