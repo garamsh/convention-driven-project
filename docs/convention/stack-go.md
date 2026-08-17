@@ -107,8 +107,7 @@ past ~300 LoC.
 A root-level file exists when the module has that concern, and it is
 named after the concern:
 
-- `errors.go` — sentinels shared across domains (§4). Domain
-  sentinels stay in `internal/<domain>/<domain>.go`.
+- `errors.go` — sentinels shared across domains (§4).
 - `config.go` — the module's configuration type and its loading.
 - `logger.go` — only when logger setup goes past `slog.Default()`
   (§5). A project that calls `slog.Default()` directly has no
