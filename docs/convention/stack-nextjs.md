@@ -304,6 +304,13 @@ back/forward. The pieces, for a photo modal:
 - Assert on rendered text, ARIA, emitted form payloads, and
   navigated URLs — **never** on the internal React tree shape or
   component identity.
+- **A text assertion is identity or presence, and the two are not
+  interchangeable.** Where the accessible name *is* the string — a
+  heading, a button — assert with `exact: true`: a substring match
+  still passes when the UI appends to the text, so it cannot catch
+  the change. Where the name carries more than the string — a row, a
+  card — a substring match is right, and the call site says so in a
+  comment.
 
 
 ## 13. Import direction and file naming
