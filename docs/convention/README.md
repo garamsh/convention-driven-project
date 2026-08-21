@@ -80,3 +80,5 @@ Reading a convention file is enough to apply its rules. Where the Extends column
 4. This index.
 
 On conflict, the more specific rule wins. Report conflicts to the PM in the PR description — do not resolve them yourself.
+
+§Scope is not a tier in this ladder. It bounds what every tier reaches, so no rule at any rank reaches what §Scope places outside what the project writes.
