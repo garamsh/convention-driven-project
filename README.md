@@ -43,5 +43,5 @@ Run in order. Every step touches only paths in this repository. Bootstrap is a c
 
 - `AGENTS.md` — the contribution contract: who may change what, and the rules that apply to every contributor
 - `docs/convention/` — conventions for code, reviews, and documentation; `stack-*.md` files are pruned during bootstrap
-- `docs/architecture/` — responsibility documents (current truth) and ADRs (append-only decision log)
+- `docs/architecture/` — responsibility documents (current truth), ADRs (append-only decision log), and the candidate structures bootstrap chooses between and then deletes
 - `.github/` — PR and issue templates, CODEOWNERS
