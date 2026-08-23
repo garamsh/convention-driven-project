@@ -171,6 +171,12 @@ file declares and which depends.
   one kind of thing (`user`, `order`); pluralize only for genuine
   collections (`errors`, `flags`).
 - **Types:** `MixedCaps`, no underscores (`UserService`).
+- **Interfaces:** the behaviour required, in the agent form of its verb
+  (`Storer`, `Mailer`, `Validator`). A dependency that is a thing rather
+  than an action keeps the thing's name — `Repository`, `Clock`,
+  `Session`; a `Model` does not become a `Modeller`. Where that name is
+  also one of the domain's verbs, the agent form breaks the tie: a
+  `Store` verb, a `Storer` interface, one file each (§1).
 - **Functions / methods:** `MixedCaps`, verb-noun (`GetUser`,
   `ParseToken`).
 - **Constants:** `MixedCaps` (not `MAX_SIZE`). Group in `const ( ... )`.
