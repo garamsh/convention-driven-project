@@ -43,7 +43,10 @@ See §0 for the banned-name list.
   and sentinel errors (`User`, `CreateUserInput`, `ErrUserNotFound`).
 - `internal/<domain>/service.go` — what the domain offers: `type
   Service interface { ... }`, unexported `type service struct { ... }`,
-  `NewService(...) Service`.
+  `NewService(...) Service`. A domain owes one once it has behaviour of
+  its own to offer. Holding types and persisting them is not that, and
+  neither is translating a request, composing commands or wiring a
+  runtime.
 - `internal/<domain>/<name>.go` — one dependency interface the domain
   needs, named for it: `repository.go` declares `type Repository
   interface`, `mailer.go` declares `type Mailer interface`.
@@ -94,10 +97,6 @@ packages split across several files:
 - `internal/<domain>/repository/memory.go` — the in-memory
   implementation, in the same package.
 - Every other domain repeats the shape.
-
-`service.go` is optional: a domain that is only types and persistence
-has none. It arrives with business behaviour that coordinates multiple
-dependencies.
 
 A cross-cutting concern moves to its own `internal/<thing>/` package
 past ~300 LoC.
