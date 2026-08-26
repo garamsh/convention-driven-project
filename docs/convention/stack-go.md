@@ -299,10 +299,12 @@ Where the project generates mocks, generate them with
   which mockery reads equally. One or the other, not both. It declares
   which interfaces to mock, output directory, package names,
   per-interface overrides.
-- **Generated location:** declared in that file via `outdir` per
-  `interface:` block. Default: `mocks/<package>/<Interface>.go` at
-  module root. A dependency interface is scoped to the one domain that
-  declares it, so `outdir: internal/<domain>/mocks/` fits it too. Pick
+- **Generated location:** declared in that file by `dir`, the output
+  directory, with `filename` for the file itself — at the top level,
+  or per interface in that interface's `config:` block under
+  `interfaces:`. Default: `mocks/<package>/<Interface>.go` at module
+  root. A dependency interface is scoped to the one domain that
+  declares it, so `dir: internal/<domain>/mocks/` fits it too. Pick
   one convention per project.
 - **Generation:** `mockery` (reads config) or `go generate ./...`
   when interfaces carry `//go:generate mockery` directives. Pick one.
