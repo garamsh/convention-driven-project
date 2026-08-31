@@ -32,7 +32,7 @@ Run in order. Every step touches only paths in this repository. Bootstrap is a c
 
 1. **Pick the conventions that apply.** Under `docs/convention/`, keep the `stack-*.md` files matching the project's stack, plus the base of any kept file the conventions index gives one; delete the rest. Keeping none is a valid outcome — a project no stack file covers runs on the stack-neutral files alone. Done when the `stack-*.md` files that remain are exactly those naming a stack the project uses, plus the base that index gives any of them.
 2. **Extend `.gitignore`.** Add the build outputs, dependency directories, and tool caches of the kept stacks to the last block of `.gitignore`.
-3. **Set up CI plumbing.** Define the entry-point names `docs/convention/ci.md` §One entry point per task requires, and a pipeline that invokes them. Done when every bullet of that section holds of the entry points and the pipeline you defined.
+3. **Set up CI plumbing.** `Makefile` carries `lint` and `ci`, and `.github/workflows/ci.yml` invokes `make ci`. Add the entry-point names `docs/convention/ci.md` §One entry point per task requires for the kept stacks, and the commands behind them. Done when every bullet of that section holds of the entry points and the pipeline.
 4. **Choose the system's structure.** Read the candidates under `docs/architecture/structures/` side by side and take one. Record the choice as an ADR, carry that file's §Boundaries and dependency direction into `docs/architecture/structure.md` (`docs/architecture/README.md` rules 6 and 7), and delete `docs/architecture/structures/` only once both exist — it is what `structure.md` is written from. Done when an ADR names the shape taken, `structure.md` carries every bullet of that shape's §Boundaries and dependency direction, and `docs/architecture/structures/` is gone.
 5. **Write the architecture documents.** Add the responsibility documents `docs/architecture/README.md` requires for the domains the project already has, list every responsibility document and ADR in its §Index, and leave `docs/architecture/adr/0000-template.md` in place. Done when every domain the project has carries a responsibility document, §Index lists every responsibility document and ADR the repository holds, and the template is still there.
 6. **Refresh the conventions index.** Update the stack-specific section of `docs/convention/README.md` to name the `stack-*.md` files that remain.
@@ -44,4 +44,6 @@ Run in order. Every step touches only paths in this repository. Bootstrap is a c
 - `AGENTS.md` — the contribution contract: who may change what, and the rules that apply to every contributor
 - `docs/convention/` — conventions for code, reviews, and documentation; `stack-*.md` files are pruned during bootstrap
 - `docs/architecture/` — responsibility documents (current truth), ADRs (append-only decision log), and the candidate structures bootstrap chooses between and then deletes
-- `.github/` — PR and issue templates, CODEOWNERS
+- `.github/` — PR and issue templates, CODEOWNERS, the CI workflow, and the Dependabot configuration that moves its pins
+- `Makefile` — the entry-point names for the project's checks; `make ci` runs the whole set
+- `check-contents-list.sh` — the documentation check behind `make lint`
