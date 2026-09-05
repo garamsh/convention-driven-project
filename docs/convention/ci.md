@@ -21,7 +21,7 @@ Local checks and CI checks are the same checks, invoked by the same names. CI re
 - **One name for the whole set.** A single name runs those names in order, so "run the checks" is one command locally and one step in CI.
 - **CI calls the names, not the commands behind them.** A pipeline that spells out the underlying tool invocations has created a second set of commands, and the two drift.
 - **An entry point reports what it did.** A suite that skipped every test, a generator that found no input, a check that read only tracked files — each exits zero and reads exactly like the run that did the work. The output has to tell those apart: a count of what was covered, or a failure when the count is zero.
-- **Entry points stay thin.** An entry point that has grown past a few lines is one name doing several jobs; re-split it into named tasks rather than letting it become a script. What it may not become is a pipeline component: it runs on a contributor's machine as well as in CI.
+- **An entry point may not become a pipeline component.** It runs on a contributor's machine as well as in CI.
 
 ## Run the checks before pushing
 
