@@ -306,11 +306,18 @@ back/forward. The pieces, for a photo modal:
   component identity.
 - **A text assertion is identity or presence, and the two are not
   interchangeable.** Where the accessible name *is* the string — a
-  heading, a button — assert with `exact: true`: a substring match
-  still passes when the UI appends to the text, so it cannot catch
-  the change. Where the name carries more than the string — a row, a
+  heading, a button — assert the whole name: a substring match still
+  passes when the UI appends to the text, so it cannot catch the
+  change. Where the name carries more than the string — a row, a
   card — a substring match is right, and the call site says so in a
-  comment.
+  comment. Which query spells which differs by tool, and the two
+  default opposite ways — checked against `@testing-library/dom` 10.4
+  and Playwright 1.63:
+
+| Tool | Identity | Presence |
+|---|---|---|
+| Testing Library | `getByRole('heading', { name: 'Cart' })` — a string `name` is compared against the whole accessible name, so the string alone is the identity assertion and `ByRoleOptions` carries no `exact` to add | `getByRole('heading', { name: /Cart/ })` — an unanchored `RegExp` is a substring test |
+| Playwright | `getByRole('heading', { name: 'Cart', exact: true })` | `getByRole('heading', { name: 'Cart' })` — a bare string matches a case-insensitive substring |
 
 
 ## 13. Import direction and file naming
