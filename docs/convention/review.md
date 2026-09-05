@@ -77,7 +77,7 @@ A self-review reads the diff against the reviewer's own understanding of the rul
 
 - **The review says the author reviewed it**, in one line beside the decision. A reader cannot tell otherwise, and a review that hides it is asserting a second pair of eyes.
 - **What the shared authorship left unchecked is marked in the row that owns it.** A rule two sections away that the author already believed they knew is a Conventions row; a command whose output arrived after the claim was written is a Verification row. The work is finding them — `pass` asserted from the understanding that produced the diff is what this section exists to name.
-- Nothing else relaxes. Scope, Verification and Depth still read `pass` for an approve, and a `fail` in any row is still not one.
+- Nothing else relaxes. §Submitting a review holds for a self-review unchanged.
 
 ## Responding to a review (author)
 
