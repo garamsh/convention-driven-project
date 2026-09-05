@@ -6,7 +6,7 @@ Current architecture of the system and the decisions behind it. This file is the
 
 - **Responsibility documents** (one `.md` per domain or concern, e.g. `memory.md`, `gateway.md`) — the single source of truth for how the system is shaped *now*. To know the current state, read only these.
 - **`adr/`** — the record of individual decisions: direction taken, context, rejected alternatives.
-- **`structures/`** — one file per candidate architecture, read side by side at bootstrap to choose the shape the system takes. These are input to that decision and not a record of it: the choice is recorded as an ADR, the chosen file's §Boundaries and dependency direction becomes `structure.md` (rules 6 and 7), and bootstrap deletes this folder once both have landed.
+- **`structures/`** — one file per candidate architecture, read side by side at bootstrap to choose the shape the system takes. These are input to that decision and not a record of it: the choice is recorded as an ADR carrying the chosen file's §Signs the choice was wrong, that file's §Boundaries and dependency direction becomes `structure.md` (rules 6 and 7), and bootstrap deletes this folder once both have landed.
 
 ## Rules
 
