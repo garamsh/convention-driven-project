@@ -29,7 +29,7 @@ What makes a PR review valid, and how authors respond. Applies to every review a
 Decision: approve / request changes / reject
 ```
 
-- An approve requires the Scope, Verification, and Depth rows to read `pass`. The other three may read `unverified`, with a stated reason (some PRs touch nothing a convention governs). A `fail` in any row is a request-changes or a reject, never an approve.
+- An approve requires the Scope, Verification, and Depth rows to read `pass`. The remaining rows may read `unverified`, with a stated reason (some PRs touch nothing a convention governs). A `fail` in any row is a request-changes or a reject, never an approve.
 - A check you did not verify is marked `unverified` — never guessed. Skipping a check is allowed; hiding the skip is not. A review full of `unverified` rows tells the reader the review did not really happen.
 - **The evidence has to test the claim it is offered for**, in a table row or anywhere else in the review. A cheap instrument — a command, or a sentence quoted out of the section that scopes it — usually answers a question adjacent to the one asked, and a clean answer looks the same either way. A checksum answers whether a file changed; where the row asks whether a measured value changed, it is the wrong instrument even on every file where the two agree.
 - **A running system reports what is in effect, not what was decided.** Where a claim is about a decision — a configured value, a chosen limit, a deliberate default — evidence read from a live object does not establish it: a tool that fills in defaults renders them indistinguishably from authored ones. Read the authored artifact, and say which one you read.
@@ -51,7 +51,7 @@ Decision: approve / request changes / reject
 
 **Scope** is measured against the task the pull request states — its issue where one exists, its Summary where none does — never against taste. A line that traces to an acceptance criterion is in scope however large it is, and a correct one-line drive-by is out of scope however small. Out-of-scope work is not wrong — it is a separate issue.
 
-**Depth** is the check the other five cannot make. They ask whether the change follows the rules; Depth asks whether it is right: a correctness risk the tests do not cover, a materially simpler approach passed over, a defect no convention happens to name. Marking it `pass` asserts the reviewer looked for those and found none, so it is the one row that cannot be filled without reading the change itself.
+**Depth** is the check the other rows cannot make. They ask whether the change follows the rules; Depth asks whether it is right: a correctness risk the tests do not cover, a materially simpler approach passed over, a defect no convention happens to name. Marking it `pass` asserts the reviewer looked for those and found none, so it is the one row that cannot be filled without reading the change itself.
 
 ## Citing violations
 
