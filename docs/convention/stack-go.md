@@ -3,8 +3,9 @@
 > How a Go module is laid out and where each kind of code belongs:
 > directories, naming, errors, logging, comments, tests, imports.
 >
-> Checked against Go 1.21 and mockery 3. A claim below that names no
-> version holds for these.
+> Checked against go1.21.13, mockery v3.7.4, goimports
+> (golang.org/x/tools) v0.49.0 and golangci-lint v2.13.2. A claim below
+> that names no version holds for these.
 
 ## Contents
 - 0. Folder & file naming — strict
