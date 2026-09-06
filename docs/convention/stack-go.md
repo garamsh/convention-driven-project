@@ -107,22 +107,13 @@ line count crossed unnoticed.
 A root-level file exists when the module has that concern, and it is
 named after the concern:
 
-- `errors.go` — sentinels shared across domains (§4).
+- `errors.go` — sentinels no single domain owns (§4).
 - `config.go` — the module's configuration type and its loading.
 - `logger.go` — only when logger setup goes past `slog.Default()`
   (§5). A project that calls `slog.Default()` directly has no
   root-level logger file.
 - `httpserver.go` — server construction and route wiring, when the
   module serves HTTP.
-
-Sizing, for each of them:
-
-- **Single file (`errors.go`, `logger.go`, `config.go`, …)** when ≤
-  ~300 LoC. Filename = what's inside.
-- **Promotion to `internal/<thing>/`** when > ~300 LoC or owns private
-  helpers. Folder name describes what's inside
-  (`internal/logger/`, `internal/httpserver/`, `internal/config/`);
-  the §0 banned-name list applies.
 
 Multiple root-level files are fine: `errors.go` + `logger.go` +
 `config.go`, each named after its concern.
