@@ -180,8 +180,9 @@ file declares and which depends.
   `Session`; a `Model` does not become a `Modeller`. Where that name is
   also one of the domain's verbs, the agent form breaks the tie: a
   `Store` verb, a `Storer` interface, one file each (§1).
-- **Functions / methods:** `MixedCaps`, verb-noun (`GetUser`,
-  `ParseToken`).
+- **Functions / methods:** `MixedCaps`, verb-noun for one that does
+  work (`GetUser`, `ParseToken`). A method that only returns a field
+  is named after the field: `Name()`, never `GetName()`.
 - **Constants:** `MixedCaps` (not `MAX_SIZE`). Group in `const ( ... )`.
 - **Variables:** short in small scopes, `MixedCaps` for package-level.
 - **Acronyms:** all-caps for the common form, consistent case
