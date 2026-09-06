@@ -8,7 +8,7 @@
 
 ## Verification
 
-<!-- Commands run locally and their results. `make ci` runs the project's checks: state its result, and any other command you ran. For a test written or changed, which tests were seen to fail with the behaviour removed. -->
+<!-- Commands run locally and their results. Run the project's single entry point for the whole check set: state its result, and any other command you ran. For a test written or changed, which tests were seen to fail with the behaviour removed. -->
 
 ## Conventions consulted
 
