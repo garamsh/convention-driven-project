@@ -18,6 +18,10 @@
 
 <!-- Where a convention names a default and allows the alternative on condition you state why — the alternative taken, and the reason. Write N/A when the change took every default. -->
 
+## Restructure rejected
+
+<!-- What the change adds, the restructure considered instead, and why it was rejected. Write N/A when the change adds nothing. -->
+
 ## Convention concerns
 
 <!-- Disagreements or gaps found in docs/convention/. The PM decides; do not work around a convention silently. Write N/A with a reason when there are none. -->
