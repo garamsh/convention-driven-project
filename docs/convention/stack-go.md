@@ -71,9 +71,7 @@ See §0 for the banned-name list.
   contract.
 - **Its implementations go in `internal/<domain>/<name>/`**, so a
   driver import (`pgx`, a vendor SDK) stays out of the domain
-  package's import graph and its tests. The package is named for the
-  interface rather than for the technology behind it, and two
-  implementations of one interface are two files in it.
+  package's import graph and its tests.
 
 **One file vs several** inside `internal/<domain>/<name>/`:
 
@@ -96,7 +94,7 @@ packages split across several files:
   `internal/<domain>/repository/postgres_queries.go` — one
   implementation too big for one file.
 - `internal/<domain>/repository/memory.go` — the in-memory
-  implementation, in the same package.
+  implementation.
 - Every other domain repeats the shape.
 
 A cross-cutting concern moves to its own `internal/<thing>/` package
