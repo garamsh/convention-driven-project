@@ -115,8 +115,11 @@ named after the concern:
 - `httpserver.go` — server construction and route wiring, when the
   module serves HTTP.
 
-Multiple root-level files are fine: `errors.go` + `logger.go` +
-`config.go`, each named after its concern.
+Multiple root-level files are fine: several concerns (`errors.go` +
+`logger.go` + `config.go`), or one concern across several files
+(`httpserver.go` + `httpserver_routes.go`), each named after what it
+holds. The root is one package, so a second file for a concern is a
+name and not a boundary.
 
 ### Project envelope
 
