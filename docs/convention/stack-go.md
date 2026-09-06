@@ -36,7 +36,18 @@ concept they own, not the role they play — `auth` over
 
 See §0 for the banned-name list.
 
-### Layout A — small service (default)
+**What the module is decides which layout governs it**, not how large
+it is:
+
+- **Service layout** — the module ships a binary.
+- **Library layout** — the module ships no binary and exists for other
+  modules to import.
+
+A module keeps that layout at any size, and changes layout only by
+gaining or losing `cmd/<binary>/main.go` — a change to the tree, not a
+line count crossed unnoticed.
+
+### Service layout
 
 - `cmd/<binary>/main.go` — the binary's entry point.
 - `internal/<domain>/<domain>.go` — the aggregate: domain types, DTOs
@@ -52,6 +63,8 @@ See §0 for the banned-name list.
   interface`, `mailer.go` declares `type Mailer interface`.
 - `internal/<domain>/<verb>.go` — one file per verb (`create.go`,
   `update.go`, `query.go`); method bodies split by responsibility.
+  Where several verbs serve one responsibility they share its file,
+  named for it: `lifecycle.go` for create/activate/deactivate.
 - `internal/<domain>/service_test.go` — the service's tests (§7).
 - `internal/<domain>/<pkg>/` — the implementations of that dependency
   interface, one file each (`repository/postgres.go`,
@@ -85,26 +98,7 @@ See §0 for the banned-name list.
   `postgres_queries.go`) when it is > ~300 LoC or owns private
   helpers / connection-pool / per-SQL constants.
 
-### Layout B — domain-rich service (5k–30k LoC)
-
-Layout A's shape, with verb files grouped by responsibility and impl
-packages split across several files:
-
-- `internal/<domain>/lifecycle.go`, `internal/<domain>/billing.go`,
-  `internal/<domain>/permissions.go` — method bodies grouped by
-  responsibility (create/activate/deactivate, charge/refund,
-  authorize/deny).
-- `internal/<domain>/repository/postgres.go`,
-  `internal/<domain>/repository/postgres_queries.go` — one
-  implementation too big for one file.
-- `internal/<domain>/repository/memory.go` — the in-memory
-  implementation.
-- Every other domain repeats the shape.
-
-A cross-cutting concern moves to its own `internal/<thing>/` package
-past ~300 LoC.
-
-### Layout C — library
+### Library layout
 
 - `<pkg>.go`, `<pkg>_test.go`, `go.mod`, `README.md` — all at the
   module root. `command.go`, `args.go` — one file per thing it owns.
