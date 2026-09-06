@@ -92,7 +92,7 @@ Replace `<lint-cmd>` and the rest with the project's actual commands (`npm run l
 - **Existing components**: search the GitHub Marketplace before writing inline `run:` blocks.
 - **Advisories**: for every third-party action, check the GitHub Advisory Database (`github.com/advisories?query=type%3Areviewed+ecosystem%3Aactions`) for the candidate version.
 - **Toolchain setup**: use the official setup action for the project's language; take its version and inputs from its own docs.
-- **Checks**: run `make lint`, `make format`, `make test`, `make build` — the targets, not the commands inside them.
+- **Checks**: run `make ci` — the target, not the commands inside it.
 - **Artifacts**: use the artifact action.
 - **Permissions**: `permissions: read-all` at the workflow top; `write` granted per job.
 - **Secrets**: repo or environment secrets, OIDC for cloud deploys, `::add-mask::VALUE` for values derived from secrets.
