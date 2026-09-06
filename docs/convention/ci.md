@@ -20,7 +20,7 @@ Local checks and CI checks are the same checks, invoked by the same names. CI re
 - **One name per task.** Each of lint, format, test, and build has exactly one name that a human and CI both invoke, once the project has a command for it. What implements that name — a task runner, a script, a package manifest entry — is the project's choice; the name is the contract, so it arrives with the command and not ahead of it.
 - **One name for the whole set.** A single name runs those names in order, so "run the checks" is one command locally and one step in CI.
 - **CI calls the names, not the commands behind them.** A pipeline that spells out the underlying tool invocations has created a second set of commands, and the two drift.
-- **An entry point reports what it did.** A suite that skipped every test, a generator that found no input, a check that read only tracked files — each exits zero and reads exactly like the run that did the work. The output has to tell those apart: a count of what was covered, or a failure when the count is zero.
+- **An entry point reports what it did.** A suite that skipped every test, a generator that found no input, a check that read only tracked files — each exits zero and reads exactly like the run that did the work. The output has to tell those apart: a count of what was covered, or a failure when the count is zero. A count taken over a set chosen for convenience is as honest as one taken over everything the task is meant to cover, and the two read the same, so the output names beside the count how the set it counted was selected.
 - **An entry point may not become a pipeline component.** It runs on a contributor's machine as well as in CI.
 
 ## Run the checks before pushing
