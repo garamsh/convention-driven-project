@@ -65,8 +65,8 @@ line count crossed unnoticed.
   bodies (`create.go`, `update.go`, `lifecycle.go`).
 - `internal/<domain>/service_test.go` — the service's tests (§7).
 - `internal/<domain>/<pkg>/` — the implementations of that dependency
-  interface, one file each (`repository/postgres.go`,
-  `repository/memory.go`); the in-memory one serves tests and dev.
+  interface, one file each (`repository/postgres.go` or
+  `memory/repository.go`); the in-memory one serves tests and dev.
 - `internal/<crosscutting>/` — a concern at least three domains
   share, named by what it is.
 - `go.mod`, `go.sum` — module root.
