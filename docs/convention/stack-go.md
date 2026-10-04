@@ -21,17 +21,11 @@
 
 ## 0. Folder & file naming — strict
 
-Names describe **what they own**. **Banned at any level:**
-`model.go`, `utils/`, `helpers/`, `common/`, `ext/`, `adapter/`,
-`driver/`, `platform/`, `infra/`, `kit/`, `repo/`.
+**Banned at any level:** `model.go`.
 
 If two helpers share a concept, **give the concept a name**:
 `password_hashing.go`, `format_currency.go`. The path tells you what
 the file does.
-
-(Standard practice in the Go community: package names after the
-concept they own, not the role they play — `auth` over
-`auth_utils`. `spf13/cobra` and `go-kit/kit` both follow this.)
 
 ## 1. Directory layout
 

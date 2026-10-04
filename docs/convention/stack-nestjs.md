@@ -17,9 +17,7 @@ Checked against NestJS 11, TypeORM 0.3, and Mongoose 8. A claim below that names
 
 ## 0. Folder & file naming — strict
 
-Names describe what they own. Banned at any level: `src/utils/`,
-`src/helpers/`, `src/shared/`, `src/misc/`, `*.utils.ts`,
-`*.helpers.ts`, `*.shared.ts`.
+Banned at any level: `*.utils.ts`, `*.helpers.ts`, `*.shared.ts`.
 
 **Mandatory file suffixes** (matches `nest g`):
 
@@ -68,14 +66,9 @@ Under `src/`:
   `data-source.ts` (the CLI data source migrations run against), and
   `migrations/`. Name the folder for the ORM when that reads better
   (`prisma/`, `orm/`, `mongo/`).
-- `src/common/<kind>/` — cross-cutting **stateless** enhancers, one
-  subfolder per Nest enhancer kind: `decorators/` (`@CurrentUser()`,
-  `@Roles()`), `guards/`, `interceptors/`, `pipes/`, `filters/`,
-  `middleware/`. One class per file, and no `index.ts` barrel across
-  feature boundaries.
 - `src/auth/` — a cross-cutting concern that owns providers is a
-  shared **module**, not a `common/` folder: `auth.module.ts`,
-  `auth.service.ts`, `strategies/`, `decorators/`.
+  shared **module**: `auth.module.ts`, `auth.service.ts`,
+  `strategies/`, `decorators/`.
 - `src/<feature>/` — one folder per bounded context, holding
   `<feature>.module.ts`, `<feature>.controller.ts`,
   `<feature>.service.ts`, the co-located `*.spec.ts` files, `dto/`
@@ -138,7 +131,7 @@ Avoid `@Global()` unless the provider is genuinely used everywhere
   only schema history, applied with `migrationsRun`.
 - Read single rows with the 0.3+ finders, `findOneBy` /
   `findOneByOrFail`. `findOneByOrFail` throws `EntityNotFoundError`;
-  a filter in `src/common/filters/` maps it to `NotFoundException`,
+  an exception filter maps it to `NotFoundException`,
   and a project using `findOneByOrFail` writes that filter.
 
 ### Mongoose
@@ -211,11 +204,6 @@ Features inject `PrismaService` directly.
 - Scaffold with `nest g <kind> <name>`; it writes into `src/<name>/`,
   and `--flat` skips the folder. `nest g resource <name>` scaffolds
   the whole feature — module, controller, service, DTOs, entity.
-- The CLI drops enhancers at `src/<name>/<name>.<kind>.ts`, which is
-  not where they live here: generate them with
-  `--path src/common/<kind>`, or move them after generation. The CLI's
-  default output exists because the CLI has no opinion on
-  cross-cutting layout; §1 does.
 - Always use the CLI's suffixes — tooling and IDE navigation rely on
   them.
 

@@ -23,8 +23,7 @@
 
 ## 0. Folder & file naming
 
-Names describe what they own. Adopt the names the canonical
-zhanymkanov production layout uses:
+Adopt the names the canonical zhanymkanov production layout uses:
 
 - **Per-domain `utils.py`** is fine (single file at the root of
   a domain — non-business logic helpers, response normalization,
@@ -38,10 +37,10 @@ zhanymkanov production layout uses:
 
 Names that are still banned (vague, never canonical for FastAPI):
 
-- `helpers.py` / `helpers/` (folder)
-- `common.py` / `common/`
-- `misc.py` / `misc/`
-- `shared.py` / `shared/`
+- `helpers.py`
+- `common.py`
+- `misc.py`
+- `shared.py`
 
 These were never the FastAPI canonical layout and are still
 wrong for it. Two helpers sharing an idea → name the idea:
