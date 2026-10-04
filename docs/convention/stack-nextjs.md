@@ -95,7 +95,7 @@ Never mix the App Router and the Pages Router in one project: no
 | File | Role | Key constraint |
 |---|---|---|
 | `layout.tsx` | Shared UI for segment + descendants. State preserved. | Root **must** render `<html>` and `<body>`. |
-| `page.tsx` | Route UI; leaf of subtree. Async by default. | Required for segment to be public. |
+| `page.tsx` | Route UI; leaf of subtree. Server Component by default; may be `async`. | Required for segment to be public. |
 | `loading.tsx` | Suspense fallback. | Cannot show when layout reads uncached data — wrap in `<Suspense>` or move to `page`. |
 | `error.tsx` | Error boundary. | **Must be a Client Component** (`'use client'`). |
 | `global-error.tsx` | Replaces root layout on catastrophic error. | Must include own `<html>` and `<body>`. |
@@ -150,8 +150,8 @@ using multiple root layouts.
 Add to **specific interactive components**, not layouts or whole
 pages. Once a file is `'use client'`, all its imports become
 client-bundled. Use `import 'server-only'` for modules that must
-never reach the client. Non-`NEXT_PUBLIC_` env vars are stripped to
-`""` in client bundles.
+never reach the client. Non-`NEXT_PUBLIC_` env vars are not inlined
+and read as `undefined` in the client.
 
 ## 4. Server Components — pages and layouts
 
@@ -231,7 +231,8 @@ inside the Server Action.**
 - With `NEXT_PUBLIC_` prefix → inlined into the client bundle at
   build time; **frozen at build** — changing it after `next build`
   has no effect.
-- Dynamic lookups (`process.env[varName]`) are NOT inlined.
+- A lookup whose key is known only at runtime (`process.env[varName]`)
+  is NOT inlined.
 
 ## 9. Multi-layout via route groups
 
@@ -249,8 +250,9 @@ For modals that stay shareable, refresh-safe, and clean under
 back/forward. The pieces, for a photo modal:
 
 - `src/app/@modal/default.tsx` — fallback for the unmatched slot.
-- `src/app/@modal/(..)photos/[id]/page.tsx` — the intercepted route,
-  rendered as the modal.
+- `src/app/@modal/(.)photos/[id]/page.tsx` — the intercepted route,
+  rendered as the modal. `(.)`, not `(..)`: a slot is not a route
+  segment, so `photos` is on the same level.
 - `src/app/photos/[id]/page.tsx` — the real page, rendered on direct
   navigation.
 - `src/app/layout.tsx` — renders both `{children}` and `{modal}`.
@@ -263,7 +265,7 @@ back/forward. The pieces, for a photo modal:
   conventionally everything except `/api`, `_next/static`,
   `_next/image`, and `favicon.ico`.
 - v16 renamed `middleware.ts` → `proxy.ts`. Codemod:
-  `npx @next/codemod@canary middleware-to-proxy .`.
+  `npx @next/codemod@16.3.8 middleware-to-proxy .`.
 - Use cases: auth gate (redirect), geolocation, A/B headers, CORS
   preflight for `/api/*`.
 - **Anti-patterns:** don't use as a general middleware hub; don't
@@ -294,7 +296,7 @@ back/forward. The pieces, for a photo modal:
   before it runs.
 - This stack's substitutes: MSW for outbound HTTP, a Prisma/Drizzle
   test double or SQLite for the database, a fake session for auth,
-  `testcontainers-node` for real service dependencies.
+  `testcontainers` for real service dependencies.
 - The built app is `next start`.
 - Assert on rendered text, ARIA, emitted form payloads, and
   navigated URLs — **never** on the internal React tree shape or
@@ -337,8 +339,9 @@ A feature declares two entry points, not one:
 One barrel over both breaks the build. A barrel that exports anything
 client-reachable is treated as client-reachable whole, so a client
 module importing a single action drags the server-only modules beside
-it into the client graph. The error then names the client module,
-which is innocent — the shape of the barrel is the cause.
+it into the client graph. The error is then reported at the
+server-only module, with the client module only in its import trace —
+the shape of the barrel is the cause.
 
 The tiers are not self-enforcing: configure `import/no-restricted-paths`
 to fail the build on a crossing, in the same pull request that creates

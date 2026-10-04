@@ -53,9 +53,9 @@ Files named for a concept: `src/auth/password_hashing.py`,
 
 ## 1. Project layout — domain-by-package (production)
 
-URL versioning is a **URL prefix** on the `APIRouter` (§7) — never
-a directory name like `api/v1/`. This is the zhanymkanov production
-layout.
+The domain-by-package layout follows zhanymkanov's. URL versioning
+is a **URL prefix** on the `APIRouter` (§7) — never a directory name
+like `api/v1/`.
 
 Paths outside the domain folders:
 
@@ -248,18 +248,18 @@ starts mixing orchestration with raw query building.
 **Mixing async and blocking code.** A sync call inside `async def`
 — `requests`, a synchronous ORM, file I/O, an SDK with no async
 form — blocks the event loop for every request in flight, not only
-its own. Run it off the loop, either way FastAPI documents: declare
-the path operation `def` and let FastAPI hand the whole function to
-a threadpool, or keep `async def` and wrap the blocking call with
-Starlette's `run_in_threadpool`. Asyncer's `asyncify` wraps the
-second with a typed signature.
+its own. Run it off the loop, one of two ways: declare the path
+operation `def`, which FastAPI documents as handing the whole
+function to a threadpool, or keep `async def` and wrap the blocking
+call with Starlette's `run_in_threadpool`. Asyncer's `asyncify`
+wraps the second with a typed signature.
 
 ## 7. Routers
 
 **Always declare router-level `prefix`, `tags`, and shared
 `dependencies=` on the `APIRouter` itself** — not at the
 `include_router` call site. That keeps the router
-self-describing and makes `include_router(app)` a one-liner.
+self-describing and makes `app.include_router(router)` a one-liner.
 
 **One HTTP operation per function.** Don't mix `@router.get("/")
 + @router.post("/")` in the same function — separation
@@ -286,8 +286,9 @@ Depends(...))`. `async def` for I/O deps; `def` for pure deps.
 
 Return what the endpoint already holds — the ORM row, or the
 value `service` handed back — and let the declared return type
-or `response_model` validate and serialize it. Constructing the
-public schema inside the endpoint validates the same data twice.
+or `response_model` validate and serialize it. The declared return
+type already states the public shape; constructing the schema inside
+the endpoint states it a second time.
 
 ## 8. Streaming (SSE / JSON Lines / bytes)
 

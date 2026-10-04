@@ -141,7 +141,7 @@ Avoid `@Global()` unless the provider is genuinely used everywhere
   `SchemaFactory.createForClass(...)`, with the document type declared
   as `HydratedDocument<T>`.
 - Inject models with `@InjectModel(Entity.name)` and create documents
-  with `Model.create` — Mongoose 8+ replaced `new Model(dto).save()`.
+  with `Model.create`.
 
 ### Prisma
 
@@ -194,9 +194,10 @@ Features inject `PrismaService` directly.
   `APP_INTERCEPTOR`, `APP_FILTER` — cannot be swapped in a test
   unless it is bound with `useExisting` instead of `useClass`; bind
   it that way so the provider behind it can be overridden.
-- E2E exercises the built app — `nest start --prod`, or the built
-  artifact — with `@testcontainers/postgresql` /
-  `@testcontainers/mongodb` supplying the services it talks to.
+- E2E exercises the built app — `nest build`, then `node dist/main`
+  (the scaffold's `start:prod`) — with `@testcontainers/postgresql` /
+  `@testcontainers/mongodb` supplying the services it talks to. Not
+  `nest start`: it compiles the source again before it runs.
 
 
 ## 7. CLI conventions
