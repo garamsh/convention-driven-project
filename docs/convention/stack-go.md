@@ -23,9 +23,7 @@
 
 **Banned at any level:** `model.go`.
 
-If two helpers share a concept, **give the concept a name**:
-`password_hashing.go`, `format_currency.go`. The path tells you what
-the file does.
+Files named for a concept: `password_hashing.go`, `format_currency.go`.
 
 ## 1. Directory layout
 

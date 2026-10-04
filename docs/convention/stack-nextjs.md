@@ -34,8 +34,8 @@ adopt it.
   the App Router file conventions
   (`layout.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`, `route.ts`,
   `template.tsx`, `default.tsx`, `proxy.ts` / `middleware.ts`).
-- Two helpers sharing an idea → name the idea:
-  `src/lib/format-currency.ts`, `src/lib/email-validation.ts`.
+- Files named for a concept: `src/lib/format-currency.ts`,
+  `src/lib/email-validation.ts`.
 
 ## 1. Project layout (App Router, `src/`)
 
