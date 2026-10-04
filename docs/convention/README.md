@@ -48,7 +48,7 @@ These apply only when the project uses that stack. The bootstrap process (root `
 | `stack-nextjs.md` | — | Next.js App Router applications |
 | `stack-tailwind.md` | — | Tailwind CSS styling |
 
-A stack file states the concrete form of what a stack-neutral file governs: the test client and file placement behind `testing.md`, the comment syntax behind `code-comments.md`, the commands behind an entry-point name in `ci.md`. It never restates the rule itself. This table and the one above are where that split is recorded — the files do not point at each other.
+A stack file states the concrete form of what a stack-neutral file governs: the test client and file placement behind `testing.md`, the comment syntax behind `code-comments.md`, the commands behind an entry-point name in `ci.md`. It states the same of a structural rule (`docs/architecture/README.md` §Rules 6): the package and file names the unit takes in its language. It never restates the rule itself. These two tables and that rule are where the split is recorded — the files do not point at each other.
 
 A stack built on another stack takes a row with a base in the Extends column. The derived file holds only the rules its stack changes — one rule, not the section around it — and the base governs every rule it does not, so a project keeping the derived file keeps the base too. A base has no base of its own: one level, so that opening two files is always enough.
 
