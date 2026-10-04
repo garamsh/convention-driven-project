@@ -43,8 +43,10 @@ Names that are still banned (vague, never canonical for FastAPI):
 - `shared.py`
 
 These were never the FastAPI canonical layout and are still
-wrong for it. Two helpers sharing an idea → name the idea:
-`src/auth/password_hashing.py`, `src/billing/format_currency.py`.
+wrong for it.
+
+Files named for a concept: `src/auth/password_hashing.py`,
+`src/billing/format_currency.py`.
 
 ## 1. Project layout — domain-by-package (production)
 
