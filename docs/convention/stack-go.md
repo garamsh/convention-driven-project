@@ -287,9 +287,6 @@ Where the project generates mocks, generate them with
 - **In tests:** the generated mock satisfies the interface; pass it
   as a constructor argument (`NewService(repo, mailer, logger)`).
 
-When a top-level domain depends on another top-level's interface, the
-test for the consumer uses the mock generated from that interface.
-
 ## 8. Imports & dependencies
 
 Three groups, separated by blank lines:
