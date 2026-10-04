@@ -12,7 +12,7 @@
 
 ## Contents
 - 0. Folder & file naming
-- 1. Project layout — domain-by-package (production)
+- 1. Project layout — domain-by-package
 - 2. Application bootstrap
 - 3. Configuration
 - 4. Database
@@ -51,7 +51,7 @@ wrong for it.
 Files named for a concept: `src/auth/password_hashing.py`,
 `src/billing/format_currency.py`.
 
-## 1. Project layout — domain-by-package (production)
+## 1. Project layout — domain-by-package
 
 The domain-by-package layout follows zhanymkanov's. URL versioning
 is a **URL prefix** on the `APIRouter` (§7) — never a directory name
@@ -79,21 +79,6 @@ Paths outside the domain folders:
   `Dockerfile` for the production image.
 
 Test paths are in §10.
-
-For **small projects (≤3 domains, ≤5 tables)** where the
-domain-by-package shape is overkill, the layer-based layout
-(`src/api/`, `src/services/`, `src/repositories/`, `src/models/`,
-`src/schemas/`, `src/core/`) is acceptable. Switch to
-domain-by-package the moment either threshold is crossed.
-
-For **microservices / very small services** the official
-`fastapi/full-stack-fastapi-template` flat layout
-(`backend/app/{main,models,crud,utils}.py` +
-`backend/app/{api,core,alembic}/`) is the canonical starter. The
-template uses `app/utils.py` for cross-cutting helpers — that
-name is fine for that layout. Adopt the official template for
-its intended use case (small / single-service projects), not for
-multi-domain production code.
 
 ### File responsibilities inside `src/<domain>/`
 
@@ -319,9 +304,7 @@ For JSON Lines or byte streaming, use `StreamingResponse` (from
   reusable.
 - **`PyJWT` is the JWT library** (`parse_jwt_data`). Never
   `from jose import jwt`.
-- Cross-cutting deps live in `src/dependencies.py`. Promote a
-  domain dep to `src/dependencies.py` only when ≥ 3 resources
-  share it.
+- Cross-cutting deps live in `src/dependencies.py`.
 
 ## 10. Tests
 
