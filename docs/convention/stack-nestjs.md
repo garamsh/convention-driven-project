@@ -42,8 +42,11 @@ Banned at any level: `*.utils.ts`, `*.helpers.ts`, `*.shared.ts`.
 Class names match files: `users.service.ts` → `UsersService`. IDE
 navigation depends on it.
 
-The table gives the **filename suffix** only; §1 gives the folder each
-file lives in (e.g. `*.entity.ts` goes in `entities/`).
+The table gives the **filename suffix** only. §1 gives the folder for
+the files it lists (e.g. `*.entity.ts` goes in `entities/`); it gives
+none for a guard, interceptor, pipe, filter, middleware, or gateway,
+or for a decorator outside `src/auth/`. Where those live is the
+project's to decide.
 
 ## 1. Project layout — feature modules
 
@@ -131,8 +134,9 @@ Avoid `@Global()` unless the provider is genuinely used everywhere
   only schema history, applied with `migrationsRun`.
 - Read single rows with the 0.3+ finders, `findOneBy` /
   `findOneByOrFail`. `findOneByOrFail` throws `EntityNotFoundError`;
-  an exception filter maps it to `NotFoundException`,
-  and a project using `findOneByOrFail` writes that filter.
+  a project using `findOneByOrFail` writes an exception filter that
+  maps that error to `NotFoundException`, in the folder where the
+  project keeps its filters.
 
 ### Mongoose
 
