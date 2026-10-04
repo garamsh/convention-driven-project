@@ -25,21 +25,15 @@ for it.
 
 ## 0. Folder & file naming
 
-Names describe what they own. The names the official tooling ships
-are the canonical ones: if a name appears in the Next.js docs or in
-a `create-next-app` default, adopt it; if it does not, name the file
-or folder after what it owns.
+The names the official tooling ships are the canonical ones: if a
+name appears in the Next.js docs or in a `create-next-app` default,
+adopt it.
 
 - Official, and kept as shipped: `app/` (routes), `public/` (static
   assets), `src/` — optional in Next.js, required here (§1) — and
   the App Router file conventions
   (`layout.tsx`, `page.tsx`, `loading.tsx`, `error.tsx`, `route.ts`,
   `template.tsx`, `default.tsx`, `proxy.ts` / `middleware.ts`).
-- `src/lib/utils.ts`, the shadcn-ui companion file, is allowed. It is
-  the conventional home for `cn()` plus a few formatting and type
-  helpers, and it stays small.
-- Banned, because Next.js ships none of them: `utils/`, `helpers/`,
-  `common/`, `misc/`, `shared/`, `stuff/`.
 - Two helpers sharing an idea → name the idea:
   `src/lib/format-currency.ts`, `src/lib/email-validation.ts`.
 
