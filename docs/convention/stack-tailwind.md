@@ -24,7 +24,7 @@ Tailwind's own locators for a version check: `tailwindcss.com/docs/installation`
 ## Tailwind v4 specifics
 
 - Install: `npm install tailwindcss @tailwindcss/vite` (Vite) or `@tailwindcss/postcss` (PostCSS). CLI lives in `@tailwindcss/cli`.
-- Import: `@import "tailwindcss";` in your CSS. **No `@tailwind base/components/utilities` directives** — those were removed in v4.
+- Import: `@import "tailwindcss";` in your CSS. **No `@tailwind base/components/utilities` directives** — v4 compiles them without an error, but they load no theme and no preflight, so `p-4` or `bg-red-500` generates nothing.
 - Config is CSS-first via `@theme { ... }` blocks in your stylesheet. **No `tailwind.config.js` required.**
 - Browser target: Safari 16.4+, Chrome 111+, Firefox 128+. For older browsers, stay on v3.4.
 - Custom utilities: `@utility <name> { ... }` (replaces `@layer utilities` from v3).
