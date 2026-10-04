@@ -4,8 +4,9 @@ How a Next.js project is laid out and where each kind of code
 belongs: routes, the server/client boundary, mutations, env, and
 tests.
 
-Checked against Next.js 16. A claim below that names no version holds
-for it.
+Checked against Next.js 16.3.8, create-next-app 16.3.8,
+`@next/codemod` 16.3.8, `server-only` 0.0.1, and shadcn 4.21.1. A
+claim below that names no version holds for these.
 
 ## Contents
 - 0. Folder & file naming

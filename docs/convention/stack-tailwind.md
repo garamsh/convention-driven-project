@@ -2,7 +2,7 @@
 
 Defaults for Tailwind CSS projects. How styles are composed: utilities in markup first, with `@apply`, `@utility`, and theme tokens only where they earn their place.
 
-Checked against Tailwind CSS 4. A claim below that names no version holds for it.
+Checked against Tailwind CSS v4.3.3 — `tailwindcss`, `@tailwindcss/cli`, `@tailwindcss/postcss`, `@tailwindcss/vite` and `@tailwindcss/upgrade`, all at that release. A claim below that names no version holds for it.
 
 ## Contents
 - Core principle
