@@ -59,10 +59,8 @@ Paths outside the domain folders:
 - `src/config.py` — the global `Settings` (§3).
 - `src/database.py` — async engine, sessionmaker, `get_db`,
   `Base` (§4).
-- `src/dependencies.py` — cross-cutting dependencies, promoted
-  from a domain when ≥ 3 resources share them (§9).
-- `src/exceptions.py` — cross-cutting exceptions, mapped to HTTP
-  by the handlers in `src/main.py` (§11).
+- `src/dependencies.py` — cross-cutting dependencies (§9).
+- `src/exceptions.py` — cross-cutting exceptions (§11).
 - `src/pagination.py` — shared pagination helper (optional).
 - `src/<domain>/` — one folder per bounded context; the table
   below lists the files it owns.
@@ -104,7 +102,7 @@ multi-domain production code.
 | `dependencies.py` | Domain-local FastAPI dependencies (`valid_<x>_id`, etc.). |
 | `config.py` | `BaseSettings` subclass with `env_prefix="<DOMAIN>_"` — auth-specific env, billing-specific env, etc. |
 | `constants.py` | `class <Domain>ErrorCode(StrEnum)`. Replaces magic strings. |
-| `exceptions.py` | Domain exceptions, mapped to HTTP by global handlers in `main.py`. |
+| `exceptions.py` | Domain exceptions (§11). |
 | `utils.py` | Non-business logic helpers (response normalization, data enrichment, etc.). |
 
 Cross-domain imports use explicit aliases:
@@ -360,10 +358,9 @@ Tooling and substitutes:
 - Review each migration before merge. Schema changes touch
   every environment; they deserve a second pair of eyes.
 - `HTTPException` for HTTP errors in routes/deps.
-- Cross-cutting domain exceptions live in
-  `src/<domain>/exceptions.py` and are mapped to HTTP in
-  `src/main.py`'s exception handlers
-  (`@app.exception_handler(MyDomainError)`).
+- Cross-cutting exceptions live in `src/exceptions.py`. They and
+  domain exceptions are mapped to HTTP in `src/main.py`'s
+  exception handlers (`@app.exception_handler(MyDomainError)`).
 - **Never** `except Exception:` in routes. Catch the narrowest
   class.
 - **Never** `BackgroundTasks` for anything you'd page on. If
