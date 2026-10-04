@@ -140,13 +140,6 @@ file declares and which depends.
 - **The import goes one way.** `internal/<domain>/<pkg>/` may import
   `internal/<domain>` for the types in the interface's signatures; the
   reverse import never happens.
-- **A consumer imports the producer's interface, not its concrete
-  type.** `order` imports `billing.Charger`; the compiler does not
-  enforce this, so it is a review matter.
-- Within a domain and across domains those two rules point opposite
-  ways, for a reason: a domain declares the behaviour it needs and
-  publishes the behaviour it offers, so a need is declared beside its
-  consumer and an offer beside its producer.
 - Go rejects an import cycle at compile time but does not detect a
   `type → struct → type` cycle. Those are found by reading.
 
@@ -297,8 +290,7 @@ Where the project generates mocks, generate them with
   as a constructor argument (`NewService(repo, mailer, logger)`).
 
 When a top-level domain depends on another top-level's interface, the
-test for the consumer uses the consumer-side mock (generated from the
-interface declared in the **producer's** top level).
+test for the consumer uses the mock generated from that interface.
 
 ## 8. Imports & dependencies
 
