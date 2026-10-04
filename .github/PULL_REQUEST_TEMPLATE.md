@@ -1,6 +1,6 @@
 ## Summary
 
-<!-- What changed and why. Reference the task or issue if one exists. -->
+<!-- What changed and why. Write `Closes #<n>` for each issue this implements, or the form your tracker closes on where it lives outside GitHub, and `No issue` where it implements none. -->
 
 ## Changes
 
