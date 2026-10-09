@@ -21,7 +21,7 @@
 - 7. Routers
 - 8. Streaming (SSE / JSON Lines / bytes)
 - 9. Dependencies
-- 10. Tests
+- 10. Tests — placement, tooling, substitutes, names
 - 11. Migrations & errors
 
 ## 0. Folder & file naming
@@ -306,7 +306,7 @@ For JSON Lines or byte streaming, use `StreamingResponse` (from
   `from jose import jwt`.
 - Cross-cutting deps live in `src/dependencies.py`.
 
-## 10. Tests
+## 10. Tests — placement, tooling, substitutes, names
 
 Placement:
 
@@ -334,6 +334,10 @@ Tooling and substitutes:
 
 
 ## 11. Migrations & errors
+
+This section states the Alembic migration form, the FastAPI
+exception forms and their mapping to HTTP, and what
+`BackgroundTasks` may run.
 
 - `alembic init -t async`. Import every `<domain>.models` in
   `alembic/env.py` so autogenerate sees them. Set a
