@@ -291,7 +291,10 @@ Where the project generates mocks, generate them with
   `mocks/<package>/<Interface>.go` at module root is one `dir` and
   `filename` declare. A dependency interface is scoped to the one
   domain that declares it, so `dir: internal/<domain>/mocks/` fits it
-  too. Pick one convention per project.
+  too. A project whose tests live outside the interface's directory
+  — a suite in `tests/` among them — sets `dir` and `filename` to a
+  location those tests can import, because a `_test.go` mock is not
+  importable across directories. Pick one convention per project.
 - **Generation:** `mockery` (reads config) or `go generate ./...`
   when interfaces carry `//go:generate mockery` directives. Pick one.
 - **In tests:** the generated mock satisfies the interface; pass it
