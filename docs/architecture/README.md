@@ -6,7 +6,7 @@ Current architecture of the system and the decisions behind it. This file is the
 
 - **Responsibility documents** (one `.md` per domain or concern, e.g. `memory.md`, `gateway.md`) — the single source of truth for how the system is shaped *now*. To know the current state, read only these.
 - **`adr/`** — the record of individual decisions: direction taken, context, rejected alternatives.
-- **`structures/`** — one file per candidate architecture, read side by side at bootstrap to choose the shape the system takes. These are input to that decision and not a record of it: the choice is recorded as an ADR carrying the chosen file's §Signs the choice was wrong, that file's §Boundaries and dependency direction becomes `structure.md` (rules 6 and 7), and bootstrap deletes this folder once both have landed.
+- **`structures/`** — one file per candidate architecture, read side by side at bootstrap to choose the shape the system takes. These are input to that decision and not a record of it: the choice is recorded as an ADR carrying the chosen file's §Signs the choice was wrong, that file's §Boundaries and dependency direction becomes `structure.md` (rules 6 and 7) beside §Rules every shape carries, and bootstrap deletes this folder once both have landed.
 
 ## Rules
 
@@ -18,6 +18,14 @@ Current architecture of the system and the decisions behind it. This file is the
 6. **Structural rules live in `structure.md`.** The shape chosen at bootstrap imposes rules — what the unit is, what may reference what, when a new one is earned — and they belong in the responsibility document for that concern, where a reviewer cites one by line and a correction is an ordinary edit. Not the ADR: rule 2 freezes that body, so superseding the choice of shape would be the price of fixing a rule's wording.
 7. **A point the structural rules leave to the project is settled in an ADR** — the one recording the shape where the question is met at bootstrap, a later one where it is met later. Which side is taken decides what counts as a defect, so it is a decision under rule 4, and the ADR still holds the record after bootstrap. Nothing obliges a project to settle a question it has not met: until then the point waits under `structure.md`'s open questions, where it binds nothing, and moves into that document's current decisions when the project takes a side.
 8. **Structural rules yield only to what a framework imposes.** Where `structure.md` and a convention file decide the same case differently, `structure.md` governs, unless the stack-specific file that applies decides it as its framework imposes it — the alternative fails to build or run, so the project cannot restate it. A stack file's spelling of a structural rule is not that: the rule it spells is `structure.md`'s. The shape chosen at bootstrap is this project's own refinement of what a stack-neutral file states for every project. A project with no `structure.md` meets no such conflict, and this rule asks nothing of it.
+
+## Rules every shape carries
+
+Structural rules that read the same whatever the unit is, so no candidate under `structures/` states them. Like that folder, this section is bootstrap input: bootstrap copies every bullet into `structure.md` beside the chosen shape's §Boundaries and dependency direction, where they live under rule 6, and deletes this section once `structure.md` carries them.
+
+- **The application has one composition site.** It is the one place that constructs concrete implementations, and it decides which implementation each declared abstraction receives.
+- **Every other unit receives what it depends on and constructs none of it**, whatever the shape makes the unit — a domain, a layer, or an adapter.
+- **The composition site stays thin.** It constructs and passes; it decides nothing else.
 
 ## Index
 
