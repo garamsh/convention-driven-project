@@ -28,7 +28,12 @@ Tailwind's own locators for a version check: `tailwindcss.com/docs/installation`
 - Config is CSS-first via `@theme { ... }` blocks in your stylesheet. **No `tailwind.config.js` required.**
 - Browser target: Safari 16.4+, Chrome 111+, Firefox 128+. For older browsers, stay on v3.4.
 - Custom utilities: `@utility <name> { ... }` (replaces `@layer utilities` from v3).
-- `corePlugins`, `safelist`, `resolveConfig`, `theme()` function — all gone or replaced in v4. The upgrade tool (`npx @tailwindcss/upgrade`) handles most migrations.
+- v3 config features, each with its own fate:
+  - `corePlugins` — not supported. Under `@config` it is ignored without a warning.
+  - `safelist` — not supported, ignored the same way. Use `@source inline("...")`.
+  - `resolveConfig` — removed. Read theme values as CSS variables.
+  - `theme()` — still works, deprecated. Use `var(--color-red-500)`; where a variable cannot go (a media query), `theme(--breakpoint-xl)`.
+- The upgrade tool (`npx @tailwindcss/upgrade`) handles most migrations.
 - Native CSS nesting supported — no preprocessor step needed.
 
 ## Composition: inline utilities first
@@ -68,14 +73,11 @@ Rung 2 — the chain repeats, so it becomes a class:
 ```
 
 Rung 3 — a class Tailwind does not ship, left open so variants can
-target it (`lg:scrollbar-none`, `hover:scrollbar-none`):
+target it (`md:content-auto`, `lg:content-auto`):
 
 ```css
-@utility scrollbar-none {
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+@utility content-auto {
+  content-visibility: auto;
 }
 ```
 
@@ -101,7 +103,7 @@ Use as `bg-brand-500`, `font-display`, `rounded-card`. Hardcoded hex or px in ma
 
 - **Responsive** — mobile-first: `md:grid-cols-2 lg:grid-cols-3`.
 - **State** — `hover:`, `focus:`, `active:`, `disabled:`, `group-hover:`, `peer-*`.
-- **Dark mode** — `dark:bg-gray-900`. Toggle via `<html class="dark">` or `@media (prefers-color-scheme: dark)`.
+- **Dark mode** — `dark:bg-gray-900`. It follows `prefers-color-scheme` by default; toggling via `<html class="dark">` needs `@custom-variant dark (&:where(.dark, .dark *));`.
 - **Layout** — prefer flex/grid + `gap-*` over `space-x-*` / `space-y-*` (v4 selector change for performance).
 - **Sizing** — `size-*` for square; `w-*`/`h-*` otherwise.
 - **Color with opacity** — `bg-black/50` (slash syntax). v3's `bg-opacity-*` is removed.
