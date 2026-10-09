@@ -4,9 +4,9 @@ How a Next.js project is laid out and where each kind of code
 belongs: routes, the server/client boundary, mutations, env, and
 tests.
 
-Checked against Next.js 16.3.8, create-next-app 16.3.8,
-`@next/codemod` 16.3.8, `server-only` 0.0.1, and shadcn 4.21.1. A
-claim below that names no version holds for these.
+Checked against Next.js 16.4.0, create-next-app 16.4.0,
+`@next/codemod` 16.4.0, `server-only` 0.0.1, shadcn 4.21.4, and
+Vitest 5.0.3. A claim below that names no version holds for these.
 
 ## Contents
 - 0. Folder & file naming
@@ -141,7 +141,7 @@ using multiple root layouts.
    `useTransition` / `useActionState`
 4. **Read data for a page** → Server Component (async, fetch inline)
 5. **React to a mutation** → Server Action calls `revalidatePath` /
-   `revalidateTag`, `redirect()`, or `router.refresh()`
+   `revalidateTag`, `redirect()`, or `refresh()` from `next/cache`
 
 ### `'use client'` placement
 
@@ -149,7 +149,10 @@ Add to **specific interactive components**, not layouts or whole
 pages. Once a file is `'use client'`, all its imports become
 client-bundled. Use `import 'server-only'` for modules that must
 never reach the client. Non-`NEXT_PUBLIC_` env vars are not inlined
-and read as `undefined` in the client.
+into the client bundle and read as `undefined` in the browser, but a
+Client Component's server render reads the real value. The prefix
+keeps a value out of the bundle, not out of the page: a secret read
+in a `'use client'` module reaches the HTML.
 
 ## 4. Server Components — pages and layouts
 
@@ -157,12 +160,13 @@ and read as `undefined` in the client.
   no `'use client'`, no `useEffect`.
 - `params` and `searchParams` are **promises** in v15+ — `await`
   them.
-- Layouts **do not re-render** on navigation, so a `searchParams`
-  value read there is unreliable. Read live values in a Client
-  Component.
-- A layout reading uncached data (`cookies()`, `headers()`, an
-  uncached `fetch`) **blocks** `loading.tsx`. Wrap the fetch in
-  `<Suspense>` or move it to `page.tsx`.
+- Layouts **do not re-render** on navigation, so they receive no
+  `searchParams`. Read live values in a Client Component.
+- `loading.tsx` shows no fallback for a layout reading uncached data
+  (`cookies()`, `headers()`, an uncached `fetch`). Without
+  `cacheComponents` navigation blocks on it; with it, which
+  create-next-app writes into `next.config.ts`, `next build` fails.
+  Wrap the read in `<Suspense>` or move it to `page.tsx`.
 
 ## 5. Server Actions
 
@@ -263,9 +267,8 @@ back/forward. The pieces, for a photo modal:
   conventionally everything except `/api`, `_next/static`,
   `_next/image`, and `favicon.ico`.
 - v16 renamed `middleware.ts` → `proxy.ts`. Codemod:
-  `npx @next/codemod@16.3.8 middleware-to-proxy .`.
-- Use cases: auth gate (redirect), geolocation, A/B headers, CORS
-  preflight for `/api/*`.
+  `npx @next/codemod@16.4.0 middleware-to-proxy .`.
+- Use cases: auth gate (redirect), geolocation, A/B headers.
 - **Anti-patterns:** don't use as a general middleware hub; don't
   rely on it for Server Action security — matchers can exclude
   paths silently (§5).
@@ -290,7 +293,8 @@ back/forward. The pieces, for a photo modal:
   segment, not here.
 - Nothing outside a test imports `src/testing/`.
 - The test setup stubs `server-only` to an empty module. That package
-  throws wherever it is imported outside a Server Component, so
+  throws wherever it resolves without the `react-server` export
+  condition — in a Client Component, and in a Vitest run — so
   without the stub every test reaching a server-only module fails
   before it runs.
 - This stack's substitutes: MSW for outbound HTTP, a Prisma/Drizzle
