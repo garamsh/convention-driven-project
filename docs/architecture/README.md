@@ -6,7 +6,7 @@ Current architecture of the system and the decisions behind it. This file is the
 
 - **Responsibility documents** (one `.md` per domain or concern, e.g. `memory.md`, `gateway.md`) — the single source of truth for how the system is shaped *now*. To know the current state, read only these.
 - **`adr/`** — the record of individual decisions: direction taken, context, rejected alternatives.
-- **`structures/`** — one file per candidate architecture, read side by side at bootstrap to choose the shape the system takes. These are input to that decision and not a record of it: the choice is recorded as an ADR carrying the chosen file's §Signs the choice was wrong, that file's §Boundaries and dependency direction becomes `structure.md` (rules 6 and 7) beside §Rules every shape carries, and bootstrap deletes this folder once both have landed.
+- **`structures/`** — one file per candidate architecture, read side by side at bootstrap to choose the shape the system takes. These are input to that decision and not a record of it: the choice is recorded as an ADR carrying the chosen file's §Signs the choice was wrong, that file's §Boundaries and dependency direction becomes `structure.md` (rules 6 and 7) beside §Rules every shape carries, and bootstrap deletes this folder once both have landed, or, in a project that writes no `structure.md`, without waiting for them.
 
 ## Rules
 
@@ -21,7 +21,7 @@ Current architecture of the system and the decisions behind it. This file is the
 
 ## Rules every shape carries
 
-Structural rules that read the same whatever the unit is, so no candidate under `structures/` states them. Like that folder, this section is bootstrap input: bootstrap copies every bullet into `structure.md` beside the chosen shape's §Boundaries and dependency direction, where they live under rule 6, and deletes this section once `structure.md` carries them.
+Structural rules that read the same whatever the unit is, so no candidate under `structures/` states them. Like that folder, this section is bootstrap input: bootstrap copies every bullet into `structure.md` beside the chosen shape's §Boundaries and dependency direction, where they live under rule 6, and deletes this section once `structure.md` carries them. A project with no `structure.md` has nowhere to copy them: it copies nothing and deletes this section.
 
 - **The application has one composition site.** It is the one place that constructs concrete implementations, and it decides which implementation each declared abstraction receives.
 - **Every other unit receives what it depends on and constructs none of it**, whatever the shape makes the unit — a domain, a layer, or an adapter.
