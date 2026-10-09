@@ -272,10 +272,7 @@ Within `internal/<domain>/`:
 - Test names: `TestFunctionName` or `TestFunctionName_Scenario`.
 - Benchmarks: `func BenchmarkXxx(b *testing.B)`.
 
-### Generated mocks
-
-This section states which tool generates Go mocks, where its
-configuration and output live, and how a test passes one in.
+### Generated mocks — tool, configuration, output, injection
 
 Where the project generates mocks, generate them with
 **[mockery v3](https://vektra.github.io/mockery/)**.
