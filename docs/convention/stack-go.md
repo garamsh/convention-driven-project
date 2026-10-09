@@ -116,8 +116,7 @@ name and not a boundary.
 
 ### Project envelope
 
-- **The module has one composition site**: the place that constructs concrete types and passes them to interfaces, deciding which implementation each interface gets. Everything else takes what it depends on as an argument. Keep it thin.
-- **That site is `cmd/<binary>/main.go`, unless a test outside `cmd/<binary>/` has to reach it** — a suite in `tests/` (§7) among them. Only a test in its own directory can import a main package, so where such a test exercises the wired binary the site is in a package `main.go` calls, and `main.go` holds that call. A site a test cannot call is one the test copies instead, and the copy goes on passing after the shipped wiring breaks.
+- **The composition site is `cmd/<binary>/main.go`, unless a test outside `cmd/<binary>/` has to reach it** — a suite in `tests/` (§7) among them. Only a test in its own directory can import a main package, so where such a test exercises the wired binary the site is in a package `main.go` calls, and `main.go` holds that call. A site a test cannot call is one the test copies instead, and the copy goes on passing after the shipped wiring breaks.
 - `internal/` is enforced by the Go toolchain. Use it for everything not explicitly public.
 - `pkg/` is for code other modules import. Most services don't need it.
 
