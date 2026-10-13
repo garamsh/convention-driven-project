@@ -16,13 +16,13 @@ This file is replaced during bootstrap; do not edit it to describe your project.
 
 ## Configure the repository
 
-Templates do not carry repository settings. Configure these by hand:
+Configure and verify the receiving repository's settings:
 
-- **Branch protection on `main`** — require pull requests and block direct pushes. This enforces that changes reach `main` through a pull request rather than a direct push; it does not decide who merges one, since merging stays available to anyone with write access. Separating author from reviewer takes a second identity, so with one shared account the single merge authority holds by convention rather than by enforcement.
+- **Branch protection on `main`** — require pull requests and block direct pushes. Configure protection so changes reach `main` through a pull request. Keep one designated merge authority, enforced by convention where repository settings cannot restrict who merges.
 - **Require review before merge** — only if the reviewer uses a separate account. GitHub rejects self-approval, so with one shared account this blocks every merge; leave it off and the merge itself serves as the approval (`docs/convention/review.md`).
 - **Squash-only merges** and **automatically delete head branches** — match `docs/convention/git.md` and keep branches from piling up.
 - **Require status checks** once CI exists, so the project's single entry point for the whole check set gates merges (`docs/convention/ci.md`).
-- **Labels `task` and `proposal`** — the shipped issue templates declare them (`.github/ISSUE_TEMPLATE/task.md`, `.github/ISSUE_TEMPLATE/proposal.md`); a new repository has neither, and an issue filed before they exist loses its label.
+- **Labels `task` and `proposal`** — the shipped issue templates declare them (`.github/ISSUE_TEMPLATE/task.md`, `.github/ISSUE_TEMPLATE/proposal.md`); ensure both labels exist before accepting issues from those templates.
 
 A setting the platform puts out of reach — a plan that gates it, an organisation policy, a forge that has no such thing — does not release the rule it would have enforced. That rule holds the way the single merge authority does above: by convention, with the review the only thing standing between a change and `main`.
 
