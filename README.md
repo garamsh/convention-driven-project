@@ -19,7 +19,7 @@ This file is replaced during bootstrap; do not edit it to describe your project.
 Configure and verify the receiving repository's settings:
 
 - **Branch protection on `main`** — require pull requests and block direct pushes. Configure protection so changes reach `main` through a pull request. Keep one designated merge authority, enforced by convention where repository settings cannot restrict who merges.
-- **Require review before merge** — only if the reviewer uses a separate account. GitHub rejects self-approval, so with one shared account this blocks every merge; leave it off and the merge itself serves as the approval (`docs/convention/review.md`).
+- **Require review before merge** — only if the reviewer uses a separate account. A pull request's author cannot approve it (`docs/convention/review.md` §Single-account setups names the basis), so with one shared account this blocks every merge; leave it off and the merge itself serves as the approval.
 - **Squash-only merges** and **automatically delete head branches** — match `docs/convention/git.md` and keep branches from piling up.
 - **Require status checks** once CI exists, so the project's single entry point for the whole check set gates merges (`docs/convention/ci.md`).
 - **Labels `task` and `proposal`** — the shipped issue templates declare them (`.github/ISSUE_TEMPLATE/task.md`, `.github/ISSUE_TEMPLATE/proposal.md`); ensure both labels exist before accepting issues from those templates.
