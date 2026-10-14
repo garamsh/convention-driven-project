@@ -7,7 +7,7 @@
 > Checked against FastAPI 0.138.2, Pydantic 2.13.5, SQLAlchemy
 > 2.1.3, fastapi-cli 0.0.32, pydantic-settings 2.15.0, Alembic
 > 1.20.0, full-stack-fastapi-template 0.12.0, and
-> zhanymkanov/fastapi-best-practices at `5e00aa6`. A claim below that
+> zhanymkanov/fastapi-best-practices at `5e00aa6095521f0d00e4eec2ef0afa44cd566af4`. A claim below that
 > names no version holds for these.
 
 ## Contents
