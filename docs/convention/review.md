@@ -66,7 +66,14 @@ Decision: approve / request changes / reject
 
 ## Single-account setups
 
-When the PM and authors share one GitHub account, `comment` is the only review state GitHub is known to accept on one's own pull request — `approve` and `request changes` are both refused where tested. `approve`: `github/docs` at commit `ba6f6f9b9b31c4f0a991fbcb1005080526424804`, `data/reusables/repositories/request-changes-tips.md`, states "Pull request authors cannot approve their own pull requests." `request changes`: under REST API version `2022-11-28`, `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews` with `{"event":"REQUEST_CHANGES"}` on a pull request the submitting account authored returns HTTP 422 with `errors[0]` reading `Review Can not request changes on your own pull request`, as reported on 2026-10-14 in `garamsh/convention-driven-project#461`. Of the versions `GET /versions` returned on 2026-10-14 (`2022-11-28`, `2026-03-10`), that refusal is established for `2022-11-28` only; `2026-03-10` is untested. Every decision is submitted as a `comment` review carrying the evidence table and its decision line, plus one line saying the state was substituted because GitHub allows no other. That comment is the review; it is not a bare comment.
+When the PM and authors share one GitHub account, `comment` is the only review state GitHub accepts on one's own pull request — `approve` and `request changes` are both refused. Every decision is submitted as a `comment` review carrying the evidence table and its decision line, plus one line saying the state was substituted because GitHub allows no other. That comment is the review; it is not a bare comment.
+
+What the two refusals rest on:
+
+| State | Basis | Checked against |
+|---|---|---|
+| `approve` | `data/reusables/repositories/request-changes-tips.md` states "Pull request authors cannot approve their own pull requests." | `github/docs` at commit `ba6f6f9b9b31c4f0a991fbcb1005080526424804` |
+| `request changes` | `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews` with `{"event":"REQUEST_CHANGES"}`, sent by the pull request's author, returns HTTP 422 with `errors[0]` reading `Review Can not request changes on your own pull request`. A refused request creates no review, so it is checked by repeating the request; the measurement is transcribed in `garamsh/convention-driven-project#472#pullrequestreview-5516887020`. | REST API `2022-11-28` and `2026-03-10`, every version `GET /versions` served on 2026-10-14, each named by its response's `X-Github-Api-Version-Selected` |
 
 - **Approve.** Post the review, then merge immediately — the merge is the approval.
 - **Request changes.** Post the review and leave the PR open. The author responds to it as to any request-changes review.
