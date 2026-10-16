@@ -3,9 +3,9 @@
 # docs/convention/documentation.md §Keep it current. That rule governs every Markdown document
 # in this repository, so the set is selected by $scope and the count is printed with $scope.
 # $scope runs through eval, as a shell runs it when pasted, so the text printed is the text run.
-# A token is a maximal run of letters and digits; one of 7 to 39 lowercase hex characters with
-# both a digit and a letter is an abbreviated object name. All-digit runs are numbers, and
-# all-letter runs words, not names.
+# A token is a maximal run of letters and digits, with runs joined by `_` or `-` read as one; one
+# of 7 to 39 lowercase hex characters with both a digit and a letter is an abbreviated object name.
+# All-digit runs are numbers, all-letter runs words, and joined runs identifiers, not names.
 set -euf
 
 scope="git ls-files --cached --others --exclude-standard -- '*.md'"
@@ -22,7 +22,7 @@ while IFS= read -r file; do
 		fence { next }
 		{
 			rest = $0
-			while (match(rest, /[0-9A-Za-z]+/)) {
+			while (match(rest, /[0-9A-Za-z]+([_-][0-9A-Za-z]+)*/)) {
 				token = substr(rest, RSTART, RLENGTH)
 				rest = substr(rest, RSTART + RLENGTH)
 				if (token ~ /^[0-9a-f]+$/ && token ~ /[0-9]/ && token ~ /[a-f]/ && length(token) >= 7 && length(token) <= 39)
