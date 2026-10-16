@@ -22,6 +22,8 @@ The two checks this section serves are `review.md` §Submitting a review, "Confi
 
 1. Read the head: `gh pr view <n> --json headRefOid,headRefName`.
 2. List the runs on the branch with the commit each ran on: `gh run list --branch <headRefName> --json databaseId,headSha,conclusion,event`. Take the run whose `headSha` equals `headRefOid`; a run on any other commit is not a run on the head.
+
+   Where `gh run list --commit <sha>` is used instead, pass it the full 40-character `headRefOid` from step 1. Given an abbreviated SHA it prints nothing and exits 0, which reads the same as a head with no run — and `review.md` §Submitting a review, "Confirm the checks belong to the head commit", treats a head with no expected result as an unverified change. Observed on this host on 2026-10-16 with gh 2.46.0 (Debian 2.46.0-3): `gh run list --commit "$H"` with `H=2a24e5c46d54fb1261d34b8d19f9ab56d3e0afb9` listed one run, and `gh run list --commit "$(echo "$H" | cut -c1-8)"` printed nothing and exited 0. Reported by the PM of `garamsh/gitops`, whose first pass over six merges read no run on all six, and received here in #504.
 3. Count the steps that ran: `gh run view <databaseId> --json jobs --jq '.jobs[] | {name, conclusion, steps: [.steps[] | {name, conclusion}]}'`.
 4. Read what the steps selected: `gh run view <databaseId> --log`. In this repository the `make ci` step runs `make lint`, whose scripts each print a `checked <count> ... selected by: <command>` line; the counts are the work selected.
 
