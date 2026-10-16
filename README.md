@@ -44,6 +44,7 @@ Run in order. Every step touches only paths in this repository. Bootstrap is a c
 - `AGENTS.md` — the contribution contract: who may change what, and the rules that apply to every contributor
 - `docs/convention/` — conventions for code, reviews, and documentation; `stack-*.md` files are pruned during bootstrap
 - `docs/architecture/` — responsibility documents (current truth), ADRs (append-only decision log), and the candidate structures bootstrap chooses between and then deletes
+- `docs/procedure/` — this repository's own procedures for its recurring acts, not part of what a project takes; a project wanting the layer writes its own
 - `.github/` — PR and issue templates, CODEOWNERS, the CI workflow, and the Dependabot configuration that moves its pins
 - `Makefile` — the entry-point names for the project's checks; `make ci` runs the whole set
 - `check-*.sh` — the documentation checks behind `make lint`
