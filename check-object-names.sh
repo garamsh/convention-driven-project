@@ -4,7 +4,8 @@
 # in this repository, so the set is selected by $scope and the count is printed with $scope.
 # $scope runs through eval, as a shell runs it when pasted, so the text printed is the text run.
 # A token is a maximal run of letters and digits; one of 7 to 39 lowercase hex characters with
-# at least one letter is an abbreviated object name. All-digit runs are numbers, not names.
+# both a digit and a letter is an abbreviated object name. All-digit runs are numbers, and
+# all-letter runs words, not names.
 set -euf
 
 scope="git ls-files --cached --others --exclude-standard -- '*.md'"
@@ -24,7 +25,7 @@ while IFS= read -r file; do
 			while (match(rest, /[0-9A-Za-z]+/)) {
 				token = substr(rest, RSTART, RLENGTH)
 				rest = substr(rest, RSTART + RLENGTH)
-				if (token ~ /^[0-9a-f]+$/ && token ~ /[a-f]/ && length(token) >= 7 && length(token) <= 39)
+				if (token ~ /^[0-9a-f]+$/ && token ~ /[0-9]/ && token ~ /[a-f]/ && length(token) >= 7 && length(token) <= 39)
 					print file ":" NR ": \"" token "\" is " length(token) " hex characters; an object name is cited by all 40"
 			}
 		}
