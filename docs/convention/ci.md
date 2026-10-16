@@ -59,6 +59,8 @@ A pin fixes what a reference means, not what it points at: a digest never receiv
 
 For every third-party dependency, also check the ecosystem's advisory source for known vulnerabilities in the candidate version.
 
+A reference no ecosystem can make immutable — a hosted runner label, a rolling base image, anything published without a digest — cannot be pinned, and the two sentences above do not reach it. What it owes instead: the version it holds, named in the reference itself where the platform offers versioned forms; a mover, as a pin owes one; and a record, on each run, of what the reference actually resolved to. Fixing what a reference means in advance and knowing what it meant afterwards are the only two ways to read a failure that no change explains, and where the first is unavailable the second is not optional.
+
 ## Security baseline
 
 - **Minimal permissions**: the pipeline's default credential grants read only; grant write on the single job that needs it.
