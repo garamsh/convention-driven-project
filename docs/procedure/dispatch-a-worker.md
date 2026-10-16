@@ -6,7 +6,7 @@ The acts that start a worker through Orca on this host, bind it to its role, wai
 
 Read from `orca-ide` 1.4.218 on this host on 2026-10-16: the `--help` output of each command named, and the process list. The CLI's help prints its name as `orca`; the commands below are run as `orca-ide`.
 
-- Every running `claude` agent's command line reads `claude --dangerously-skip-permissions --agent pm`, worker or not (`ps -o args -C claude`). A dispatched worker therefore arrives holding the PM role document, and the dispatch's own text is the only place a Worker role reaches it.
+- Every running `claude` agent's command line begins with `claude --dangerously-skip-permissions --agent pm`, worker or not (`ps -o args -C claude`). A dispatched worker therefore arrives holding the PM role document, and the dispatch's own text is the only place a Worker role reaches it.
 - `orchestration worker-start` takes `--task <task_id>` or `--spec <text>`, not both. `--retry-of` takes `--task` naming the failed Task, and `--spec` creates a new one.
 - `worker-start --help` states "When reusing --terminal, pass --worktree for that terminal; current means the coordinator worktree." A reuse without `--worktree` was refused on this host, as recorded in the decision comment on #480.
 - `worker-release` "closes only the exact coordinator-owned agent terminal of that worker" and "never closes setup terminals, configured tabs, reused or pre-existing terminals". A terminal made with `orca-ide terminal create` is not one `worker-start` created, so `worker-release` leaves it open.
