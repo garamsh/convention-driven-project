@@ -1,14 +1,15 @@
 #!/bin/sh
 # Fails on a Markdown file citing a commit object by fewer than its full 40 characters, per
-# docs/convention/documentation.md §Keep it current. That rule governs every Markdown document
-# in this repository, so the set is selected by $scope and the count is printed with $scope.
+# docs/convention/documentation.md §Keep it current. That rule binds a citation when it is written
+# and a merged ADR body is frozen, so $scope takes every Markdown document except those under
+# docs/architecture/adr/ other than its template, and the count is printed with $scope.
 # $scope runs through eval, as a shell runs it when pasted, so the text printed is the text run.
 # A token is a maximal run of letters and digits, with runs joined by `_` or `-` read as one; one
 # of 7 to 39 lowercase hex characters with both a digit and a letter is an abbreviated object name.
 # All-digit runs are numbers, all-letter runs words, and joined runs identifiers, not names.
 set -euf
 
-scope="git ls-files --cached --others --exclude-standard -- '*.md'"
+scope="git ls-files --cached --others --exclude-standard -- '*.md' ':(exclude)docs/architecture/adr/*' && git ls-files --cached --others --exclude-standard -- docs/architecture/adr/0000-template.md"
 
 cd "$(dirname "$0")"
 
