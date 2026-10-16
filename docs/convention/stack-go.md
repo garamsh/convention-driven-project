@@ -343,8 +343,10 @@ The format rows take their set from git: CI checks out the tracked
 set, a `.` walk also reaches ignored trees CI never sees and `-w`
 rewrites them, `--cached --others --exclude-standard` adds back the
 untracked files the ignore files leave so that a new file fails here
-before it fails in CI, and an empty set needs `xargs -0 -r` or a read
-loop, since `gofmt` given no arguments reads standard input and hangs.
+before it fails in CI, and the set reaches `gofmt` as arguments rather
+than through a shell substitution, because `gofmt` with no file
+arguments reads standard input: over an empty set `gofmt -l $(…)`
+blocks, where `xargs -0` hands the process `/dev/null` and it returns.
 
 Every tool the module invokes is built with a toolchain at least the
 module's `go` directive. `go install tool@version` and `go run
