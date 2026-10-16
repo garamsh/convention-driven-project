@@ -21,9 +21,9 @@ cd "$(dirname "$0")"
 
 status=0
 eval "$scope" | awk -v scope="$scope" '
-	function read_headings(file,    line, fence, title) {
+	function read_headings(file,    line, r, fence, title) {
 		fence = 0
-		while ((getline line < file) > 0) {
+		while ((r = (getline line < file)) > 0) {
 			if (line ~ /^```/) { fence = 1 - fence; continue }
 			if (fence || line !~ /^#+[ \t]/) continue
 			title = line
@@ -31,6 +31,7 @@ eval "$scope" | awk -v scope="$scope" '
 			sub(/[ \t]+$/, "", title)
 			heading[file, ++headings[file]] = title
 		}
+		if (r < 0) { print file ": cannot be read" > "/dev/stderr"; exit 3 }
 		close(file)
 	}
 	function carries(file, text,    i, h) {
@@ -67,10 +68,10 @@ eval "$scope" | awk -v scope="$scope" '
 		}
 		return 0
 	}
-	function check(file,    line, fence, seg, segs, names, name, n, i, p, offset, rest, at, text) {
+	function check(file,    line, r, fence, seg, segs, names, name, n, i, p, offset, rest, at, text) {
 		fence = 0
 		lineno = 0
-		while ((getline line < file) > 0) {
+		while ((r = (getline line < file)) > 0) {
 			lineno++
 			if (line ~ /^```/) { fence = 1 - fence; continue }
 			if (fence || index(line, sect) == 0) continue
@@ -100,6 +101,7 @@ eval "$scope" | awk -v scope="$scope" '
 				offset += length(seg[i]) + 1
 			}
 		}
+		if (r < 0) { print file ": cannot be read" > "/dev/stderr"; exit 3 }
 		close(file)
 	}
 	BEGIN { sect = "§" }
@@ -117,7 +119,7 @@ if [ "$status" -eq 2 ]; then
 	echo "no Markdown file or no section reference was read" >&2
 	exit 1
 fi
-if [ "$status" -ne 0 ]; then
+if [ "$status" -eq 1 ]; then
 	echo "rule: docs/convention/documentation.md §Keep it current, \"Every claim about this repository must be verifiable in it\"" >&2
 fi
 exit "$status"

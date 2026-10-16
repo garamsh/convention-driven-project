@@ -13,11 +13,11 @@ cd "$(dirname "$0")"
 
 status=0
 eval "$scope" | awk -v scope="$scope" '
-	function check(file,    line, lineno, fence, title, n, i) {
+	function check(file,    line, r, lineno, fence, title, n, i) {
 		fence = 0
 		lineno = 0
 		n = 0
-		while ((getline line < file) > 0) {
+		while ((r = (getline line < file)) > 0) {
 			lineno++
 			if (line ~ /^```/) { fence = 1 - fence; continue }
 			if (fence || line !~ /^#+[ \t]/) continue
@@ -35,14 +35,16 @@ eval "$scope" | awk -v scope="$scope" '
 			heading[++n] = title
 			at[n] = lineno
 		}
+		if (r < 0) { print file ": cannot be read" > "/dev/stderr"; exit 3 }
 		close(file)
 	}
 	function report(file, shorter, s, longer, l) {
 		prefixed = 1
 		print file ":" s ": heading \"" shorter "\" is a prefix of heading \"" longer "\" at line " l
 	}
-	NF { files++; check($0) }
+	NF { path[++files] = $0 }
 	END {
+		for (i = 1; i <= files; i++) check(path[i])
 		print "checked " headings + 0 " headings in " files + 0 " Markdown files, selected by: " scope
 		if (files == 0 || headings == 0) exit 2
 		exit prefixed
@@ -53,7 +55,7 @@ if [ "$status" -eq 2 ]; then
 	echo "no Markdown file or no heading was read" >&2
 	exit 1
 fi
-if [ "$status" -ne 0 ]; then
+if [ "$status" -eq 1 ]; then
 	echo "rule: docs/convention/documentation.md §Keep it current, \"No heading in a file is a prefix of another heading in the same file\"" >&2
 fi
 exit "$status"
