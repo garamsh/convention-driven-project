@@ -1,6 +1,6 @@
 # Dispatch a worker
 
-The acts that start a worker through Orca on this host, bind it to its role, and release it once it settles. No convention in `docs/convention/` governs dispatch; the role a worker holds is `AGENTS.md` §Roles, and the branch it works on is `docs/convention/git.md` §Branches.
+The acts that start a worker through Orca on this host, bind it to its role, wait on it, and release it once it settles. No convention in `docs/convention/` governs dispatch; the role a worker holds is `AGENTS.md` §Roles, and the branch it works on is `docs/convention/git.md` §Branches.
 
 ## Host facts
 
@@ -11,6 +11,7 @@ Read from `orca-ide` 1.4.218 on this host on 2026-10-16: the `--help` output of 
 - `worker-start --help` states "When reusing --terminal, pass --worktree for that terminal; current means the coordinator worktree." A reuse without `--worktree` was refused on this host, as recorded in the decision comment on #480.
 - `worker-release` "closes only the exact coordinator-owned agent terminal of that worker" and "never closes setup terminals, configured tabs, reused or pre-existing terminals". A terminal made with `orca-ide terminal create` is not one `worker-start` created, so `worker-release` leaves it open.
 - `worktree rm` "attempts to delete the checked-out local branch" and "retains ... any branch whose changes it cannot prove are already merged". This repository squash-merges (`git.md` §PRs), and `git log --merges origin/main` lists no commit, so a merged branch's tip is not an ancestor of `main` and a retained branch is the expected result.
+- `orchestration check --help` states that `--types` "is the wake condition for --wait; a returned Delivery is always the whole FIFO batch, so it is never filtered by type". A wait on `--types "worker_done,escalation,question"` therefore does not return for a `heartbeat`, and the heartbeats queue behind it. The coordinator dispatching #497 reported on 2026-10-16, three times, being told it had a message while such a wait was outstanding, each time for a queued heartbeat carrying only `phase`.
 
 ## Start
 
@@ -24,6 +25,12 @@ A start that exits 0 is the launcher's report, not an observation. Confirm each 
 1. **The worktree exists:** `orca-ide worktree list --json` lists it, and `git worktree list` shows it on the branch named.
 2. **The role took:** `orca-ide orchestration worker-read --dispatch <dispatch_id> --source auto` shows the worker reading the issue and the files its role names, not acting as the role on its command line.
 3. **It runs on its own:** a later `worker-read` shows new output, and none of it is a permission prompt waiting on input.
+
+## Wait
+
+1. Wait on completion and its neighbours: `orca-ide orchestration check --terminal <coordinator handle> --wait --types "worker_done,escalation,question" --timeout-ms <n> --json`. Leaving `heartbeat` out of `--types` keeps the wait blocked across beats; with it in, every beat returns the wait.
+2. On a nudge for a queued message, read the batch, acknowledge it with `--ack <delivery_id>`, and go back to step 1 where every message in it is a heartbeat. A heartbeat shows the worker is alive, not that it is done.
+3. Judge whether a worker has settled by what it produced — commits on its branch (`git log origin/main..origin/<branch>`), a pull request (`gh pr list --head <branch> --json number,state`), a comment on its issue — rather than by its beats or its silence.
 
 ## Release
 
