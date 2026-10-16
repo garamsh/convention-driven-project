@@ -46,4 +46,4 @@ Run in order. Every step touches only paths in this repository. Bootstrap is a c
 - `docs/architecture/` — responsibility documents (current truth), ADRs (append-only decision log), and the candidate structures bootstrap chooses between and then deletes
 - `.github/` — PR and issue templates, CODEOWNERS, the CI workflow, and the Dependabot configuration that moves its pins
 - `Makefile` — the entry-point names for the project's checks; `make ci` runs the whole set
-- `check-contents-list.sh` — the documentation check behind `make lint`
+- `check-*.sh` — the documentation checks behind `make lint`
