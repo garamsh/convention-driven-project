@@ -44,6 +44,6 @@ if [ "$count" -eq 0 ]; then
 	exit 1
 fi
 if [ "$status" -ne 0 ]; then
-	echo "rule: docs/convention/documentation.md §Keep it current" >&2
+	echo "rule: docs/convention/documentation.md §Keep it current, \"A commit is cited by its full object name\"" >&2
 fi
 exit "$status"
