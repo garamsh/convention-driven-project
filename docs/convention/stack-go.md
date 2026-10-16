@@ -348,6 +348,15 @@ than through a shell substitution, because `gofmt` with no file
 arguments reads standard input: over an empty set `gofmt -l $(…)`
 blocks, where `xargs -0` hands the process `/dev/null` and it returns.
 
+The Build, Test, Vet and Coverage rows take their set from the working
+tree: `./...` is the module's packages as the directory on disk holds
+them, which is neither git's set nor CI's checkout. It never consults
+git. It skips a directory named `testdata` or beginning with `.` or
+`_`, tracked or not, by the go tool's own rule, and reaches an ignored
+directory with any other name as it reaches a tracked one. So a package
+in such a directory is built here and never in CI: a failure there is
+not a CI failure, and a pass here is not a CI pass.
+
 Every tool the module invokes is built with a toolchain at least the
 module's `go` directive. `go install tool@version` and `go run
 tool@version` take the toolchain from the tool's own `go.mod`, not from
