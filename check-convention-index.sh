@@ -49,7 +49,9 @@ if [ "$count" -eq 0 ] || [ "$row_count" -eq 0 ]; then
 	echo "no convention file or no index row was read" >&2
 	exit 1
 fi
+status=0
 if [ -n "$problems" ]; then
 	echo "rule: docs/convention/README.md §Stack-specific" >&2
-	exit 1
+	status=1
 fi
+exit "$status"
