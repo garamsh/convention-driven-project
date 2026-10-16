@@ -18,7 +18,7 @@ Read from `orca-ide` 1.4.218 on this host on 2026-10-16: the `--help` output of 
 
 ## Start
 
-1. Write the Task's text with `orca-ide orchestration task-create`, naming the role from `AGENTS.md` §Roles the worker holds, the issue it implements, the branch name per `git.md` §Branches, and the paths it may change.
+1. Write the Task's text with `orca-ide orchestration task-create`, naming the role from `AGENTS.md` §Roles the worker holds, the issue it implements, the branch name per `git.md` §Branches, and the paths it may change. Where the change edits a convention file to meet an obligation another convention file states, the Task asks for the citation of that obligation in the pull request body and not in the convention file: `docs/convention/README.md` §Independence, "A convention file does not send the reader to another convention file", and §Stack-specific, "the files do not point at each other".
 2. Start it: `orca-ide orchestration worker-start --task <task_id> --worktree new-child --agent claude --name <name> --base-branch main`. For a second round on the same worker, create a new Task with `orchestration task-create` and dispatch that.
 
 ## Confirm the three bindings
