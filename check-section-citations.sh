@@ -9,6 +9,9 @@
 # in a folder so named, is a prefix of the text after the §. A name resolves to each selected path
 # equal to it or ending in "/" and it, so a bare basename such as `review.md` matches every file of
 # that basename; a folder name ends in "/" and matches the files directly inside it.
+# A shorter heading that prefixes a longer one resolves citations of the longer, so the check finds
+# a citation matching nothing, not one matching the wrong heading. The live pair is
+# docs/architecture/README.md's `## Rules` and `## Rules every shape carries`.
 set -euf
 
 scope="git ls-files --cached --others --exclude-standard -- '*.md'"
