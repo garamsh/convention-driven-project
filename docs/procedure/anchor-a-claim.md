@@ -16,7 +16,7 @@ A sentence holding claims about two subjects is two claims; anchor each.
 
 ## Anchor it
 
-1. **Name an object in full.** Cite a commit by its 40-character name: `git rev-parse <ref>` prints it. `check-object-names.sh`, run by `make lint`, fails on a Markdown file naming one by 7 to 39 characters, citing `documentation.md` §Keep it current.
+1. **Name an object in full.** Cite a commit as `documentation.md` §Keep it current, "A commit is cited by its full object name", states: `git rev-parse <ref>` prints that name.
 2. **Cite a rule by its words.** Where the rule is numbered outside this project, the citation takes the form `documentation.md` §Keep it current, "A citation of a rule numbered outside this project", states — quote its heading or opening words.
 3. **Record what was read and when.** Name the release or commit, the command with its arguments, and the date, as `documentation.md` §Keep it current, "A claim about anything outside it names what it holds for", and §GitHub artifacts, "A claim names a basis that could have contradicted it", ask.
 4. **Ask whether a measurement exists before asserting a behaviour.** Before writing that a tool does something, find the command, run, or source that showed it. Where none exists, either produce one or ask whoever made the claim what established it; where neither yields one, the claim comes out, per `documentation.md` §Keep it current, "Every claim about this repository must be verifiable in it", for this repository.
