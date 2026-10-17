@@ -24,7 +24,7 @@ A sentence holding claims about two subjects is two claims; anchor each.
    - name the command that enumerated the set and the classification applied to its output; or
    - write the members as instances, with no quantifier over them.
 
-   The members a writer happened to read are not an enumeration. Where a quantifier failed, fix it with one of the two anchors; a narrower quantifier drawn from the same reading is the same defect again. Example: at PR #559 head `c4919b45fc38aab0c761df7bdb06474291ed7ddf`, `README.md:5` read "Of the lines that name an agent, two reach more than agents", written in place of a failed quantifier; `docs/convention/ci.md:52` names an agent and made a third (review 5555442139). The paragraph that landed at `985afb2af4f6b450a26e0b341ae08404a81e5d28` names those lines as instances and counts none.
+   The members a writer happened to read are not an enumeration. Where a quantifier failed, fix it with one of the two anchors; a narrower quantifier drawn from the same reading is the same defect again. Example: at PR #559 head `c4919b45fc38aab0c761df7bdb06474291ed7ddf`, `README.md:5` read "Of the lines that name an agent, two reach more than agents", written in place of a failed quantifier; `docs/convention/ci.md:52` names an agent and made a third (review 5555442139). The paragraph that landed at `985afb2af4f6b450a26e0b341ae08404a81e5d28` names two such lines as instances and counts none.
 
 ## Check the anchor
 
