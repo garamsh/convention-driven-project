@@ -2,7 +2,7 @@
 
 A GitHub template carrying the conventions a codebase is held to: how code, tests, commits, and reviews are written, how architecture decisions are recorded, and what a pull request or issue must contain.
 
-Nothing here is specific to AI agents. The conventions read the same for a human team. `AGENTS.md` additionally states the contribution contract in the standard place an agent looks for it, the way `.editorconfig` states formatting in the place an editor looks.
+The rules bind what a project writes, not who writes it (`docs/convention/README.md` §Scope, "These rules bind what the project writes"). The opening line of `docs/convention/README.md` addresses its reader as an agent, and `AGENTS.md` §Start here, every time sends every contributor, human or agent, to that file first. In `docs/convention/ci.md` §Verify a pinned dependency before adopting it, "Pre-trained recollection is a starting point, not source of truth" has nothing to fire on in a human team, while that section's obligations — reading the dependency's own documentation, pinning to a reference that cannot come to mean something else, naming how the pin gets moved — bind a human team as they bind an agent. `AGENTS.md` additionally states the contribution contract in the standard place an agent looks for it, the way `.editorconfig` states formatting in the place an editor looks.
 
 ## Usage
 
@@ -44,7 +44,7 @@ Run in order. Every step touches only paths in this repository. Bootstrap is a c
 - `AGENTS.md` — the contribution contract: who may change what, and the rules that apply to every contributor
 - `docs/convention/` — conventions for code, reviews, and documentation; `stack-*.md` files are pruned during bootstrap
 - `docs/architecture/` — responsibility documents (current truth), ADRs (append-only decision log), and the candidate structures bootstrap chooses between and then deletes
-- `docs/procedure/` — this repository's own procedures for its recurring acts, not part of what a project takes; a project wanting the layer writes its own
+- `docs/procedure/` — this repository's own procedures for its recurring acts, not part of what a project takes; a project wanting the layer writes its own. Because the layer stays here, a procedure may name the host its acts run on and the version of that host's tool it was read from, as `docs/procedure/dispatch-a-worker.md` does; a convention file travels to every project that takes it, where that host need not exist
 - `.github/` — PR and issue templates, CODEOWNERS, the CI workflow, and the Dependabot configuration that moves its pins
 - `Makefile` — the entry-point names for the project's checks; `make ci` runs the whole set
 - `check-*.sh` — the documentation checks behind `make lint`, written for this repository's documents; a project keeps, adapts, or deletes each during bootstrap
