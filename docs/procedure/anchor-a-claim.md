@@ -29,6 +29,13 @@ A sentence holding claims about two subjects is two claims; anchor each.
 ## Check the anchor
 
 1. Repeat the basis as written — the command, the file at the revision named — and confirm it returns what the claim says.
-2. Where the basis is a search, confirm the same expression matches something that is present, as `documentation.md` §GitHub artifacts, "A claim names a basis that could have contradicted it", states.
+2. Where the basis is a search, run it where the claim is false. For each part of the claim the search is offered for, ask what it would have read had that part been false, construct an input in which that part is false, and run the same command over it. Where it reads the same as it did over the real input, it is no basis for that part, as `documentation.md` §GitHub artifacts, "A claim names a basis that could have contradicted it", states. An expression matching nothing is one case: had the absence been false, the input would hold what was searched for, so the expression must match an input that holds it. Matching some input is not the test; reading differently where the part is false is. Example: #566 counted citations of `README.md:5` with the expression below, its control a string known to contain one; the expression also matches `README.md:50`, so an input holding no citation reads the same (GNU grep 3.11):
+
+   ```
+   printf 'README.md:5`\nREADME.md:50\n' | grep -c 'README\.md:5'   -> 2
+   printf 'README.md:50\nREADME.md:50\n' | grep -c 'README\.md:5'   -> 2
+   ```
+
+   Where the claim quantifies over a set, its members come from the enumeration §Anchor it, step 5 names; this step tests the expression that enumeration ran.
 3. Where the claim quantifies over a set (§Anchor it, step 5), re-run the enumeration at the revision named and apply the classification to its output. Re-reading the claim shows only the members it names.
 4. Run `make lint` before pushing; it prints the count of Markdown files each script read and the command that selected them.
