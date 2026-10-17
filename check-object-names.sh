@@ -7,6 +7,8 @@
 # A token is a maximal run of letters and digits, with runs joined by `_` or `-` read as one; one
 # of 7 to 39 lowercase hex characters with both a digit and a letter is an abbreviated object name.
 # All-digit runs are numbers, all-letter runs words, and joined runs identifiers, not names.
+# Three or more tokens joined by `:`, as in `urn:ns:id`, are one identifier too; two are read as
+# two tokens, so `at:<name>` is still reported. A name written inside three such tokens is not.
 set -euf
 
 scope="git ls-files --cached --others --exclude-standard -- '*.md' ':(exclude)docs/architecture/adr/*' && git ls-files --cached --others --exclude-standard -- docs/architecture/adr/0000-template.md"
@@ -23,11 +25,17 @@ while IFS= read -r file; do
 		fence { next }
 		{
 			rest = $0
-			while (match(rest, /[0-9A-Za-z]+([_-][0-9A-Za-z]+)*/)) {
-				token = substr(rest, RSTART, RLENGTH)
+			while (match(rest, /[0-9A-Za-z]+([_-][0-9A-Za-z]+)*(:[0-9A-Za-z]+([_-][0-9A-Za-z]+)*)*/)) {
+				run = substr(rest, RSTART, RLENGTH)
 				rest = substr(rest, RSTART + RLENGTH)
-				if (token ~ /^[0-9a-f]+$/ && token ~ /[0-9]/ && token ~ /[a-f]/ && length(token) >= 7 && length(token) <= 39)
-					print file ":" NR ": \"" token "\" is " length(token) " hex characters; an object name is cited by all 40"
+				n = split(run, tokens, ":")
+				if (n >= 3)
+					continue
+				for (i = 1; i <= n; i++) {
+					token = tokens[i]
+					if (token ~ /^[0-9a-f]+$/ && token ~ /[0-9]/ && token ~ /[a-f]/ && length(token) >= 7 && length(token) <= 39)
+						print file ":" NR ": \"" token "\" is " length(token) " hex characters; an object name is cited by all 40"
+				}
 			}
 		}
 	' "$file")
