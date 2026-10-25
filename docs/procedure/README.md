@@ -8,4 +8,4 @@ How to carry out a recurring act in this repository: the files to open, the orde
 |---|---|
 | `review-a-pull-request.md` | Reviewing a pull request, from choosing the conventions to read to posting the verdict |
 | `anchor-a-claim.md` | Turning a claim in a document or a GitHub artifact into one a reader can check |
-| `dispatch-a-worker.md` | Starting a worker through Orca, binding its role, waiting on it, and releasing it once it settles |
+| `dispatch-a-worker.md` | Starting a worker as a Claude Code subagent, confirming the start, reusing it across rounds, judging it by its output, and releasing it |
