@@ -45,4 +45,3 @@ A sentence holding claims about two subjects is two claims; anchor each.
 
    The section of `~/.claude/CLAUDE.md` headed "`pkill -f` and `pgrep -f` match this shell's own command line", as read at 2026-10-25T18:13Z (2026-10-26 03:13 +0900), offers "read `/proc/*/cmdline` directly" as a remedy. The first reading shows that clause does not hold: the wrapper is in `/proc` too, so reading it directly reproduces the self-match. That file is the user's and is not edited from here.
 3. Where the claim quantifies over a set (§Anchor it, step 5), re-run the enumeration at the revision named and apply the classification to its output. Re-reading the claim shows only the members it names.
-4. Run `make lint` before pushing; it prints the count of Markdown files each script read and the command that selected them.
