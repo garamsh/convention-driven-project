@@ -19,7 +19,7 @@ Local checks and CI checks are the same checks, invoked by the same names. CI re
 
 This section states which names exist and what each owes, not the commands behind them.
 
-- **One name per task.** Each of lint, format, test, and build has exactly one name that a human and CI both invoke, once the project has a command for it. What implements that name — a task runner, a script, a package manifest entry — is the project's choice; the name is the contract, so it arrives with the command and not ahead of it.
+- **One name per task.** Each of lint, format, test, and build has exactly one name that a human and CI both invoke, once the project has a command for it. What exposes that name — a task runner, a script, a package manifest entry — is the project's choice; the name is the contract, so it arrives with the command and not ahead of it.
 - **One name for the whole set.** A single name runs those names in order, so "run the checks" is one command locally and one step in CI.
 - **A change shows that the whole set ran before it landed.** Once the project has a pipeline, every change that can land on the default branch carries, on the change itself, the record of a run of the whole set against it made before it lands, and what made that run: a pipeline run whose result is attached to the change, or a run outside the pipeline recorded there by whoever made it. A pipeline run that starts only after the change has landed, or only for changes bound for another branch, is no such record for it.
 - **CI calls the names, not the commands behind them.** A pipeline that spells out the underlying tool invocations has created a second set of commands, and the two drift.
@@ -35,13 +35,13 @@ This section states which names exist and what each owes, not the commands behin
 
 ## Reuse
 
-A pipeline step is one of two kinds. A check — lint, format, test, build — is invoked by its entry-point name (§One entry point per task). Everything else a pipeline needs — toolchain setup, caching, artifacts, deploys — is a step this section governs.
+A check — lint, format, test, build — is invoked by its entry-point name (§One entry point per task). This section governs what the name runs, and everything else a pipeline needs — toolchain setup, caching, artifacts, deploys. It does not oblige a project to add a check.
 
-For each of those steps:
+For each tool behind a check and each other step:
 
-1. **Search for a maintained component** — a published action, plugin, or reusable job — at its current version, before writing pipeline code.
+1. **Search for a maintained component** — a published action, plugin, or reusable job; for a check, the standard test runner, linter, formatter or build tool its ecosystem maintains and widely uses — at its current version, before writing pipeline code or a check script.
 2. **Verify it** per the next section before pinning.
-3. **Use it as its own documentation shows**. If no maintained component covers the step, a checked-in script is the fallback — not a license to hand-roll per-job.
+3. **Use it as its own documentation shows**. If no maintained component covers the step, a checked-in script is the fallback — not a license to hand-roll per-job. A script behind a check records, in the pull request that adds it, why no such tool covers the check.
 
 ## Verify a pinned dependency before adopting it
 
