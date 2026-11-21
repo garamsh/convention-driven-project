@@ -74,7 +74,7 @@ What the two refusals rest on:
 | State | Basis | Checked against |
 |---|---|---|
 | `approve` | `data/reusables/repositories/request-changes-tips.md` states "Pull request authors cannot approve their own pull requests." | `github/docs` at commit `ba6f6f9b9b31c4f0a991fbcb1005080526424804` |
-| `request changes` | `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews` with `{"event":"REQUEST_CHANGES"}`, sent by the pull request's author, returns HTTP 422 with `errors[0]` reading `Review Can not request changes on your own pull request`. A refused request creates no review, so it is checked by repeating the request; the measurement is transcribed in `garamsh/convention-driven-project#472#pullrequestreview-5516887020`. | REST API `2022-11-28` and `2026-03-10`, every version `GET /versions` served on 2026-10-14, each named by its response's `X-Github-Api-Version-Selected` |
+| `request changes` | `POST /repos/{owner}/{repo}/pulls/{pull_number}/reviews` with `{"event":"REQUEST_CHANGES"}`, sent by the pull request's author, returns HTTP 422 with `errors[0]` reading `Review Can not request changes on your own pull request`. A refused request creates no review, so it is checked by repeating the request. | REST API `2022-11-28` and `2026-03-10`, every version `GET /versions` served on 2026-10-14, each named by its response's `X-Github-Api-Version-Selected` |
 
 - **Approve.** Post the review, then merge immediately — the merge is the approval.
 - **Request changes.** Post the review and leave the PR open. The author responds to it as to any request-changes review.
