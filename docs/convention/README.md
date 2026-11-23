@@ -24,12 +24,12 @@ What makes anything generated is that regenerating it changes nothing. What nobo
 | `code-comments.md` | When and how to comment code |
 | `runtime-safety.md` | Types, trust boundaries, error handling |
 | `testing.md` | Test layers, mocking, placement |
-| `ci.md` | Local/CI parity, pipeline authoring, security |
+| `ci.md` | Local/CI parity, the development-stage deferral of checks, pipeline authoring, security |
 | `git.md` | Branches, commits, PR titles, merging |
 | `style.md` | Naming and pattern consistency in code |
 | `simplicity.md` | Whether to add or to change the shape; when an abstraction earns its place |
 | `interfaces.md` | Boundaries between separately built components: versioned interface, conformance test, implementations, compatibility rules |
-| `review.md` | What a review must carry to be valid, and how an author responds |
+| `review.md` | What a review must carry to be valid, when an approve may accept deferred verification, and how an author responds |
 | `documentation.md` | What makes a document or a GitHub artifact valid, review comments included |
 
 Every project keeps all of these. They are the floor, and bootstrap prunes only the table below.

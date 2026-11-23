@@ -6,6 +6,7 @@ How a project's checks are named, run, and secured. The rules hold on any toolch
 - Core principle
 - One entry point per task
 - Run the checks before pushing
+- Development stage
 - Reuse
 - Verify a pinned dependency before adopting it
 - Security baseline
@@ -32,6 +33,15 @@ This section states which names exist and what each owes, not the commands behin
 - Where a pipeline run against the change being pushed will be the record §One entry point per task requires, test and build are the pipeline's to run, over the whole set. Where no pipeline run will be that change's record, they run locally before pushing too.
 - Running more locally, the whole set included, is always allowed. This rule sets the least that runs before pushing, not the most.
 - Automating the local run — a version-control hook, a watch task, an on-save editor command — is the contributor's choice. No tool is mandated, and running the checks by hand satisfies this section.
+
+## Development stage
+
+While a project is in its development stage, a pull request may defer test, build and e2e to a final check. This section states what may be deferred, what may not, and how the stage is marked.
+
+- **Lint and format are never deferred.** They run before every push, as §Run the checks before pushing requires.
+- **The final check runs the whole set, once, on the tree it covers**: at a release, at a landing on the default branch, or just before an interim report. A pull request that deferred its checks has no record of a run against it before it lands, so for those checks the final check replaces the record §One entry point per task requires.
+- **Verified on every pull request, with no exception**: a release, a change applied to a running environment, and a change to a security boundary (authentication, cryptography, isolation). A project that wants a different choice records it in its own conventions; the default here does not move.
+- **The stage is marked.** A project that follows the 0.1.0 version rule is in the stage until its first `-rc` tag. Any other project marks it with a `## Stage` section in its README, and removing that section ends it. When the stage ends, every pull request is verified before it lands again.
 
 ## Reuse
 
