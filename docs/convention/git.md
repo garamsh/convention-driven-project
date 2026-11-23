@@ -35,4 +35,5 @@ Format: `<type>: <imperative summary>`
 - A change to a file other projects copy from this one that renames, renumbers, or removes a heading or a numbered rule names the old one in its pull request title. That title is what reaches a project taking the change, and nothing else tells it which of its citations to re-check.
 - Body follows `.github/PULL_REQUEST_TEMPLATE.md`.
 - A promotion is a PR from the default branch into a branch that only promotions move. It is merged by fast-forward, never by a squash, a rebase or a merge commit: each of those leaves that branch holding a commit the default branch never held. Its title becomes no commit; the commits it carries keep the titles and trailers their own squash merges gave them.
-- PRs other than a promotion are squash-merged. Branch commits do not appear on the default branch; do not rewrite them to be pretty.
+- A catch-up is a PR from the default branch into a long-lived branch that will land on the default branch later. It is merged by a merge commit, never by a squash, and its body names the default-branch commits it brings. A squash copies those commits as new ones, so the later landing rereads them and can conflict with them.
+- PRs other than a promotion or a catch-up are squash-merged. Branch commits do not appear on the default branch; do not rewrite them to be pretty.
