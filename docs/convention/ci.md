@@ -39,9 +39,9 @@ This section states which names exist and what each owes, not the commands behin
 While a project is in its development stage, a pull request may defer test, build and e2e to a final check. This section states what may be deferred, what may not, and how the stage is marked.
 
 - **Lint and format are never deferred.** They run before every push, as §Run the checks before pushing requires.
-- **The final check runs the whole set, once, on the tree it covers**: at a release, at a landing on the default branch, or just before an interim report. A pull request that deferred its checks has no record of a run against it before it lands, so for those checks the final check replaces the record §One entry point per task requires.
+- **The final check runs the whole set, once, on the tree it covers**: at a release or at a landing on the default branch. A pull request that deferred its checks has no record of a run against it before it lands, so for those checks the final check replaces the record §One entry point per task requires.
 - **Verified on every pull request, with no exception**: a release, a change applied to a running environment, and a change to a security boundary (authentication, cryptography, isolation). A project that wants a different choice records it in its own conventions; the default here does not move.
-- **The stage is marked.** A project that follows the 0.1.0 version rule is in the stage until its first `-rc` tag. Any other project marks it with a `## Stage` section in its README, and removing that section ends it. When the stage ends, every pull request is verified before it lands again.
+- **The stage is marked.** A project that tags pre-releases is in the stage until its first release-candidate tag. Any other project marks it with a `## Stage` section in its README, and removing that section ends it. When the stage ends, every pull request is verified before it lands again.
 
 ## Reuse
 
