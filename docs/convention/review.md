@@ -30,6 +30,7 @@ Decision: approve / request changes / reject
 ```
 
 - An approve requires the Scope, Verification, and Depth rows to read `pass`. The remaining rows may read `unverified`, with a stated reason (some PRs touch nothing a convention governs). A `fail` in any row is a request-changes or a reject, never an approve.
+- **Development stage.** While the project is in its development stage, a pull request whose Verification reads `deferred to final check` for test, build and e2e may be approved, and the row then reads `pass`. The row names which checks were deferred, and the review confirms that lint and format ran, since they are never deferred. The stage is marked, for a project that tags pre-releases, by lasting until its first release-candidate tag, and otherwise by a `## Stage` section in its README; the review reads that mark and cites it. Three kinds of pull request take no deferral, in any stage: a release, a change applied to a running environment, and a change to a security boundary (authentication, cryptography, isolation). Their Verification reads `pass` only for a run the review confirmed. When the stage ends, every pull request is verified before approval again.
 - A check you did not verify is marked `unverified` — never guessed. Skipping a check is allowed; hiding the skip is not. A review full of `unverified` rows tells the reader the review did not really happen.
 - **The evidence has to test the claim it is offered for**, in a table row or anywhere else in the review. A cheap instrument — a command, or a sentence quoted out of the section that scopes it — usually answers a question adjacent to the one asked, and a clean answer looks the same either way. A checksum answers whether a file changed; where the row asks whether a measured value changed, it is the wrong instrument even on every file where the two agree.
 - **A running system reports what is in effect, not what was decided.** Where a claim is about a decision — a configured value, a chosen limit, a deliberate default — evidence read from a live object does not establish it: a tool that fills in defaults renders them indistinguishably from authored ones. Read the authored artifact, and say which one you read.
@@ -47,7 +48,7 @@ Decision: approve / request changes / reject
 | Conventions | A changed line breaks a rule in a file that governs it. |
 | Architecture | A decision or a domain changed without the documents that describe it, or a changed line contradicts what a responsibility document in `docs/architecture/` states. |
 | Documentation | A change to structure, workflow, or conventions left an affected document stale. |
-| Verification | The PR claims a check the reviewer cannot confirm ran. |
+| Verification | The PR claims a check the reviewer cannot confirm ran, or defers a check where the project is outside its development stage or the change takes no deferral. |
 | Depth | The change obeys every rule and is still the wrong thing to keep. |
 
 **Scope** is measured against the task the pull request states — its issue where one exists, its Summary where none does — never against taste. A line that traces to an acceptance criterion is in scope however large it is, and a correct one-line drive-by is out of scope however small. Out-of-scope work is not wrong — it is a separate issue.

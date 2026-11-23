@@ -37,7 +37,7 @@ Run in order. Every step touches only paths in this repository. Bootstrap is a c
 5. **Write the architecture documents.** Add the responsibility documents `docs/architecture/README.md` requires for the domains the project already has, list every responsibility document and ADR in its §Index, and leave `docs/architecture/adr/0000-template.md` in place. Done when every domain the project has carries a responsibility document, `docs/architecture/README.md` §Index lists every responsibility document and ADR the repository holds, and the template is still there.
 6. **Refresh the conventions index.** Update the stack-specific section of `docs/convention/README.md` to name the `stack-*.md` files that remain.
 7. **Replace the CODEOWNERS placeholder.** Replace `@project-owner-placeholder` in `.github/CODEOWNERS` with the project owner.
-8. **Replace this README.** Describe the project instead of the template. `AGENTS.md` stays as it is.
+8. **Replace this README.** Describe the project instead of the template. `AGENTS.md` stays as it is. A project in its development stage that does not tag pre-releases adds a `## Stage` section to it, which `docs/convention/ci.md` §Development stage names as the mark.
 
 ## Structure
 
