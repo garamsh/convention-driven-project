@@ -13,7 +13,7 @@ It does not cover a boundary inside one build and one release: a module, a layer
 - **The boundary is a versioned public interface.** It has a written specification and a version, and a consumer depends on the version, not on an implementation.
 - **Each interface has a conformance test.** It runs against any implementation and passes or fails it through the interface alone, reaching into no implementation's internals.
 - **More than one implementation from the start**, so the interface is not shaped by the first one. In pre-stable releases, a reference implementation the conformance test runs against, such as a fake or in-memory one, counts as the second. The first stable version (v1 under semver) needs two production implementations that pass the conformance test.
-- **The specification states its compatibility rules.** What a release may change without breaking an implementation, what forces a major version, and how a deprecated element is retired.
+- **The specification states its compatibility rules.** What a release may change without breaking an implementation, what forces a major version, how a deprecated element is retired, and how a caller learns which elements a peer supports before it uses one added in a later release. Without that, a caller sends an element an older peer rejects or misreads. The specification of each interface chooses the mechanism.
 
 ## Example
 
