@@ -1,6 +1,6 @@
 # ADR NNNN: <short decision title>
 
-> Status: proposed | accepted | superseded by ADR-XXXX
+> Status: proposed | accepted | superseded by ADR-XXXX | retired by PR #N: <reason>
 > Date: YYYY-MM-DD
 
 Append-only: once merged, the body below is not rewritten. A fact later found wrong is corrected in an appended note, not edited out; a revised decision is a new ADR that supersedes this one.
